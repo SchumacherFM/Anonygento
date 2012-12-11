@@ -31,14 +31,17 @@ Zipcode, City, State and Country aren't anonymized so that shipping and tax calc
 
 This module is optimized to handle a large amount of data with less memory.
 
+
 Todo / Next Versions
 -------------
 - Run via backend instead of shell
 - Anonymize all prices
 
+
 Compatibility
 -------------
 - Magento >= 1.4
+
 
 Installation Instructions
 -------------------------
@@ -65,5 +68,6 @@ But bummer:
 - It can't handle a large amount of data
 - Fake data is taken from external sources. I mainly develop offline during a long train ride
 - PHP code of the module is suboptimal and not Magento style
+- bugs
 
 So I've refactored everything ... still in refactoring.

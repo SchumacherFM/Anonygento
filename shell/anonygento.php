@@ -44,7 +44,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
     {
         try {
             /** @var $anonygento SchumacherFM_Anonygento_Model_Anonygento */
-            $anonygento = Mage::getModel('integernet_anonygento/anonygento');
+            $anonygento = Mage::getModel('schumacherfm_anonygento/anonygento');
             $anonygento->anonymizeAll();
             foreach ($anonygento->getResults() as $resultLabel => $resultCount) {
                 echo 'Anonymized ' . $resultCount . ' ' . $resultLabel . ".\n";
