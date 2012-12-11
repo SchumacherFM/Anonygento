@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <layout>
     <!-- admin acl users edit page -->
-    <schumacherfm_anonygento_adminhtml_anonygento_index>
+    <adminhtml_anonygento_index>
         <reference name="content">
             <block type="schumacherfm_anonygento/adminhtml_anonygento" name="anonygento"></block>
         </reference>
-    </schumacherfm_anonygento_adminhtml_anonygento_index>
+    </adminhtml_anonygento_index>
 </layout>

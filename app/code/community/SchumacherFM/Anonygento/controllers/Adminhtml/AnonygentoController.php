@@ -15,16 +15,17 @@ class SchumacherFM_Anonygento_Adminhtml_AnonygentoController extends Mage_Adminh
             ->_title(Mage::helper('adminhtml')->__('Anonygento'));
 
         $this->loadLayout();
+
         $this->_setActiveMenu('system/tools/anonygento');
         $this->_addBreadcrumb(Mage::helper('schumacherfm_anonygento')->__('Anonygento'),
             Mage::helper('schumacherfm_anonygento')->__('Anonygento'));
 
-        $block = $this->getLayout()->createBlock(
-            'schumacherfm_anonygento/anonygento',
-            'anonygento'
-        );
-
-        $this->getLayout()->getBlock('content')->append($block);
+//        $block = $this->getLayout()->createBlock(
+//            'schumacherfm_anonygento/anonygento',
+//            'anonygento'
+//        );
+//
+//        $this->getLayout()->getBlock('content')->append($block);
 
         $this->renderLayout();
     }
