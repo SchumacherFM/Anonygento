@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    SchumacherFM_Anonygento
+ * @package     SchumacherFM_Anonygento
+ * @author      Cyrill at Schumacher dot fm
+ */
+-->
+<config>
+    <modules>
+        <SchumacherFM_Anonygento>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Customer />
+            </depends>
+        </SchumacherFM_Anonygento>
+    </modules>
+</config>

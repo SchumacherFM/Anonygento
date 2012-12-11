@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    SchumacherFM_Anonygento
+ * @package     SchumacherFM_Anonygento
+ * @author      Cyrill at Schumacher dot fm
+ */
+ -->
+<config>
+    <modules>
+        <SchumacherFM_Anonygento>
+            <version>0.0.1</version>
+        </SchumacherFM_Anonygento>
+    </modules>
+    <global>
+        <models>
+            <schumacherfm_anonygento>
+                <class>SchumacherFM_Anonygento_Model</class>
+            </schumacherfm_anonygento>
+        </models>
+        <blocks>
+            <schumacherfm_anonygento>
+                <class>SchumacherFM_Anonygento_Block</class>
+            </schumacherfm_anonygento>
+        </blocks>
+        <helpers>
+            <schumacherfm_anonygento>
+                <class>SchumacherFM_Anonygento_Helper</class>
+            </schumacherfm_anonygento>
+        </helpers>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <schumacherfm_anonygento after="Mage_Adminhtml">SchumacherFM_Anonygento_Adminhtml</schumacherfm_anonygento>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <schumacherfm_anonygento>
+                    <file>anonygento.xml</file>
+                </schumacherfm_anonygento>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <schumacherfm_anonygento>
+                    <files>
+                        <default>SchumacherFM_Anonygento.csv</default>
+                    </files>
+                </schumacherfm_anonygento>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>
