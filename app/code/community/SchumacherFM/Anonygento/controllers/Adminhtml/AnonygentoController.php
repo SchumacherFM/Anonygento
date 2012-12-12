@@ -15,18 +15,10 @@ class SchumacherFM_Anonygento_Adminhtml_AnonygentoController extends Mage_Adminh
             ->_title(Mage::helper('adminhtml')->__('Anonygento'));
 
         $this->loadLayout();
-
         $this->_setActiveMenu('system/tools/anonygento');
-        $this->_addBreadcrumb(Mage::helper('schumacherfm_anonygento')->__('Anonygento'),
-            Mage::helper('schumacherfm_anonygento')->__('Anonygento'));
 
-//        $block = $this->getLayout()->createBlock(
-//            'schumacherfm_anonygento/anonygento',
-//            'anonygento'
-//        );
-//
-//        $this->getLayout()->getBlock('content')->append($block);
-
+        $abc = Mage::helper('schumacherfm_anonygento')->__('Anonygento');
+        $this->_addBreadcrumb($abc, $abc);
         $this->renderLayout();
     }
 
@@ -37,18 +29,23 @@ class SchumacherFM_Anonygento_Adminhtml_AnonygentoController extends Mage_Adminh
      */
     public function saveAction()
     {
-        try {
-            /** @var $anonygento SchumacherFM_Anonygento_Model_Anonygento */
-            $anonygento = Mage::getModel('schumacherfm_anonygento/anonygento');
-            $anonygento->anonymizeAll();
-            foreach ($anonygento->getResults() as $resultLabel => $resultCount) {
-                Mage::getSingleton('adminhtml/session')->addSuccess(
-                    Mage::helper('schumacherfm_anonygento')->__('Anonymized %s %s.', $resultCount, $resultLabel)
-                );
-            }
-        } catch (Exception $e) {
-            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-        }
+//        try {
+        /** @var $anonygento SchumacherFM_Anonygento_Model_Anonygento */
+        $anonygento = Mage::getModel('schumacherfm_anonygento/anonygento');
+        $exec = $this->getRequest()->getParam('exec');
+
+        Zend_Debug::dump($exec);
+        exit;
+
+//            $anonygento->anonymizeAll();
+//            foreach ($anonygento->getResults() as $resultLabel => $resultCount) {
+//                Mage::getSingleton('adminhtml/session')->addSuccess(
+//                    Mage::helper('schumacherfm_anonygento')->__('Anonymized %s %s.', $resultCount, $resultLabel)
+//                );
+//            }
+//        } catch (Exception $e) {
+//            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+//        }
 
         $this->_redirectReferer();
     }
