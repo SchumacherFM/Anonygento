@@ -29,6 +29,13 @@
             </schumacherfm_anonygento>
         </helpers>
     </global>
+    <default>
+        <schumacherfm_anonygento>
+            <anonymized>
+
+            </anonymized>
+        </schumacherfm_anonygento>
+    </default>
     <admin>
         <routers>
             <adminhtml>

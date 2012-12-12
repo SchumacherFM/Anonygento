@@ -9,7 +9,7 @@
 
 class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
-    protected $_invalidatedTypes = array();
+
 
     /**
      * Class constructor
@@ -21,7 +21,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
         $this->_filterVisibility = false;
         $this->_pagerVisibility = false;
         $this->setTitle($this->__('Anonygento'));
-//        $this->_invalidatedTypes = $this->getControllerActions();
+
     }
 
     /**
@@ -80,7 +80,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'align' => 'left',
             'index' => 'status',
             'type' => 'options',
-            'options' => array(0 => $this->__('Disabled'), 1 => $this->__('Enabled')),
+            'options' => array(0 => $this->__('Sensitive Data!'), 1 => $this->__('Anonymized!')),
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
@@ -89,12 +89,12 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
                 'header' => $this->__('Action'),
                 'width' => '100',
                 'type' => 'action',
-                'getter' => 'getId',
+                'getter' => 'getValue',
                 'actions' => array(
                     array(
-                        'caption' => $this->__('Refresh'),
-                        'url' => array('base' => '*/*/refresh'),
-                        'field' => 'type'
+                        'caption' => $this->__('Anonymize'),
+                        'url' => array('base' => '*/*/save'),
+                        'field' => 'exec'
                     ),
                 ),
                 'filter' => false,
@@ -112,15 +112,10 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
      */
     public function decorateStatus($value, $row, $column, $isExport)
     {
-        $class = '';
-        if (isset($this->_invalidatedTypes[$row->getId()])) {
-            $cell = '<span class="grid-severity-minor"><span>' . $this->__('Invalidated') . '</span></span>';
+        if ($row->getStatus()) {
+            $cell = '<span class="grid-severity-notice"><span>' . $value . '</span></span>';
         } else {
-            if ($row->getStatus()) {
-                $cell = '<span class="grid-severity-notice"><span>' . $value . '</span></span>';
-            } else {
-                $cell = '<span class="grid-severity-critical"><span>' . $value . '</span></span>';
-            }
+            $cell = '<span class="grid-severity-critical"><span>' . $value . '</span></span>';
         }
         return $cell;
     }
@@ -139,9 +134,9 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     /**
      * Add mass-actions to grid
      */
-    protected function _prepareMassaction()
+    protected function XX_prepareMassaction()
     {
-        $this->setMassactionIdField('id');
+        $this->setMassactionIdField('value');
         $this->getMassactionBlock()->setFormFieldName('types');
 
         $modeOptions = Mage::getModel('index/process')->getModesOptions();

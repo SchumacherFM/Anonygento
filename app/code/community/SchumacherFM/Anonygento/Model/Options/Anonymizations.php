@@ -65,9 +65,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         foreach ($this->getAllOptions() as $option) {
 
             $optObj = new Varien_Object();
-
             $optObj->addData($option);
-
+            $optObj->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']));
             $collection->addItem($optObj);
         }
         return $collection;
