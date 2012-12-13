@@ -15,8 +15,12 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
      */
     protected function _counter($model)
     {
-        return (int)Mage::getModel($model)->getCollection()->count();
-
+        /**
+         * don't use count(), otherwise it loads the whole collection
+         * and counts the items
+         * only getSize will perform a 'select count(*)...' query
+         */
+        return Mage::getModel($model)->getCollection()->getSize();
     }
 
     /**

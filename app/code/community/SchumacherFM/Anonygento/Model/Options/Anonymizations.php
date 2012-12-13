@@ -81,9 +81,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
         foreach ($this->getAllOptions() as $option) {
 
-            $optObj = new Varien_Object();
+            $optObj = $this->_array2VO($option);
             $optObj
-                ->addData($option)
                 ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']))
                 ->setRowcount($rowCountModel->{'count' . $option['value']}());
 
@@ -96,16 +95,46 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
     protected function _setAdminCollection()
     {
-        Mage::getSingleton('admin/session')->setAnonymizationsCollection($this->_collection);
+        Mage::getSingleton('admin/session')->setAnonymizationsCollection($this->_collection->toArray());
     }
 
+    /**
+     * @return Varien_Data_Collection
+     */
     protected function _getAdminCollection()
     {
-        return Mage::getSingleton('admin/session')->getAnonymizationsCollection();
+        $return = Mage::getSingleton('admin/session')->getAnonymizationsCollection();
+
+        if (!isset($return['items'])) {
+            throw new Exception('items key is empty for getAnonymizationsCollection');
+        }
+
+        $collection = new Varien_Data_Collection();
+
+        foreach ($return['items'] as $item) {
+            $collection->addItem(
+                $this->_array2VO($item)->setRowcountcached('yes')
+            );
+        }
+        return $collection;
     }
 
+    /**
+     * @return bool
+     */
     protected function _hasAdminCollection()
     {
-        return Mage::getSingleton('admin/session')->hasAnonymizationsCollection();
+        return (boolean)Mage::getSingleton('admin/session')->hasAnonymizationsCollection();
+    }
+
+    /**
+     * @param array $array
+     * @return Varien_Object
+     */
+    protected function _array2VO($array)
+    {
+        $obj = new Varien_Object();
+        $obj->addData($array);
+        return $obj;
     }
 }

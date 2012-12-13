@@ -82,6 +82,13 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'sortable' => false,
         ));
 
+        $this->addColumn('rowcountcached', array(
+            'header' => $this->__('Row count cached?'),
+            'align' => 'left',
+            'index' => 'rowcountcached',
+            'sortable' => false,
+        ));
+
         $this->addColumn('status', array(
             'header' => $this->__('Status'),
             'width' => '120',
