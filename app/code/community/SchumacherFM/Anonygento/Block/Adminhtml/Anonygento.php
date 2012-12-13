@@ -29,29 +29,22 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento extends Mage_Adminhtml_
         $this->_headerText = Mage::helper('core')->__('Anonygento');
         parent::__construct();
         $this->_removeButton('add');
-//        $this->_addButton('flush_magento', array(
-//            'label'     => Mage::helper('core')->__('Anonymize Magento'),
-//            'onclick'   => 'setLocation(\'' . $this->getFlushSystemUrl() .'\')',
-//            'class'     => 'delete',
-//        ));
+
+        $this->_addButton('anonymize_magento', array(
+            'label' => Mage::helper('core')->__('Anonymize Magento'),
+            'onclick' => 'setLocation(\'' . $this->getFlushSystemUrl() . '\')',
+            'class' => 'delete',
+        ));
 
     }
 
     /**
      * Get url for clean cache storage
      */
-//    public function getFlushStorageUrl()
-//    {
-//        return $this->getUrl('*/*/flushAll');
-//    }
-
-    /**
-     * Get url for clean cache storage
-     */
-//    public function getFlushSystemUrl()
-//    {
-//        return $this->getUrl('*/*/flushSystem');
-//    }
+    public function getFlushSystemUrl()
+    {
+        return $this->getUrl('*/*/save');
+    }
 
 
 }

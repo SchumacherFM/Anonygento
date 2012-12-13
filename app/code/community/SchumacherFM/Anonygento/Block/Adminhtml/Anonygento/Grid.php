@@ -74,6 +74,14 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'sortable' => false,
         ));
 
+        $this->addColumn('rowcount', array(
+            'header' => $this->__('Row count'),
+            'align' => 'left',
+            'index' => 'rowcount',
+            'width' => '180',
+            'sortable' => false,
+        ));
+
         $this->addColumn('status', array(
             'header' => $this->__('Status'),
             'width' => '120',
@@ -84,23 +92,23 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
-        $this->addColumn('action',
-            array(
-                'header' => $this->__('Action'),
-                'width' => '100',
-                'type' => 'action',
-                'getter' => 'getValue',
-                'actions' => array(
-                    array(
-                        'caption' => $this->__('Anonymize'),
-                        'url' => array('base' => '*/*/save'),
-                        'field' => 'exec'
-                    ),
-                ),
-                'filter' => false,
-                'sortable' => false,
-                'is_system' => true,
-            ));
+//        $this->addColumn('action',
+//            array(
+//                'header' => $this->__('Action'),
+//                'width' => '100',
+//                'type' => 'action',
+//                'getter' => 'getValue',
+//                'actions' => array(
+//                    array(
+//                        'caption' => $this->__('Anonymize'),
+//                        'url' => array('base' => '*/*/save'),
+//                        'field' => 'exec'
+//                    ),
+//                ),
+//                'filter' => false,
+//                'sortable' => false,
+//                'is_system' => true,
+//            ));
 
         return parent::_prepareColumns();
     }
@@ -134,7 +142,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     /**
      * Add mass-actions to grid
      */
-    protected function XX_prepareMassaction()
+    protected function _XXXprepareMassaction()
     {
         $this->setMassactionIdField('value');
         $this->getMassactionBlock()->setFormFieldName('types');

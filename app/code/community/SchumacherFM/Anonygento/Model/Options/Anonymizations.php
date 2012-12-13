@@ -14,12 +14,12 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
      */
     protected $_options = array(
 
-        'customers',
-        'customersAddresses',
-        'orders',
-        'orderAddresses',
-        'quotes',
-        'quoteAddresses',
+        'customer',
+        'customerAddress',
+        'order',
+        'orderAddress',
+        'quote',
+        'quoteAddress',
         'newsletterSubscribers'
 
     );
@@ -57,20 +57,55 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     }
 
     /**
+     * @var Varien_Data_Collection
+     */
+    protected $_collection = null;
+
+    /**
      * @return Varien_Data_Collection
      */
     public function getCollection()
     {
-        $collection = new Varien_Data_Collection();
+
+        if ($this->_hasAdminCollection()) {
+            return $this->_getAdminCollection();
+        }
+
+        if ($this->_collection !== null) {
+            return $this->_collection;
+        }
+
+        $this->_collection = new Varien_Data_Collection();
+
+        $rowCountModel = Mage::getModel('schumacherfm_anonygento/counter');
+
         foreach ($this->getAllOptions() as $option) {
 
             $optObj = new Varien_Object();
-            $optObj->addData($option);
-            $optObj->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']));
-            $collection->addItem($optObj);
+            $optObj
+                ->addData($option)
+                ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']))
+                ->setRowcount($rowCountModel->{'count' . $option['value']}());
+
+            $this->_collection->addItem($optObj);
         }
-        return $collection;
+        $this->_setAdminCollection();
+        return $this->_collection;
 
     }
 
+    protected function _setAdminCollection()
+    {
+        Mage::getSingleton('admin/session')->setAnonymizationsCollection($this->_collection);
+    }
+
+    protected function _getAdminCollection()
+    {
+        return Mage::getSingleton('admin/session')->getAnonymizationsCollection();
+    }
+
+    protected function _hasAdminCollection()
+    {
+        return Mage::getSingleton('admin/session')->hasAnonymizationsCollection();
+    }
 }
