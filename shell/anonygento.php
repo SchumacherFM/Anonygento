@@ -36,23 +36,72 @@ error_reporting(E_ALL);
  */
 class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 {
+
     /**
      * Run script
      *
      */
     public function run()
     {
-        try {
-            /** @var $anonygento SchumacherFM_Anonygento_Model_Anonygento */
-            $anonygento = Mage::getModel('schumacherfm_anonygento/anonygento');
-            $anonygento->anonymizeAll();
-            foreach ($anonygento->getResults() as $resultLabel => $resultCount) {
-                echo 'Anonymized ' . $resultCount . ' ' . $resultLabel . ".\n";
+
+        $_execCollection = $this->_getAnonymizationCollection();
+
+        foreach ($_execCollection as $anonExec) {
+            $anonModel = $this->_getModel($anonExec->getValue());
+
+            if ($anonModel) {
+                $this->_shellOut('Running ' . $anonExec->getLabel());
+                $progessBar = $this->_getProgressBar($anonExec->getRowcount());
+                $anonModel->setProgressBar($progessBar);
+                $anonModel->run();
+            } else {
+                $this->_shellOut('Model ' . $anonExec->getValue() . ' not found!');
             }
-        } catch (Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+
         }
     }
+
+    /**
+     * @param string $string
+     */
+    protected function _shellOut($string = '')
+    {
+        echo $string . PHP_EOL;
+    }
+
+    /**
+     * @param $type
+     * @return false|Mage_Core_Model_Abstract
+     */
+    protected function _getModel($type)
+    {
+        return Mage::getModel('schumacherfm_anonygento/anonymizations_' . $type);
+    }
+
+    /**
+     * @return object
+     */
+    protected function _getAnonymizationCollection()
+    {
+        return Mage::getModel('schumacherfm_anonygento/options_anonymizations')->getCollection();
+    }
+
+    /**
+     * @param integer $count
+     * @return Zend_ProgressBar
+     */
+    protected function _getProgressBar($count)
+    {
+        $pbAdapter = new Zend_ProgressBar_Adapter_Console(
+            array('elements' =>
+            array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT,
+                Zend_ProgressBar_Adapter_Console::ELEMENT_BAR,
+                Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))
+        );
+
+        return new Zend_ProgressBar($pbAdapter, 0, $count);
+    }
+
 
     /**
      * Retrieve Usage Help Message
@@ -60,12 +109,9 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     public function usageHelp()
     {
-        return <<<USAGE
-Usage:  php -f anonygento.php
-
-USAGE;
+        return 'Usage:  php -f anonygento.php' . PHP_EOL . PHP_EOL;
     }
 }
 
-$shell = new Mage_Shell_Anonygento();
+$shell = new Mage_Shell_Anonygento($argv);
 $shell->run();

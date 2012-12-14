@@ -8,6 +8,11 @@
  */
 abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Varien_Object
 {
+    /**
+     * @var Zend_ProgressBar
+     */
+    protected $_progressBar = null;
+
     protected $_unusedCustomerData = array();
     protected $_anonymizedCustomerIds = array();
     protected $_anonymizedCustomerAddressIds = array();
@@ -19,25 +24,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     const MAX_FAKESTER_REQUEST_COUNT = 100;
 
-//    public function anonymizeAll()
-//    {
-//        /** @var $customers Mage_Customer_Model_Resource_Customer_Collection */
-//        $customers = Mage::getModel('customer/customer')
-//            ->getCollection()
-//            ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix'));
-//
-//        $this->_fetchRandomCustomerData($customers->getSize() * 2);
-//
-//        $this->_anonymizeCustomers($customers);
-//
-//        $this->_anonymizeRemainingNewsletterSubscribers();
-//
-//        $this->_anonymizeRemainingOrders();
-//        $this->_anonymizeRemainingQuotes();
-//
-//        $this->_anonymizeRemainingOrderAddresses();
-//        $this->_anonymizeRemainingQuoteAddresses();
-//    }
 
     /**
      * executes and runs one anonymization process
@@ -46,6 +32,15 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     abstract public function run();
 
+    /**
+     * @param string $type
+     * @return null|array
+     */
+    protected function _getMapping($type)
+    {
+        $mapping = Mage::getModel('schumacherfm_anonygento/anonymizations_mapping');
+        return $mapping->{'get' . ucfirst($type)}();
+    }
 
     /**
      * @return array
@@ -110,19 +105,30 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         return $this->_unusedCustomerData;
     }
 
+
     /**
-     * @return array
+     * @param Zend_ProgressBar $bar
      */
-    public function getResults()
+    public function setProgressBar(Zend_ProgressBar $bar)
     {
-        return array(
-            'Customers' => sizeof($this->_anonymizedCustomerIds),
-            'Customer Addresses' => sizeof($this->_anonymizedCustomerAddressIds),
-            'Orders' => sizeof($this->_anonymizedOrderIds),
-            'Order Addresses' => sizeof($this->_anonymizedOrderAddressIds),
-            'Quotes' => sizeof($this->_anonymizedQuoteIds),
-            'Quote Addresses' => sizeof($this->_anonymizedQuoteAddressIds),
-            'Newsletter Subscribers' => sizeof($this->_anonymizedNewsletterSubscriberIds),
-        );
+        $this->_progressBar = $bar;
+    }
+
+    /**
+     * @return null|Zend_ProgressBar
+     */
+    public function getProgressBar()
+    {
+        return $this->_progressBar;
+    }
+
+    /**
+     * gets the last part of a class name
+     * @return string
+     */
+    protected function _whatsMyName()
+    {
+        $class = explode('_', get_class($this));    // if not $this then
+        return $class[count($class) - 1];           // return is 'Abstract' 8-)
     }
 }

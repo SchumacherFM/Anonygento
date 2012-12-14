@@ -59,7 +59,7 @@ class Anonygento extends Mage_Shell_Abstract
             ->addAttributeToSelect('*');
         $count = $customerCollection->count();
 
-        $progressBar = $this->__getProgressBar($count);
+        $progressBar = $this->_getProgressBar($count);
 
         echo 'Anonymizing customers: ' . PHP_EOL;
         $i = 0;

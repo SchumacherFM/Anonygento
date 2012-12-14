@@ -6,31 +6,51 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @bugs        https://github.com/SchumacherFM/Anonygento/issues
  */
-class SchumacherFM_Anonygento_Model_Anonymizations_Customers extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
+class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
 
     public function run()
     {
+        $customers = $this->_getCollection();
 
-        $this->_anonymizeCustomers();
+        $i = 0;
+        foreach ($customers as $customer) {
+            $this->_anonymizeCustomer($customer);
+            $this->getProgressBar()->update($i);
+            $i++;
+        }
+        $this->getProgressBar()->finish();
 
     }
 
     /**
-     * @param Mage_Customer_Model_Resource_Customer_Collection $customers
+     * @return Mage_Customer_Model_Resource_Customer_Collection
      */
-    protected function _anonymizeCustomers($customers)
+    protected function _getCollection()
     {
-        foreach ($customers as $customer) {
-
-            $this->_anonymizeCustomer($customer);
-        }
+        return Mage::getModel('customer/customer')
+            ->getCollection()
+            ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix'));
     }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
     protected function _anonymizeCustomer($customer)
+    {
+        $mapping = $this->_getMapping( $this->_whatsMyName() );
+
+        Zend_Debug::dump($this->_whatsMyName());
+        Zend_Debug::dump($mapping);
+        exit;
+
+        usleep(800);
+    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function XX_anonymizeCustomerXX($customer)
     {
         $randomData = $this->_getRandomData();
 

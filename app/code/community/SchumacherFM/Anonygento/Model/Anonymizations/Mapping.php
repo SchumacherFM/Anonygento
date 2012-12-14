@@ -12,7 +12,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Mapping extends Varien_Object
     /**
      * @return array
      */
-    public function getCustomerMapping()
+    public function getCustomer()
     {
         return array(
             'prefix' => 'prefix',
@@ -27,7 +27,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Mapping extends Varien_Object
     /**
      * @return array
      */
-    public function getQuoteMapping()
+    public function getQuote()
     {
         return array(
             'customer_prefix' => 'prefix',
@@ -44,7 +44,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Mapping extends Varien_Object
     /**
      * @return array
      */
-    public function getOrderMapping()
+    public function getOrder()
     {
         return array(
             'customer_prefix' => 'prefix',
@@ -61,7 +61,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Mapping extends Varien_Object
     /**
      * @return array
      */
-    public function getAddressMapping()
+    public function getAddress()
     {
         return array(
             'prefix' => 'prefix',
