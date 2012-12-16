@@ -26,4 +26,9 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
         return (int)Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . $type);
     }
 
+    public function getLocaleForData()
+    {
+        return Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . 'locale');
+    }
+
 }

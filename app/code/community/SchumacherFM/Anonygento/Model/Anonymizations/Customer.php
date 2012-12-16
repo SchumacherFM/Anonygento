@@ -13,6 +13,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         $customerCollection = $this->_getCollection();
 
+        $cu = $this->_randomCustomerModel->getCustomer();
+
+        Zend_Debug::dump($cu);
+        exit;
+
         $i = 0;
         foreach ($customerCollection as $customer) {
             $this->_anonymizeCustomer($customer);

@@ -13,6 +13,11 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected $_progressBar = null;
 
+    /**
+     * @var SchumacherFM_Anonygento_Model_Random_Customer
+     */
+    protected $_randomCustomerModel = null;
+
     protected $_unusedCustomerData = array();
     protected $_anonymizedCustomerIds = array();
     protected $_anonymizedCustomerAddressIds = array();
@@ -24,6 +29,9 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     const MAX_FAKESTER_REQUEST_COUNT = 100;
 
+    protected function _construct(){
+        $this->_randomCustomerModel = Mage::getModel('schumacherfm_anonygento/random_customer');
+    }
 
     /**
      * executes and runs one anonymization process
