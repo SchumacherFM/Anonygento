@@ -10,10 +10,8 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_ANONYMIZED = 'schumacherfm_anonygento/anonymized/';
 
-    const OFFLINE_FILE = 'fakester_offline.json';
-
     /**
-     * @param string $type
+     * @param string  $type
      * @param integer $value
      */
     public function setAnonymizations($type, $value)
@@ -28,13 +26,4 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
         return (int)Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . $type);
     }
 
-    /**
-     * returns json data for offline development
-     *
-     * @return array
-     */
-    public function getOfflineFakester()
-    {
-        return implode('', file('./' . self::OFFLINE_FILE));
-    }
 }

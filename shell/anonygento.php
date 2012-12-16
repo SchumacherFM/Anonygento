@@ -51,7 +51,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
             if ($anonModel) {
                 $this->_shellOut('Running ' . $anonExec->getLabel());
-                $progessBar = $this->_getProgressBar($anonExec->getRowcount());
+                $progessBar = $this->_getProgressBar($anonExec->getUnanonymized());
                 $anonModel->setProgressBar($progessBar);
                 $anonModel->run();
             } else {

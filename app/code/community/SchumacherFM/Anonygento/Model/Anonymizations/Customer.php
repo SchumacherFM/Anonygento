@@ -11,10 +11,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 
     public function run()
     {
-        $customers = $this->_getCollection();
+        $customerCollection = $this->_getCollection();
 
         $i = 0;
-        foreach ($customers as $customer) {
+        foreach ($customerCollection as $customer) {
             $this->_anonymizeCustomer($customer);
             $this->getProgressBar()->update($i);
             $i++;
@@ -28,9 +28,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _getCollection()
     {
-        return Mage::getModel('customer/customer')
+        $collection = Mage::getModel('customer/customer')
             ->getCollection()
             ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix'));
+        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
+
+        $collection->getSelect()->where('anonymized=0');
+
+        return $collection;
     }
 
     /**
@@ -38,11 +43,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeCustomer($customer)
     {
-        $mapping = $this->_getMapping( $this->_whatsMyName() );
 
-        Zend_Debug::dump($this->_whatsMyName());
-        Zend_Debug::dump($mapping);
-        exit;
+
+//        Zend_Debug::dump($this->_whatsMyName());
+//        Zend_Debug::dump($mapping);
+//        exit;
 
         usleep(800);
     }
