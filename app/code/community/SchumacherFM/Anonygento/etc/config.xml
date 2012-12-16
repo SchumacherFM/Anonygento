@@ -28,6 +28,17 @@
                 <class>SchumacherFM_Anonygento_Helper</class>
             </schumacherfm_anonygento>
         </helpers>
+
+        <resources>
+            <schumacherfm_anonygento_setup>
+                <setup>
+                    <module>SchumacherFM_Anonygento</module>
+                    <class>SchumacherFM_Anonygento_Model_Resource_Setup</class>
+                </setup>
+            </schumacherfm_anonygento_setup>
+        </resources>
+
+
     </global>
     <default>
         <schumacherfm_anonygento>

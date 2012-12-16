@@ -14,14 +14,21 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
      */
     protected $_options = array(
 
-        'customer',
-        'customerAddress',
-        'order',
-        'orderAddress',
-        'quote',
-        'quoteAddress',
-        'newsletterSubscribers'
-
+        // internalKey => modelname
+        'customer'             => 'customer/customer',
+        'customerAddress'      => 'customer/address',
+        'order'                => 'sales/order',
+        'orderAddress'         => 'sales/order_address',
+        'orderGrid'            => 'sales/order_grid_collection',
+        'orderPayment'         => 'sales/order_payment',
+        'quote'                => 'sales/quote',
+        'quoteAddress'         => 'sales/quote_address',
+        'quotePayment'         => 'sales/quote_payment',
+        'creditmemoGrid'       => 'sales/order_creditmemo_grid_collection',
+        'invoiceGrid'          => 'sales/order_invoice_grid_collection',
+        'shipmentGrid'         => 'sales/order_shipment_grid_collection',
+        'newsletterSubscriber' => 'newsletter/subscriber',
+        'giftmessageMessage'   => 'giftmessage/message',
     );
 
     /**
@@ -32,10 +39,11 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     public function getAllOptions()
     {
         $return = array();
-        foreach ($this->_options as $opt) {
+        foreach ($this->_options as $opt => $modelName) {
             $return[] = array(
                 'label' => Mage::helper('schumacherfm_anonygento')->__($opt),
-                'value' => $opt
+                'value' => $opt,
+                'model' => $modelName
             );
         }
 
@@ -50,7 +58,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     public function getOptionArray()
     {
         $_options = array();
-        foreach ($this->getAllOptions() as $option) {
+        foreach ($this->getAllOptions() as $option => $modelName) {
             $_options[$option['value']] = $option['label'];
         }
         return $_options;
@@ -84,7 +92,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
             $optObj = $this->_array2VO($option);
             $optObj
                 ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']))
-                ->setRowcount($rowCountModel->{'count' . $option['value']}());
+                ->setUnanonymized($rowCountModel->unAnonymized($option['model']))
+                ->setAnonymized($rowCountModel->anonymized($option['model']));
 
             $this->_collection->addItem($optObj);
         }
@@ -129,6 +138,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
     /**
      * @param array $array
+     *
      * @return Varien_Object
      */
     protected function _array2VO($array)

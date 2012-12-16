@@ -53,7 +53,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
         $baseUrl = $this->getUrl();
         $this->addColumn('value', array(
             'header' => $this->__('Value'),
-            'width' => '180',
             'align' => 'left',
             'index' => 'value',
             'sortable' => false,
@@ -70,15 +69,20 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'header' => $this->__('Label'),
             'align' => 'left',
             'index' => 'label',
-            'width' => '180',
             'sortable' => false,
         ));
 
-        $this->addColumn('rowcount', array(
-            'header' => $this->__('Row count'),
+        $this->addColumn('unanonymized', array(
+            'header' => $this->__('Unanonymized'),
             'align' => 'left',
-            'index' => 'rowcount',
-            'width' => '180',
+            'index' => 'unanonymized',
+            'sortable' => false,
+        ));
+
+        $this->addColumn('anonymized', array(
+            'header' => $this->__('Anonymized'),
+            'align' => 'left',
+            'index' => 'anonymized',
             'sortable' => false,
         ));
 
@@ -91,7 +95,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
 
         $this->addColumn('status', array(
             'header' => $this->__('Status'),
-            'width' => '120',
             'align' => 'left',
             'index' => 'status',
             'type' => 'options',
@@ -99,23 +102,22 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
-//        $this->addColumn('action',
-//            array(
-//                'header' => $this->__('Action'),
-//                'width' => '100',
-//                'type' => 'action',
-//                'getter' => 'getValue',
-//                'actions' => array(
-//                    array(
-//                        'caption' => $this->__('Anonymize'),
-//                        'url' => array('base' => '*/*/save'),
-//                        'field' => 'exec'
-//                    ),
-//                ),
-//                'filter' => false,
-//                'sortable' => false,
-//                'is_system' => true,
-//            ));
+        $this->addColumn('action',
+            array(
+                'header' => $this->__('View data'),
+                'type' => 'action',
+                'getter' => 'getValue',
+                'actions' => array(
+                    array(
+                        'caption' => $this->__('View'),
+                        'url' => array('base' => '*/*/view'),
+                        'field' => 'exec'
+                    ),
+                ),
+                'filter' => false,
+                'sortable' => false,
+                'is_system' => true,
+            ));
 
         return parent::_prepareColumns();
     }
