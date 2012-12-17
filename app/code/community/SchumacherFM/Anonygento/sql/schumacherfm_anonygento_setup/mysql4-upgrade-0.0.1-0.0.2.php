@@ -10,5 +10,13 @@
 $installer = $this;
 $installer->startSetup();
 
+// Add reset password link token creation date attribute
+$installer->addAttribute('customer', 'anonymized', array(
+    'type'     => 'static',
+    'input'    => 'boolean',
+    'backend'  => 'customer/attribute_backend_data_boolean',
+    'visible'  => TRUE,
+    'required' => FALSE
+));
 
 $installer->endSetup();

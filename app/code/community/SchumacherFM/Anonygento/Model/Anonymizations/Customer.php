@@ -13,11 +13,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         $customerCollection = $this->_getCollection();
 
-        $cu = $this->_randomCustomerModel->getCustomer();
-
-        Zend_Debug::dump($cu);
-        exit;
-
         $i = 0;
         foreach ($customerCollection as $customer) {
             $this->_anonymizeCustomer($customer);
@@ -29,32 +24,22 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     }
 
     /**
-     * @return Mage_Customer_Model_Resource_Customer_Collection
-     */
-    protected function _getCollection()
-    {
-        $collection = Mage::getModel('customer/customer')
-            ->getCollection()
-            ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix'));
-        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
-
-        $collection->getSelect()->where('anonymized=0');
-
-        return $collection;
-    }
-
-    /**
      * @param Mage_Customer_Model_Customer $customer
      */
     protected function _anonymizeCustomer($customer)
     {
 
+        $customer = $this->_randomCustomerModel->getCustomer($customer);
+        $customer->save();
 
-//        Zend_Debug::dump($this->_whatsMyName());
-//        Zend_Debug::dump($mapping);
+        /**
+         * @todo now find all entities where a customer id is
+         */
+//
+//        Zend_Debug::dump($cu);
 //        exit;
 
-        usleep(800);
+
     }
 
     /**
@@ -91,4 +76,18 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         $this->_anonymizeCustomerAddresses($customer, $randomData);
     }
 
+    /**
+     * @return Mage_Customer_Model_Resource_Customer_Collection
+     */
+    protected function _getCollection()
+    {
+        $collection = Mage::getModel('customer/customer')
+            ->getCollection()
+            ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix'));
+        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
+
+        $collection->getSelect()->where('anonymized=0');
+
+        return $collection;
+    }
 }

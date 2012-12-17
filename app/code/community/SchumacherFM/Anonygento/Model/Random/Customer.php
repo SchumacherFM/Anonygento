@@ -9,6 +9,11 @@
 class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
 {
     /**
+     * @todo these three constants should be defined somewhere else
+     *      maybe via backend settings
+     */
+
+    /**
      * path to csv data dir, no slash at the end
      */
     const DATA_PATH = 'app/code/community/SchumacherFM/Anonygento/data';
@@ -40,9 +45,10 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
 
     protected $_street = array();
 
-    protected $_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    protected $_prefixMale = array();
+    protected $_prefixFemale = array();
 
-    protected $_namesLength = array();
+//    protected $_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * @var Varien_Object
@@ -60,12 +66,8 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
         $this->_lastname        = $this->_loadFile('Lastname');
         $this->_email           = $this->_loadFile('Email');
         $this->_street          = $this->_loadFile('Street');
-
-//        $this->_namesLength['firstnameFemale'] = count($this->_firstnameFemale);
-//        $this->_namesLength['firstnameMale']   = count($this->_firstnameMale);
-//        $this->_namesLength['lastnames']       = count($this->_lastname);
-//        $this->_namesLength['street']          = count($this->_street);
-//        $this->_namesLength['email']           = count($this->_email);
+        $this->_prefixMale      = $this->_loadFile('PrefixMale');
+        $this->_prefixFemale    = $this->_loadFile('PrefixFemale');
 
     }
 
@@ -84,45 +86,69 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
             $this->_currentCustomer = $customer;
         }
 
-        $this->_currentCustomer->setPrefix($this->_getCustomerPrefixString());
-        $this->_currentCustomer->setFirstname($this->_getCustomerFirstName());
-        $this->_currentCustomer->setMiddlename($this->_getCustomerFirstName());
-        $this->_currentCustomer->setLastname($this->_getCustomerLastName());
-        $this->_currentCustomer->setSuffix('');
-        $this->_currentCustomer->setDob($this->_getCustomerDob());
+        $data = array(
+            'prefix'     => $this->_getCustomerPrefixString(),
+            'firstname'  => $this->_getCustomerFirstName(),
+            'middlename' => $this->_getCustomerFirstName(),
+            'lastname'   => $this->_getCustomerLastName(),
+            'suffix'     => '',
+            'company'    => '',
+            'taxvat'     => '',
+            'dob'        => $this->_getCustomerDob(),
+            'street'     => $this->_getCustomerStreet(),
+            'telephone'  => $this->_getCustomerTelephone(),
+            'fax'        => $this->_getCustomerTelephone(),
+            'remote_ip'  => $this->_getCustomerIp(),
+            'anonymized'  => 1,
+        );
 
-//            (
-//            'taxvat',
-//            'remote_ip',
-//            'company'   => 'bs',
-//            'street'    => 'street_address',
-//            'telephone' => 'zip_code',
-//            'fax'       => '',
+        $this->_currentCustomer->addData($data);
 
         $this->_getRandEmail();
 
         return $this->_currentCustomer;
     }
 
+    protected function _getCustomerIp()
+    {
+        $ip = array(
+            mt_rand(1, 255),
+            mt_rand(1, 255),
+            mt_rand(1, 255),
+            mt_rand(1, 255),
+        );
+        return implode('.', $ip);
+    }
+
     protected function _getCustomerStreet()
     {
-        return $this->_getRandomString(11) . ' ' . mt_rand(1, 100);
+        return $this->_street[mt_rand() % count($this->_street)] . ' ' . mt_rand(1, 100);
     }
 
     protected function _getCustomerTelephone()
     {
-        return mt_rand(100000, 999999);
+        return mt_rand(100000000, 999999999);
     }
 
     protected function _getCustomerDob()
     {
-        return date('Y-m-d H:i:s', mt_rand(0, time() - (3600 * 24 * 360 * 18)));
+        // @todo maybe use Zend_Date
+        $date = array(
+            mt_rand(1950, date('Y') - 21),
+            str_pad(mt_rand(1, 12), 2, '0', STR_PAD_LEFT),
+            str_pad(mt_rand(1, 30), 2, '0', STR_PAD_LEFT),
+        );
+
+        return implode('-', $date);
     }
 
     protected function _getCustomerPrefixString()
     {
-        $prefix = array('Frau', 'Herr');
-        return $prefix[$this->getCustomerPrefix()];
+        $p = $this->getCustomerPrefix() === 0
+            ? $this->_prefixFemale[mt_rand() % count($this->_prefixFemale)]
+            : $this->_prefixMale[mt_rand() % count($this->_prefixMale)];
+
+        return $p;
     }
 
     protected function _getCustomerFirstName()
@@ -145,9 +171,8 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
         $name = $this->_currentCustomer->getFirstname() . '.' .
             $this->_currentCustomer->getLastname() . '-' . $this->_currentCustomer->getEntityId();
 
-        $email = strtolower($name) . '@' . $this->_email[mt_rand() % count($this->_email)];
-
-        // @todo remove german umlauts with magentos catalog url helper func
+        $email = Mage::helper('catalog/product_url')->format($name) . '@' . $this->_email[mt_rand() % count($this->_email)];
+        $email = strtolower($email);
 
         $this->_currentCustomer->setEmail($email);
     }
