@@ -24,8 +24,11 @@ $entities = array(
     $installer->getTable('sales/quote_address'),
     $installer->getTable('sales/quote_payment'),
 
+    $installer->getTable('sales/creditmemo'),
     $installer->getTable('sales/creditmemo_grid'),
+    $installer->getTable('sales/invoice'),
     $installer->getTable('sales/invoice_grid'),
+    $installer->getTable('sales/shipment'),
     $installer->getTable('sales/shipment_grid'),
 
     $installer->getTable('newsletter/subscriber'),
@@ -37,23 +40,61 @@ $entities = array(
      * enterprise_giftregistry_entity
      * enterprise_rma
      * enterprise_rma_grid
-     * enterprise_sales_creditmemo_grid_archive
-     * enterprise_sales_invoice_grid_archive
-     * enterprise_sales_order_grid_archive
-     * enterprise_sales_shipment_grid_archive
      * enterprise_scheduled_operations ?
+     *
      */
 );
 
-foreach ($entities as $name) {
-
-    /**
-     * instead of adding it as an attribute we directly altering the main table
-     */
-    if ($installer->tableExists($name)) {
-        $installer->run('ALTER TABLE  ' . $name . ' ADD `anonymized` tinyint(1) not null default 0;');
-    }
+if ($this->isEnterpriseEdition()) {
+    $entities[] = $installer->getTable('enterprise_salesarchive/order_grid');
+    $entities[] = $installer->getTable('enterprise_salesarchive/creditmemo_grid');
+    $entities[] = $installer->getTable('enterprise_salesarchive/invoice_grid');
+    $entities[] = $installer->getTable('enterprise_salesarchive/shipment_grid');
 }
 
+//Zend_Debug::dump($entities);
+//exit;
+
+foreach ($entities as $tableName) {
+
+    $installer->getConnection()
+        ->addColumn($tableName, 'anonymized', array(
+            'type'    => Varien_Db_Ddl_Table::TYPE_BOOLEAN,
+            'comment' => 'Is anonymized',
+        ));
+
+}
+
+
+
+
+$attributeEntities = array(
+    'customer',
+    'customer_address',
+    'creditmemo',
+    'order',
+    'invoice',
+    'shipment',
+
+);
+foreach ($attributeEntities as $name) {
+
+    $installer->addAttribute($name, 'anonymized', array(
+        'type'     => 'static',
+        'default'  => 0,
+        'input'    => 'boolean',
+        'backend'  => 'customer/attribute_backend_data_boolean',
+        'visible'  => TRUE,
+        'required' => FALSE,
+        'label'    => 'Is anonymized'
+    ));
+}
+
+/*
+ * fill values
+ *
+ * insert into `customer_entity_int` (entity_type_id,attribute_id,entity_id,value)
+ SELECT entity_type_id,206,entity_id,0 FROM `customer_entity`
+ * */
 
 $installer->endSetup();

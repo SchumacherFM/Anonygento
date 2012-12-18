@@ -16,19 +16,19 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
         // internalKey => modelname
         'customer'             => 'customer/customer',
-        'customerAddress'      => 'customer/address',
-        'order'                => 'sales/order',
-        'orderAddress'         => 'sales/order_address',
-        'orderGrid'            => 'sales/order_grid_collection',
-        'orderPayment'         => 'sales/order_payment',
-        'quote'                => 'sales/quote',
-        'quoteAddress'         => 'sales/quote_address',
-        'quotePayment'         => 'sales/quote_payment',
-        'creditmemoGrid'       => 'sales/order_creditmemo_grid_collection',
-        'invoiceGrid'          => 'sales/order_invoice_grid_collection',
-        'shipmentGrid'         => 'sales/order_shipment_grid_collection',
-        'newsletterSubscriber' => 'newsletter/subscriber',
-        'giftmessageMessage'   => 'giftmessage/message',
+//        'customerAddress'      => 'customer/address',
+//        'order'                => 'sales/order',
+//        'orderAddress'         => 'sales/order_address',
+//        'orderGrid'            => 'sales/order_grid_collection',
+//        'orderPayment'         => 'sales/order_payment',
+//        'quote'                => 'sales/quote',
+//        'quoteAddress'         => 'sales/quote_address',
+//        'quotePayment'         => 'sales/quote_payment',
+//        'creditmemoGrid'       => 'sales/order_creditmemo_grid_collection',
+//        'invoiceGrid'          => 'sales/order_invoice_grid_collection',
+//        'shipmentGrid'         => 'sales/order_shipment_grid_collection',
+//        'newsletterSubscriber' => 'newsletter/subscriber',
+//        'giftmessageMessage'   => 'giftmessage/message',
     );
 
     /**
@@ -76,7 +76,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     {
 
         if ($this->_hasAdminCollection()) {
-            return $this->_getAdminCollection();
+//            return $this->_getAdminCollection();
         }
 
         if ($this->_collection !== null) {

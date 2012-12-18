@@ -63,15 +63,26 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
         if (!$model) {
             return -1;
         }
+        /* @var $model Mage_Customer_Model_Resource_Customer_Collection */
 
         /**
          * don't use count(), otherwise it loads the whole collection
          * and counts the items
          * only getSize will perform a 'select count(*)...' query
          */
-//        return $model->getSize();
+        Zend_Debug::dump(get_class($model));
+        $model->addStaticField('anonymized');
+        $model->addAttributeToFilter('anonymized', array('eq'=>0));
+//        $model->addAttributeToFilter('anonymized',null);
+//        Zend_Debug::dump($model->getSelect() );
+        $return = $model->getSize();
 
-        return $this->_sqlWhereAndExec($model, 0);
+//        Zend_Debug::dump($return);
+//        exit;
+
+        return $model->getSize();
+
+//        return $this->_sqlWhereAndExec($model, 0);
 
     }
 
@@ -86,8 +97,9 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
         if (!$model) {
             return -1;
         }
+        $model->addAttributeToFilter('anonymized', 1);
 
-        return $this->_sqlWhereAndExec($model, 1);
+//        return $this->_sqlWhereAndExec($model, 1);
 
     }
 
