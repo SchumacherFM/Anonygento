@@ -32,4 +32,20 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
 
     }
 
+    /**
+     * key = from customer model
+     * value = newsletter subscriber column name
+     *
+     * @return array
+     */
+    public static function getNewsletterSubscriber()
+    {
+
+        return array(
+            'anonymized' => 'anonymized',
+            'email'      => 'subscriber_email',
+        );
+
+    }
+
 }

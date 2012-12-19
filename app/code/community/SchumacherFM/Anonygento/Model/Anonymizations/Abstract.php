@@ -31,6 +31,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     protected function _construct()
     {
+        parent::_construct();
         $this->_randomCustomerModel = Mage::getModel('schumacherfm_anonygento/random_customer');
     }
 
@@ -68,6 +69,24 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
+     * @param array $addAttributeToSelect
+     * @param integer $isAnonymized
+     *
+     * @return Mage_Customer_Model_Resource_Customer_Collection
+     */
+    protected function _getCustomerCollection($addAttributeToSelect = array(), $isAnonymized = 0)
+    {
+        $collection = Mage::getModel('customer/customer')
+            ->getCollection()
+            ->addAttributeToSelect($addAttributeToSelect);
+        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
+
+        $this->_collectionAddStaticAnonymized($collection, $isAnonymized);
+
+        return $collection;
+    }
+
+    /**
      * copies the data from obj to another using a mapping array
      *
      * @param object  $fromObj
@@ -87,6 +106,16 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $toObj->setData($newKey, $data);
         }
 
+    }
+
+    /**
+     * @param object  $collection
+     * @param integer $isAnonymized
+     */
+    protected function _collectionAddStaticAnonymized($collection, $isAnonymized = 0)
+    {
+        $collection->addStaticField('anonymized');
+        $collection->addAttributeToFilter('anonymized', $isAnonymized);
     }
 
 }

@@ -50,7 +50,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
             $anonModel = $this->_getModel($anonExec->getValue());
 
             if ($anonModel) {
-                $this->_shellOut('Running ' . $anonExec->getLabel());
+                $this->_shellOut('Running ' . $anonExec->getLabel() . ', work load: ' . $anonExec->getUnanonymized() . ' rows');
                 $progessBar = $this->_getProgressBar($anonExec->getUnanonymized());
                 $anonModel->setProgressBar($progessBar);
                 $anonModel->run();
@@ -71,6 +71,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
     /**
      * @param $type
+     *
      * @return false|Mage_Core_Model_Abstract
      */
     protected function _getModel($type)
@@ -88,20 +89,22 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
     /**
      * @param integer $count
+     *
      * @return Zend_ProgressBar
      */
     protected function _getProgressBar($count)
     {
         $pbAdapter = new Zend_ProgressBar_Adapter_Console(
             array('elements' =>
-            array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT,
-                Zend_ProgressBar_Adapter_Console::ELEMENT_BAR,
-                Zend_ProgressBar_Adapter_Console::ELEMENT_ETA))
+                  array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT,
+                      Zend_ProgressBar_Adapter_Console::ELEMENT_BAR,
+                      Zend_ProgressBar_Adapter_Console::ELEMENT_ETA
+                  )
+            )
         );
 
         return new Zend_ProgressBar($pbAdapter, 0, $count);
     }
-
 
     /**
      * Retrieve Usage Help Message
