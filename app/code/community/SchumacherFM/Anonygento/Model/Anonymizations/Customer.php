@@ -32,6 +32,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         $customer = $this->_randomCustomerModel->getCustomer($customer);
         $customer->save();
 
+        // customer address
+        $this->_anonymizeCustomerAddresses($customer);
+
         /**
          * @todo now find all entities where a customer id is
          */
@@ -39,6 +42,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 //        Zend_Debug::dump($cu);
 //        exit;
 
+    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function _anonymizeCustomerAddresses($customer){
+        $addressCollection = $customer->getAddressesCollection();
+        // if count 1 then use current model and if > 1 generate new addresses
+        // if 0 do nothing
 
     }
 
@@ -86,7 +98,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
             ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix'));
         /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
 
-        $collection->getSelect()->where('anonymized=0');
+        $collection->addStaticField('anonymized');
+        $collection->addAttributeToFilter('anonymized', 0);
 
         return $collection;
     }
