@@ -9,6 +9,8 @@
 
 class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 {
+    public $useCache = 0;
+
     /**
      * @var array
      */
@@ -75,8 +77,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     public function getCollection()
     {
 
-        if ($this->_hasAdminCollection()) {
-//            return $this->_getAdminCollection();
+        if ($this->_hasAdminCollection() && $this->useCache === 1) {
+            return $this->_getAdminCollection();
         }
 
         if ($this->_collection !== null) {
@@ -97,7 +99,10 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
             $this->_collection->addItem($optObj);
         }
-        $this->_setAdminCollection();
+
+        if ($this->useCache === 1) {
+            $this->_setAdminCollection();
+        }
         return $this->_collection;
 
     }
