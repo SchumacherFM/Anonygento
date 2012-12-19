@@ -46,6 +46,9 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
         $_execCollection = $this->_getAnonymizationCollection();
 
+Zend_Debug::dump($_execCollection);
+exit;
+
         foreach ($_execCollection as $anonExec) {
             $anonModel = $this->_getModel($anonExec->getValue());
 

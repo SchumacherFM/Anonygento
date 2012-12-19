@@ -13,6 +13,13 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
      */
 
     /**
+     * current collection holder
+     *
+     * @var null
+     */
+    protected $_currentCollection = null;
+
+    /**
      * @var null
      */
     protected $_readConnection = null;
@@ -24,11 +31,13 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
     }
 
     /**
+     * gets the collection
+     *
      * @param $modelName
      *
      * @return Object
      */
-    protected function  _getModel($modelName)
+    protected function  _getCollection($modelName)
     {
         if (stristr($modelName, '_collection') !== FALSE) {
             return Mage::getResourceModel($modelName);
@@ -39,16 +48,46 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
     }
 
     /**
-     * @param     Mage_Core_Model ...    $model
+     * @param obj $model
      * @param int $anonymized
+     *
+     * @return int
      */
-    protected function  _sqlWhereAndExec($model, $anonymized = 0)
+    protected function  _sqlWhereAndExec($anonymized = 0)
     {
-        $countSql = $model->getSelectCountSql();
+        $anonymized = (int)$anonymized;
+        $countSql = $this->_currentCollection->getSelectCountSql();
         /* @var $countSql Varien_Db_Select */
         $countSql->where('anonymized=' . $anonymized);
         $result = $this->_readConnection->fetchOne($countSql);
         return (int)$result;
+
+    }
+
+    /**
+     * @param obj $model
+     * @param int $anonymized
+     *
+     * @return int
+     */
+    protected function  _addStatic($anonymized = 0)
+    {
+        /**
+         * don't use count(), otherwise it loads the whole collection
+         * and counts the items
+         * only getSize will perform a 'select count(*)...' query
+         */
+        $this->_currentCollection->addStaticField('anonymized');
+        $this->_currentCollection->addAttributeToFilter('anonymized', $anonymized);
+        return (int)$this->_currentCollection->getSize();
+
+    }
+
+    protected function _chooseMethod($anonymized = 0)
+    {
+
+        $method = method_exists($this->_currentCollection, 'addStaticField') ? '_addStatic' : '_sqlWhereAndExec';
+        return $this->$method($anonymized);
 
     }
 
@@ -59,31 +98,13 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
      */
     public function unAnonymized($model)
     {
-        $model = $this->_getModel($model);
-        if (!$model) {
+        $this->_currentCollection = $this->_getCollection($model);
+        if (!$this->_currentCollection) {
             return -1;
         }
         /* @var $model Mage_Customer_Model_Resource_Customer_Collection */
 
-        /**
-         * don't use count(), otherwise it loads the whole collection
-         * and counts the items
-         * only getSize will perform a 'select count(*)...' query
-         */
-        Zend_Debug::dump(get_class($model));
-        $model->addStaticField('anonymized');
-        $model->addAttributeToFilter('anonymized', array('eq'=>0));
-//        $model->addAttributeToFilter('anonymized',null);
-//        Zend_Debug::dump($model->getSelect() );
-        $return = $model->getSize();
-
-//        Zend_Debug::dump($return);
-//        exit;
-
-        return $model->getSize();
-
-//        return $this->_sqlWhereAndExec($model, 0);
-
+        return $this->_chooseMethod(0);
     }
 
     /**
@@ -93,13 +114,12 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
      */
     public function anonymized($model)
     {
-        $model = $this->_getModel($model);
-        if (!$model) {
+        $this->_currentCollection = $this->_getCollection($model);
+        if (!$this->_currentCollection) {
             return -1;
         }
-        $model->addAttributeToFilter('anonymized', 1);
 
-//        return $this->_sqlWhereAndExec($model, 1);
+        return $this->_chooseMethod(1);
 
     }
 

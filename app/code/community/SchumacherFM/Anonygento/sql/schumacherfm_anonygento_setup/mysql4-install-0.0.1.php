@@ -11,29 +11,29 @@ $installer = $this;
 
 $installer->startSetup();
 
-$entities = array(
-    $installer->getTable('customer/entity'),
-    $installer->getTable('customer/address_entity'),
+$entityTableNames = array(
+    'customer/entity',
+    'customer/address_entity',
 
-    $installer->getTable('sales/order'),
-    $installer->getTable('sales/order_address'),
-    $installer->getTable('sales/order_grid'),
-    $installer->getTable('sales/order_payment'),
+    'sales/order',
+    'sales/order_address',
+    'sales/order_grid',
+    'sales/order_payment',
 
-    $installer->getTable('sales/quote'),
-    $installer->getTable('sales/quote_address'),
-    $installer->getTable('sales/quote_payment'),
+    'sales/quote',
+    'sales/quote_address',
+    'sales/quote_payment',
 
-    $installer->getTable('sales/creditmemo'),
-    $installer->getTable('sales/creditmemo_grid'),
-    $installer->getTable('sales/invoice'),
-    $installer->getTable('sales/invoice_grid'),
-    $installer->getTable('sales/shipment'),
-    $installer->getTable('sales/shipment_grid'),
+    'sales/creditmemo',
+    'sales/creditmemo_grid',
+    'sales/invoice',
+    'sales/invoice_grid',
+    'sales/shipment',
+    'sales/shipment_grid',
 
-    $installer->getTable('newsletter/subscriber'),
+    'newsletter/subscriber',
 
-    $installer->getTable('giftmessage/message'),
+    'giftmessage/message',
 
     /*
      * @todo add tables from enterprise
@@ -46,29 +46,22 @@ $entities = array(
 );
 
 if ($this->isEnterpriseEdition()) {
-    $entities[] = $installer->getTable('enterprise_salesarchive/order_grid');
-    $entities[] = $installer->getTable('enterprise_salesarchive/creditmemo_grid');
-    $entities[] = $installer->getTable('enterprise_salesarchive/invoice_grid');
-    $entities[] = $installer->getTable('enterprise_salesarchive/shipment_grid');
-}
-
-//Zend_Debug::dump($entities);
-//exit;
-
-foreach ($entities as $tableName) {
-
-    $installer->getConnection()
-        ->addColumn($tableName, 'anonymized', array(
-            'type'    => Varien_Db_Ddl_Table::TYPE_BOOLEAN,
-            'comment' => 'Is anonymized',
-        ));
-
+    $entityTableNames[] = 'enterprise_salesarchive/order_grid';
+    $entityTableNames[] = 'enterprise_salesarchive/creditmemo_grid';
+    $entityTableNames[] = 'enterprise_salesarchive/invoice_grid';
+    $entityTableNames[] = 'enterprise_salesarchive/shipment_grid';
 }
 
 
+foreach ($entityTableNames as $tableName) {
 
+    $installer
+        ->getConnection()
+        ->addColumn($installer->getTable($tableName), 'anonymized', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0');
 
-$attributeEntities = array(
+}
+
+$attributeEavEntities = array(
     'customer',
     'customer_address',
     'creditmemo',
@@ -77,17 +70,26 @@ $attributeEntities = array(
     'shipment',
 
 );
-foreach ($attributeEntities as $name) {
+foreach ($attributeEavEntities as $name) {
+
+    $installer->removeAttribute($name, 'anonymized');
 
     $installer->addAttribute($name, 'anonymized', array(
-        'type'     => 'static',
-        'default'  => 0,
-        'input'    => 'boolean',
-        'backend'  => 'customer/attribute_backend_data_boolean',
-        'visible'  => TRUE,
-        'required' => FALSE,
-        'label'    => 'Is anonymized'
+        'type'         => 'static',
+        'group'        => 'General',
+        'label'        => 'Is anonymized',
+        'is_visible'   => TRUE,
+        'visible'      => TRUE,
+        'default'      => 0,
+        'user_defined' => FALSE,
+        'input'        => 'boolean',
+        'backend'      => 'customer/attribute_backend_data_boolean',
+        'required'     => FALSE,
+        'is_system'    => TRUE,
+        'position'     => 200,
+        'sort_order'   => 200,
     ));
+
 }
 
 /*
