@@ -47,10 +47,27 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeCustomerAddresses($customer){
+    protected function _anonymizeCustomerAddresses($customer)
+    {
         $addressCollection = $customer->getAddressesCollection();
-        // if count 1 then use current model and if > 1 generate new addresses
-        // if 0 do nothing
+        /* @var $addressCollection Mage_Customer_Model_Resource_Address_Collection */
+
+        $size           = (int)$addressCollection->getSize();
+        $addressMapping = SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress();
+
+        if ($size === 1) {
+
+            $address = $addressCollection->getFirstItem();
+            $this->_copyObjectData($customer, $address, $addressMapping);
+            $address->save();
+
+        } elseif ($size > 1) {
+
+            foreach ($addressCollection as $address) {
+                $this->_copyObjectData($customer, $address, $addressMapping);
+                $address->save();
+            }
+        }
 
     }
 

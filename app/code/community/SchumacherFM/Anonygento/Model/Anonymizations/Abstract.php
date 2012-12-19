@@ -18,18 +18,19 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected $_randomCustomerModel = null;
 
-    protected $_unusedCustomerData = array();
-    protected $_anonymizedCustomerIds = array();
-    protected $_anonymizedCustomerAddressIds = array();
-    protected $_anonymizedOrderIds = array();
-    protected $_anonymizedOrderAddressIds = array();
-    protected $_anonymizedQuoteIds = array();
-    protected $_anonymizedQuoteAddressIds = array();
-    protected $_anonymizedNewsletterSubscriberIds = array();
+//    protected $_unusedCustomerData = array();
+//    protected $_anonymizedCustomerIds = array();
+//    protected $_anonymizedCustomerAddressIds = array();
+//    protected $_anonymizedOrderIds = array();
+//    protected $_anonymizedOrderAddressIds = array();
+//    protected $_anonymizedQuoteIds = array();
+//    protected $_anonymizedQuoteAddressIds = array();
+//    protected $_anonymizedNewsletterSubscriberIds = array();
 
     const MAX_FAKESTER_REQUEST_COUNT = 100;
 
-    protected function _construct(){
+    protected function _construct()
+    {
         $this->_randomCustomerModel = Mage::getModel('schumacherfm_anonygento/random_customer');
     }
 
@@ -39,8 +40,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      * @return mixed
      */
     abstract public function run();
-
-
 
     /**
      * @param Zend_ProgressBar $bar
@@ -64,7 +63,30 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _whatsMyName()
     {
-        $class = explode('_', get_class($this));    // if not $this then
-        return $class[count($class) - 1];           // return is 'Abstract' 8-)
+        $class = explode('_', get_class($this)); // if not $this then
+        return $class[count($class) - 1]; // return is 'Abstract' 8-)
     }
+
+    /**
+     * copies the data from obj to another using a mapping array
+     *
+     * @param object  $fromObj
+     * @param object  $toObj
+     * @param array   $mappings key=>value
+     *
+     * @return bool
+     */
+    protected function _copyObjectData($fromObj, $toObj, $mappings = array())
+    {
+        if (count($mappings) === 0) {
+            return FALSE;
+        }
+
+        foreach ($mappings as $key => $newKey) {
+            $data = $fromObj->getData($key);
+            $toObj->setData($newKey, $data);
+        }
+
+    }
+
 }

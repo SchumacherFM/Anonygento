@@ -10,7 +10,7 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
 {
     /**
      * @todo these three constants should be defined somewhere else
-     *      maybe via backend settings
+     *       maybe via backend settings
      */
 
     /**
@@ -99,7 +99,7 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
             'telephone'  => $this->_getCustomerTelephone(),
             'fax'        => $this->_getCustomerTelephone(),
             'remote_ip'  => $this->_getCustomerIp(),
-            'anonymized'  => 1,
+            'anonymized' => 1,
         );
 
         $this->_currentCustomer->addData($data);
