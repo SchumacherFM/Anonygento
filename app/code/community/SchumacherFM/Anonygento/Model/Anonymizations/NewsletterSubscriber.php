@@ -60,7 +60,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     {
         $collection = Mage::getModel('newsletter/subscriber')
             ->getCollection()
-            ->addFieldToSelect(array('subscriber_email'));
+            ->addFieldToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber()));
         /* @var $collection Mage_Newsletter_Model_Resource_Subscriber_Collection */
 
         $this->_collectionAddStaticAnonymized($collection, 0);

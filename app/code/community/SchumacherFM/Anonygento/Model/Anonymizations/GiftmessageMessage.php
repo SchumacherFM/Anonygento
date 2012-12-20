@@ -33,7 +33,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
         $this->_copyObjectData($customer, $message,
             SchumacherFM_Anonygento_Model_Random_Mappings::getGiftMessage());
 
-        $message->setMessage($this->_getInstance('schumacherfm_anonygento/random_loremIpsum')->getLoremIpsum(mt_rand(20, 30), 'txt'));
+        $message->setMessage($this->_getInstance('schumacherfm_anonygento/random_loremIpsum')->getLoremIpsum(mt_rand(20, 40), 'txt'));
         $message->setRecipient($this->_getInstance('schumacherfm_anonygento/random_customer')->getEmailWeird());
 
         $message->save();
@@ -47,7 +47,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
     {
         $collection = Mage::getModel('giftmessage/message')
             ->getCollection()
-            ->addFieldToSelect(array('sender', 'message', 'recipient'));
+            ->addFieldToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getGiftMessage()));
         /* @var $collection Mage_GiftMessage_Model_Resource_Message_Collection */
 
         $this->_collectionAddStaticAnonymized($collection, 0);

@@ -18,7 +18,7 @@ class SchumacherFM_Anonygento_Model_Random_LoremIpsum
      */
     public function getLoremIpsum($count, $format = 'html', $loremIpsum = TRUE)
     {
-        return $this->getContent($count, $format, $loremIpsum);
+        return trim($this->getContent($count, $format, $loremIpsum));
     }
 
     /**
@@ -48,13 +48,12 @@ class SchumacherFM_Anonygento_Model_Random_LoremIpsum
      *    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      */
 
-    private $_wordsPerParagraph;
-    private $_wordsPerSentence;
+    private $_wordsPerParagraph = 100;
+    private $_wordsPerSentence = 24.460;
 
-    public function __construct($wordsPer = 100)
+    public function setWordsPerParagraph($wordsPer)
     {
         $this->_wordsPerParagraph = $wordsPer;
-        $this->_wordsPerSentence  = 24.460;
     }
 
     public function getContent($count, $format = 'html', $loremIpsum = TRUE)
@@ -151,14 +150,16 @@ class SchumacherFM_Anonygento_Model_Random_LoremIpsum
         }
 
         $paragraphStr[0] = "\t" . $paragraphStr[0];
-        return implode(PHP_EOL . PHP_EOL"\t", $paragraphStr);
+        return implode(PHP_EOL . PHP_EOL . "\t", $paragraphStr);
     }
 
     private function _getParagraphArr($sentences)
     {
         $wordsPer    = $this->_wordsPerParagraph;
-        $sentenceAvg = $this->_wordsPerSentence;
-        $total       = count($sentences);
+        $sentenceAvg = $this->_wordsPerSentence / 2;
+
+        $sentenceWordsPer = $wordsPer - round($sentenceAvg);
+        $total            = count($sentences);
 
         $paragraphs = array();
         $pCount     = 0;
@@ -169,7 +170,11 @@ class SchumacherFM_Anonygento_Model_Random_LoremIpsum
             $s = $sentences[$i];
             $currCount += count($s);
             $curr[] = $s;
-            if ($currCount >= ($wordsPer - round($sentenceAvg / 2.00)) || $i == $total - 1) {
+
+            if (($currCount >= $sentenceWordsPer)
+                || ($i == ($total - 1))
+            ) {
+
                 $currCount    = 0;
                 $paragraphs[] = $curr;
                 $curr         = array();

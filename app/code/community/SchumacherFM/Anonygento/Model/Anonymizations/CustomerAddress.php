@@ -41,7 +41,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
     {
         $collection = Mage::getModel('customer/address')
             ->getCollection()
-            ->addAttributeToSelect(array('prefix', 'firstname', 'lastname', 'suffix', 'street'));
+            ->addAttributeToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress()));
         /* @var $collection Mage_Customer_Model_Resource_Address_Collection */
 
         $this->_collectionAddStaticAnonymized($collection);

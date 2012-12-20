@@ -15,7 +15,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 
     public function run()
     {
-        $customerCollection = $this->_getCustomerCollection(array('prefix', 'email', 'firstname', 'lastname', 'suffix'));
+        $customerCollection = $this->_getCustomerCollection(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getCustomer()));
 
         $i = 0;
         foreach ($customerCollection as $customer) {
@@ -37,6 +37,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         $customer->save();
         $this->_anonymizeCustomerAddresses($customer);
         $this->_anonymizeCustomerNewsletter($customer);
+
+        $this->_anonymizeOrder($customer);
     }
 
     /**
@@ -45,8 +47,16 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     protected function _anonymizeCustomerNewsletter($customer)
     {
         // SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')
-            ->anonymizeNewsletterByCustomer($customer);
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')->anonymizeNewsletterByCustomer($customer);
+    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function _anonymizeOrder($customer)
+    {
+        // SchumacherFM_Anonygento_Model_Anonymizations_Order
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_order')->anonymizeOrderByCustomer($customer);
     }
 
     /**

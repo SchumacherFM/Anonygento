@@ -39,6 +39,21 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
     protected $_devMode = TRUE;
 
+    protected function _construct()
+    {
+        Varien_Profiler::enable();
+        Varien_Profiler::start('Anonygento');
+    }
+
+    public function __destruct()
+    {
+        Varien_Profiler::stop('Anonygento');
+        $duration = Varien_Profiler::fetch('Anonygento', 'sum');
+
+        $this->_shellOut('Runs for ' . sprintf('%.2f', $duration) . ' secs or ' . sprintf('%.2f', $duration / 60) . ' min ');
+
+    }
+
     /**
      * Run script
      *
@@ -53,7 +68,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
             if ($anonModel) {
                 $this->_shellOut('Running ' . $anonExec->getLabel() . ', work load: ' . $anonExec->getUnanonymized() . ' rows');
-                // @todo recalc getUnanonymized count values due to changes in previous run
+                // @to do recalc getUnanonymized count values due to changes in previous run
                 if ($anonExec->getUnanonymized() > 0 || $this->_devMode === TRUE) {
                     $progessBar = $this->_getProgressBar($anonExec->getUnanonymized());
                     $anonModel->setProgressBar($progessBar);
@@ -102,8 +117,9 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         $pbAdapter = new Zend_ProgressBar_Adapter_Console(
             array('elements' =>
                   array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT,
-                      Zend_ProgressBar_Adapter_Console::ELEMENT_BAR,
-                      Zend_ProgressBar_Adapter_Console::ELEMENT_ETA
+                      Zend_ProgressBar_Adapter_Console::ELEMENT_BAR /* ,
+                     this is to weird for showing it because of the many recalculations
+                      Zend_ProgressBar_Adapter_Console::ELEMENT_ETA */
                   )
             )
         );

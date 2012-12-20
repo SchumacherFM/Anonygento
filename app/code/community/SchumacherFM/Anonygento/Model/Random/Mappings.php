@@ -15,6 +15,18 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
      * RandomCusteomer => CustomerAddress
      */
 
+    public static function getCustomer()
+    {
+        return array(
+            'prefix'    => 'prefix',
+            'email'     => 'email',
+            'firstname' => 'firstname',
+            'lastname'  => 'lastname',
+            'suffix'    => 'suffix',
+            'anonymized' => 'anonymized',
+        );
+    }
+
     public static function getCustomerAddress()
     {
 
@@ -53,6 +65,28 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
         return array(
             'anonymized' => 'anonymized',
             'email'      => 'sender',
+        );
+
+    }
+
+    /**
+     * customer fields => sales_flat_order fields
+     *
+     * @return array
+     */
+    public static function getOrder()
+    {
+        return array(
+            'email'      => 'customer_email',
+            'firstname'  => 'customer_firstname',
+            'lastname'   => 'customer_lastname',
+            'middle'     => 'customer_middlename',
+            'suffix'     => 'customer_suffix',
+            'prefix'     => 'customer_prefix',
+            'taxvat'     => 'customer_taxvat',
+            'remote_ip'  => 'remote_ip',
+            'anonymized' => 'anonymized',
+
         );
 
     }
