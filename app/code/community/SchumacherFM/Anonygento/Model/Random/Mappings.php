@@ -48,4 +48,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
 
     }
 
+    public static function getGiftMessage()
+    {
+        return array(
+            'anonymized' => 'anonymized',
+            'email'      => 'sender',
+        );
+
+    }
+
 }

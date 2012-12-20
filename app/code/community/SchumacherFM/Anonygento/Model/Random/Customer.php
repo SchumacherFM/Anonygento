@@ -48,7 +48,7 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
     protected $_prefixMale = array();
     protected $_prefixFemale = array();
 
-//    protected $_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    protected $_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /**
      * @var Varien_Object
@@ -175,6 +175,34 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
         $email = strtolower($email);
 
         $this->_currentCustomer->setEmail($email);
+    }
+
+    protected function getEmailWeird()
+    {
+
+        $name = $this->_getRandomString() . '.' . $this->_getRandomString(8) . '-' . mt_rand();
+
+        // @todo abstract access to random mail host
+        $email = $name . '@' . $this->_email[mt_rand() % count($this->_email)];
+        return strtolower($email);
+    }
+
+    /**
+     * @param int  $length
+     * @param bool $toLower
+     *
+     * @return string
+     */
+    protected function _getRandomString($length = 7, $toLower = FALSE)
+    {
+
+        $s = '';
+        $i = 0;
+        while ($i < $length) {
+            $s = $s . substr($this->_chars, (mt_rand() % strlen($this->_chars)), 1);
+            $i++;
+        }
+        return $toLower ? strtolower($s) : $s;
     }
 
     /**

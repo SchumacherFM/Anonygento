@@ -37,6 +37,8 @@ error_reporting(E_ALL);
 class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 {
 
+    protected $_devMode = TRUE;
+
     /**
      * Run script
      *
@@ -51,9 +53,12 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
             if ($anonModel) {
                 $this->_shellOut('Running ' . $anonExec->getLabel() . ', work load: ' . $anonExec->getUnanonymized() . ' rows');
-                $progessBar = $this->_getProgressBar($anonExec->getUnanonymized());
-                $anonModel->setProgressBar($progessBar);
-                $anonModel->run();
+                // @todo recalc getUnanonymized count values due to changes in previous run
+                if ($anonExec->getUnanonymized() > 0 || $this->_devMode === TRUE) {
+                    $progessBar = $this->_getProgressBar($anonExec->getUnanonymized());
+                    $anonModel->setProgressBar($progessBar);
+                    $anonModel->run();
+                }
             } else {
                 $this->_shellOut('Model ' . $anonExec->getValue() . ' not found or not necessary!');
             }

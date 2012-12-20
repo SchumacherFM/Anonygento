@@ -8,15 +8,12 @@
  */
 abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Varien_Object
 {
+    const COLUMN_ANONYMIZED = 'anonymized';
+
     /**
      * @var Zend_ProgressBar
      */
     protected $_progressBar = null;
-
-    /**
-     * @var SchumacherFM_Anonygento_Model_Random_Customer
-     */
-    protected $_randomCustomerModel = null;
 
 //    protected $_unusedCustomerData = array();
 //    protected $_anonymizedCustomerIds = array();
@@ -32,7 +29,26 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected function _construct()
     {
         parent::_construct();
-        $this->_randomCustomerModel = Mage::getModel('schumacherfm_anonygento/random_customer');
+    }
+
+    /**
+     * @var object
+     */
+    protected $_instances = null;
+
+    /**
+     * @param string $type
+     * @param array  $arguments
+     * @param bool   $forceNew
+     *
+     * @return object
+     */
+    protected function _getInstance($type, $arguments = array(), $forceNew = FALSE)
+    {
+        if (!isset($this->_instances[$type]) || $forceNew === TRUE) {
+            $this->_instances[$type] = Mage::getModel($type, $arguments);
+        }
+        return $this->_instances[$type];
     }
 
     /**
@@ -69,7 +85,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
-     * @param array $addAttributeToSelect
+     * @param array   $addAttributeToSelect
      * @param integer $isAnonymized
      *
      * @return Mage_Customer_Model_Resource_Customer_Collection
@@ -114,8 +130,17 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _collectionAddStaticAnonymized($collection, $isAnonymized = 0)
     {
-        $collection->addStaticField('anonymized');
-        $collection->addAttributeToFilter('anonymized', $isAnonymized);
+        $isAnonymized = (int)$isAnonymized;
+
+        if ( $collection instanceof Mage_Eav_Model_Entity_Collection_Abstract ) {
+            $collection->addStaticField(self::COLUMN_ANONYMIZED);
+            $collection->addAttributeToFilter(self::COLUMN_ANONYMIZED, $isAnonymized);
+        } else {
+            $collection->addFieldToSelect(self::COLUMN_ANONYMIZED);
+            $select = $collection->getSelect();
+            $select->where(self::COLUMN_ANONYMIZED . '=' . $isAnonymized);
+        }
+
     }
 
 }

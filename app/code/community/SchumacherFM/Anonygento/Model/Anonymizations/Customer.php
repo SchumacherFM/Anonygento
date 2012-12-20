@@ -8,15 +8,6 @@
  */
 class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
-    /**
-     * @var SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber
-     */
-    protected $_anonNlSubscriberModel = null;
-
-    protected function _construct()
-    {
-        $this->_anonNlSubscriberModel = Mage::getModel('schumacherfm_anonygento/anonymizations_newsletterSubscriber');
-    }
 
     /**
      * anonymizes customer and related customer addresses
@@ -41,7 +32,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeCustomer($customer)
     {
-        $customer = $this->_randomCustomerModel->getCustomer($customer);
+        // SchumacherFM_Anonygento_Model_Random_Customer
+        $customer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer($customer);
         $customer->save();
         $this->_anonymizeCustomerAddresses($customer);
         $this->_anonymizeCustomerNewsletter($customer);
@@ -52,7 +44,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeCustomerNewsletter($customer)
     {
-        $this->_anonNlSubscriberModel->anonymizeNewsletterByCustomer($customer);
+        // SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')
+            ->anonymizeNewsletterByCustomer($customer);
     }
 
     /**

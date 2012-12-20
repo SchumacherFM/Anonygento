@@ -9,12 +9,6 @@
 class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
 
-    protected function _construct()
-    {
-        parent::_construct();
-
-    }
-
     public function run()
     {
         $newsLetterSubscriberCollection = $this->_getCollection();
@@ -26,16 +20,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
             $i++;
         }
         $this->getProgressBar()->finish();
-
     }
 
     /**
      * @param Mage_Newsletter_Model_Subscriber $subscriber
      */
-    protected function _anonymizeNewsletter($subscriber)
+    protected function _anonymizeNewsletter(Mage_Core_Model_Abstract $subscriber)
     {
 
-        $customer = $this->_randomCustomerModel->getCustomer();
+        $customer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer();
 
         $this->_copyObjectData($customer, $subscriber,
             SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber());
@@ -53,11 +46,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
         /* @var $subscriber Mage_Newsletter_Model_Subscriber */
         $subscriber->loadByCustomer($customer);
 
-        $this->_copyObjectData($customer, $subscriber,
-            SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber());
-
-        $subscriber->save();
-
+        if ($subscriber->getId()) {
+            $this->_copyObjectData($customer, $subscriber,
+                SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber());
+            $subscriber->save();
+        }
     }
 
     /**
@@ -67,7 +60,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     {
         $collection = Mage::getModel('newsletter/subscriber')
             ->getCollection()
-            ->addAttributeToSelect(array('subscriber_email'));
+            ->addFieldToSelect(array('subscriber_email'));
         /* @var $collection Mage_Newsletter_Model_Resource_Subscriber_Collection */
 
         $this->_collectionAddStaticAnonymized($collection, 0);
