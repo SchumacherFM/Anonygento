@@ -12,15 +12,28 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     public function run()
     {
 
-        $orderAddressCollection = $this->_getCollection();
+        $orderCollection = $this->_getCollection();
 
         $i = 0;
-        foreach ($orderAddressCollection as $order) {
-//            $this->_anonymizeCustomerAddress($address);
+        foreach ($orderCollection as $order) {
+            $this->_anonymizeOrder($order);
             $this->getProgressBar()->update($i);
             $i++;
         }
         $this->getProgressBar()->finish();
+
+    }
+
+    protected function _anonymizeOrder(Mage_Sales_Model_Order $order)
+    {
+        $randomCustomer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer();
+
+        die('go on here 8-)');
+
+        $this->_copyObjectData($randomCustomer, $order,
+            SchumacherFM_Anonygento_Model_Random_Mappings::getOrder());
+
+        $addresses = $order->getAddressesCollection();
 
     }
 
@@ -54,11 +67,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     }
 
     /**
-     * @param Mage_Sales_Model_Order $order
+     * @param Mage_Customer_Model_Customer $customer
+     * @param Mage_Sales_Model_Order       $order
      */
-    protected function _anonymizeOrderAddress(Mage_Sales_Model_Order $order)
+    protected function _anonymizeOrderAddress(Mage_Customer_Model_Customer $customer, Mage_Sales_Model_Order $order)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order);
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($customer, $order);
     }
 
     /**
@@ -66,7 +80,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _anonymizeQuote(Mage_Sales_Model_Order $order)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order);
+//        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order);
     }
 
     /**

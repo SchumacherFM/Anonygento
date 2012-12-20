@@ -105,7 +105,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
             'suffix'     => 'suffix',
             'prefix'     => 'prefix',
             'taxvat'     => 'vat_id',
-            'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 
         );

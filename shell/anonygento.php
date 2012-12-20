@@ -60,17 +60,19 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     public function run()
     {
-
         $_execCollection = $this->_getAnonymizationCollection();
 
         foreach ($_execCollection as $anonExec) {
             $anonModel = $this->_getModel($anonExec->getValue());
 
+            $reCalc = $this->_reCalcUnAnonymized($anonExec->getModel());
+
             if ($anonModel) {
-                $this->_shellOut('Running ' . $anonExec->getLabel() . ', work load: ' . $anonExec->getUnanonymized() . ' rows');
+                $this->_shellOut('Running ' . $anonExec->getLabel() . ', work load: ' .
+                    $anonExec->getUnanonymized() . '/' . $reCalc . ' rows');
                 // @to do recalc getUnanonymized count values due to changes in previous run
-                if ($anonExec->getUnanonymized() > 0 || $this->_devMode === TRUE) {
-                    $progessBar = $this->_getProgressBar($anonExec->getUnanonymized());
+                if ($reCalc > 0 || $this->_devMode === TRUE) {
+                    $progessBar = $this->_getProgressBar($reCalc);
                     $anonModel->setProgressBar($progessBar);
                     $anonModel->run();
                 }
@@ -105,6 +107,16 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
     protected function _getAnonymizationCollection()
     {
         return Mage::getModel('schumacherfm_anonygento/options_anonymizations')->getCollection();
+    }
+
+    /**
+     * @param $model
+     *
+     * @return integer
+     */
+    protected function _reCalcUnAnonymized($model)
+    {
+        return Mage::getModel('schumacherfm_anonygento/counter')->unAnonymized($model);
     }
 
     /**
