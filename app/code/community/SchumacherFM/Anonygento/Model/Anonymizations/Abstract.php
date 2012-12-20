@@ -15,26 +15,10 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected $_progressBar = null;
 
-//    protected $_unusedCustomerData = array();
-//    protected $_anonymizedCustomerIds = array();
-//    protected $_anonymizedCustomerAddressIds = array();
-//    protected $_anonymizedOrderIds = array();
-//    protected $_anonymizedOrderAddressIds = array();
-//    protected $_anonymizedQuoteIds = array();
-//    protected $_anonymizedQuoteAddressIds = array();
-//    protected $_anonymizedNewsletterSubscriberIds = array();
-
-    const MAX_FAKESTER_REQUEST_COUNT = 100;
-
-    protected function _construct()
-    {
-        parent::_construct();
-    }
-
     /**
-     * @var object
+     * @var array
      */
-    protected $_instances = null;
+    protected $_instances = array();
 
     /**
      * @param string $type
@@ -132,7 +116,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     {
         $isAnonymized = (int)$isAnonymized;
 
-        if ( $collection instanceof Mage_Eav_Model_Entity_Collection_Abstract ) {
+        if ($collection instanceof Mage_Eav_Model_Entity_Collection_Abstract) {
             $collection->addStaticField(self::COLUMN_ANONYMIZED);
             $collection->addAttributeToFilter(self::COLUMN_ANONYMIZED, $isAnonymized);
         } else {

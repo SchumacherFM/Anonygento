@@ -34,11 +34,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         // SchumacherFM_Anonygento_Model_Random_Customer
         $customer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer($customer);
-        $customer->save();
+
         $this->_anonymizeCustomerAddresses($customer);
         $this->_anonymizeCustomerNewsletter($customer);
 
         $this->_anonymizeOrder($customer);
+
+        // save the customer at the end to ensure that all other entities have been
+        // anonymized .. just in case the user aborts the script
+        $customer->save();
     }
 
     /**

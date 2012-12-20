@@ -18,11 +18,11 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
     public static function getCustomer()
     {
         return array(
-            'prefix'    => 'prefix',
-            'email'     => 'email',
-            'firstname' => 'firstname',
-            'lastname'  => 'lastname',
-            'suffix'    => 'suffix',
+            'prefix'     => 'prefix',
+            'email'      => 'email',
+            'firstname'  => 'firstname',
+            'lastname'   => 'lastname',
+            'suffix'     => 'suffix',
             'anonymized' => 'anonymized',
         );
     }
@@ -84,6 +84,27 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
             'suffix'     => 'customer_suffix',
             'prefix'     => 'customer_prefix',
             'taxvat'     => 'customer_taxvat',
+            'remote_ip'  => 'remote_ip',
+            'anonymized' => 'anonymized',
+
+        );
+
+    }
+
+    public static function getOrderAddress()
+    {
+        return array(
+            'fax'        => 'fax',
+            'street'     => 'street',
+            'email'      => 'email',
+            'telephone'  => 'telephone',
+            'company'    => 'company',
+            'firstname'  => 'firstname',
+            'lastname'   => 'lastname',
+            'middlename' => 'middlename',
+            'suffix'     => 'suffix',
+            'prefix'     => 'prefix',
+            'taxvat'     => 'vat_id',
             'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 

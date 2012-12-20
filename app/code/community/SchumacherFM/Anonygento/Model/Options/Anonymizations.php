@@ -23,7 +23,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         'giftmessageMessage'   => 'giftmessage/message',
 
         'order'                => 'sales/order',
-//        'orderAddress'         => 'sales/order_address',
+        'orderAddress'         => 'sales/order_address',
 //        'orderGrid'            => 'sales/order_grid_collection',
 //        'orderPayment'         => 'sales/order_payment',
 //        'quote'                => 'sales/quote',

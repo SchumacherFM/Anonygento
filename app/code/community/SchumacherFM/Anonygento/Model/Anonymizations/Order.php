@@ -44,6 +44,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
             $this->_copyObjectData($customer, $order,
                 SchumacherFM_Anonygento_Model_Random_Mappings::getOrder());
 
+            $this->_anonymizeOrderAddress($customer, $order);
+//            $this->_anonymizeQuote($order);
+
             $order->getResource()->save($order);
         }
 
@@ -52,31 +55,18 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
     /**
      * @param Mage_Sales_Model_Order $order
-     * @param array                  $randomData
      */
-    protected function XX_anonymizeOrder($order, $randomData)
+    protected function _anonymizeOrderAddress(Mage_Sales_Model_Order $order)
     {
-        /** @var $order Mage_Sales_Model_Order */
-        foreach ($this->_getOrderMapping() as $orderKey => $randomDataKey) {
-            if (!$order->getData($orderKey)) {
-                continue;
-            }
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order);
+    }
 
-            if (strlen($randomDataKey)) {
-                $order->setData($orderKey, $randomData[$randomDataKey]);
-            } else {
-                $order->setData($orderKey, '');
-            }
-        }
-
-        $order->getResource()->save($order);
-        $this->_anonymizedOrderIds[] = $order->getId();
-
-        /* @var $quote Mage_Sales_Model_Quote */
-        $quote = Mage::getModel('sales/quote')->load($order->getQuoteId());
-        if ($quote->getId()) {
-            $this->_anonymizeQuote($quote, $randomData);
-        }
+    /**
+     * @param Mage_Sales_Model_Order $order
+     */
+    protected function _anonymizeQuote(Mage_Sales_Model_Order $order)
+    {
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order);
     }
 
     /**
