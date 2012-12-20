@@ -33,7 +33,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
         $this->_copyObjectData($customer, $message,
             SchumacherFM_Anonygento_Model_Random_Mappings::getGiftMessage());
 
-        $message->setMessage( $this->_getInstance('schumacherfm_anonygento/random_loremIpsum')->getText() );
+        $message->setMessage($this->_getInstance('schumacherfm_anonygento/random_loremIpsum')->getLoremIpsum(mt_rand(20, 30), 'txt'));
         $message->setRecipient($this->_getInstance('schumacherfm_anonygento/random_customer')->getEmailWeird());
 
         $message->save();
