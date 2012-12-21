@@ -24,6 +24,7 @@ This extension anonymizes all customer related data from the following data obje
 - Quotes
 - Quote Addresses
 - Newsletter Subscribers
+- Fires three events
 
 All data comes from http://fakester.biz. So you need an internet connection.
 

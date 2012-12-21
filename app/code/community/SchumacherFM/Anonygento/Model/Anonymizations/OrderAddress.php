@@ -30,12 +30,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     protected function _anonymizeOrderAddress(Mage_Sales_Model_Order_Address $orderAddress)
     {
 
-        $randomCustomer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer();
+        $randomCustomer = $this->_getRandomCustomer()->getCustomer();
 
         $this->_copyObjectData($randomCustomer, $orderAddress,
             SchumacherFM_Anonygento_Model_Random_Mappings::getOrderAddress());
 
-        $orderAddress->save();
+        $orderAddress->getResource()->save($orderAddress);
     }
 
     /**
@@ -71,9 +71,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
         $orderFields = SchumacherFM_Anonygento_Model_Random_Mappings::getOrderAddress();
 
-        foreach ($orderFields as $field) {
-            $collection->addAttributeToSelect($field);
-        }
+        $this->_collectionAddAttributeToSelect($collection, $orderFields);
 
         $this->_collectionAddStaticAnonymized($collection);
 

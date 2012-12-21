@@ -44,6 +44,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
             ->addAttributeToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress()));
         /* @var $collection Mage_Customer_Model_Resource_Address_Collection */
 
+// @todo refactor with addtional addFieldToSelect
+//        $this->_collectionAddAttributeToSelect($collection, $orderFields);
+
+
         $this->_collectionAddStaticAnonymized($collection);
 
         return $collection;

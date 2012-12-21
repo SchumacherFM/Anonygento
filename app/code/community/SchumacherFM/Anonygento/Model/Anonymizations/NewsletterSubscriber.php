@@ -28,7 +28,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     protected function _anonymizeNewsletter(Mage_Core_Model_Abstract $subscriber)
     {
 
-        $customer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer();
+        $customer = $this->_getRandomCustomer()->getCustomer();
 
         $this->_copyObjectData($customer, $subscriber,
             SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber());
@@ -62,6 +62,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
             ->getCollection()
             ->addFieldToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber()));
         /* @var $collection Mage_Newsletter_Model_Resource_Subscriber_Collection */
+
+// @todo refactor with addtional addFieldToSelect
+//        $this->_collectionAddAttributeToSelect($collection, $orderFields);
+
 
         $this->_collectionAddStaticAnonymized($collection, 0);
 

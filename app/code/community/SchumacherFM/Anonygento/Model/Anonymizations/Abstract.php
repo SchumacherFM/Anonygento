@@ -8,6 +8,16 @@
  */
 abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Varien_Object
 {
+    /**
+     * Event prefix
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'anonygento_anonymizations';
+
+    /**
+     * sql column name
+     */
     const COLUMN_ANONYMIZED = 'anonymized';
 
     /**
@@ -33,6 +43,14 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $this->_instances[$type] = Mage::getModel($type, $arguments);
         }
         return $this->_instances[$type];
+    }
+
+    /**
+     * @return SchumacherFM_Anonygento_Model_Random_Customer
+     */
+    protected function _getRandomCustomer()
+    {
+        return $this->_getInstance('schumacherfm_anonygento/random_customer');
     }
 
     /**
@@ -106,6 +124,11 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $toObj->setData($newKey, $data);
         }
 
+        Mage::dispatchEvent($this->_eventPrefix . '_copy_after', array(
+            'copied_object' => $toObj,
+            'mappings'      => $mappings,
+        ));
+
     }
 
     /**
@@ -123,6 +146,23 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $collection->addFieldToSelect(self::COLUMN_ANONYMIZED);
             $select = $collection->getSelect();
             $select->where(self::COLUMN_ANONYMIZED . '=' . $isAnonymized);
+        }
+
+    }
+
+    /**
+     * @param object $collection
+     * @param array  $fields from the mapping table the values
+     */
+    protected function _collectionAddAttributeToSelect($collection, $fields = array())
+    {
+        foreach ($fields as $key => $field) {
+
+            if ($key === 'fill' || is_array($field)) {
+                continue;
+            }
+
+            $collection->addAttributeToSelect($field);
         }
 
     }

@@ -16,7 +16,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
         $i = 0;
         foreach ($quoteCollection as $quote) {
-//            $this->_anonymizeCustomerAddress($address);
+            $this->_anonymizeQuote($quote);
             $this->getProgressBar()->update($i);
             $i++;
         }
@@ -24,52 +24,77 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
     }
 
-    public function anonymizeByOrder(Mage_Sales_Model_Order $order)
+    protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote)
     {
+        $randomCustomer = $this->_getRandomCustomer()->getCustomer();
 
-        /* @var $quote Mage_Sales_Model_Quote */
-//        $quote = Mage::getModel('sales/quote')->load($order->getQuoteId());
-//        if ($quote->getId()) {
-//            $this->_anonymizeQuote($quote, $randomData);
-//        }
+        $this->_copyObjectData($randomCustomer, $quote,
+            SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
 
-//        $orderCollection     = $this->_getCollection()->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
-//        $orderCollectionSize = $orderCollection->getSize();
-//
-//        if ($orderCollectionSize == 0) {
-//            return $orderCollectionSize;
-//        }
-//
-//        foreach ($orderCollection as $order) {
-//
-//            $this->_copyObjectData($customer, $order,
-//                SchumacherFM_Anonygento_Model_Random_Mappings::getOrder());
-//
-//
-//            $order->getResource()->save($order);
-//        }
-//
-//        return $orderCollectionSize;
+        $addresses = $quote->getAddressesCollection();
+
+        foreach ($addresses as $address) {
+            /* @var $address Mage_Sales_Model_Quote_Address */
+            $this->_copyObjectData($randomCustomer, $address,
+                SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
+            $address->getResource()->save($address);
+        }
+
+        $quote->getResource()->save($quote);
     }
 
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return integer
+     */
+    public function anonymizeQuoteByCustomer(Mage_Customer_Model_Customer $customer)
+    {
 
+        $quoteCollection     = $this->_getCollection()->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
+        $quoteCollectionSize = $quoteCollection->getSize();
+
+        if ($quoteCollectionSize == 0) {
+            return $quoteCollectionSize;
+        }
+
+        foreach ($quoteCollection as $quote) {
+
+            $this->_copyObjectData($customer, $quote,
+                SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
+
+            $this->_anonymizeQuoteAddress($customer, $quote);
+
+            $quote->getResource()->save($quote);
+        }
+
+        return $quoteCollectionSize;
+    }
 
     /**
-     * @return Mage_Sales_Model_Resource_Order_Collection
+     * @param Mage_Customer_Model_Customer $customer
+     * @param Mage_Sales_Model_Quote       $quote
+     */
+    protected function _anonymizeQuoteAddress(Mage_Customer_Model_Customer $customer, Mage_Sales_Model_Quote $quote)
+    {
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_quoteAddress')->anonymizeByQuote($customer, $quote);
+    }
+
+    /**
+     * @return Mage_Sales_Model_Resource_Quote_Collection
      */
     protected function _getCollection()
     {
         $collection = Mage::getModel('sales/quote')
             ->getCollection()
+        // @todo must be addFieldToSelect
             ->addAttributeToSelect('entity_id');
 
-        /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
+        /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
 
-        $orderFields = SchumacherFM_Anonygento_Model_Random_Mappings::getQuote();
+        $quoteFields = SchumacherFM_Anonygento_Model_Random_Mappings::getQuote();
 
-        foreach ($orderFields as $field) {
-            $collection->addAttributeToSelect($field);
-        }
+        $this->_collectionAddAttributeToSelect($collection, $quoteFields);
 
         $this->_collectionAddStaticAnonymized($collection);
 

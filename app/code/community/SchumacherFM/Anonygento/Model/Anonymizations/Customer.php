@@ -33,11 +33,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     protected function _anonymizeCustomer($customer)
     {
         // SchumacherFM_Anonygento_Model_Random_Customer
-        $customer = $this->_getInstance('schumacherfm_anonygento/random_customer')->getCustomer($customer);
+        $customer = $this->_getRandomCustomer()->getCustomer($customer);
 
         $this->_anonymizeCustomerAddresses($customer);
         $this->_anonymizeCustomerNewsletter($customer);
 
+        $this->_anonymizeQuote($customer);
         $this->_anonymizeOrder($customer);
 
         // save the customer at the end to ensure that all other entities have been
@@ -52,6 +53,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         // SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber
         $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')->anonymizeNewsletterByCustomer($customer);
+    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function _anonymizeQuote($customer)
+    {
+        // SchumacherFM_Anonygento_Model_Anonymizations_Quote
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeQuoteByCustomer($customer);
     }
 
     /**

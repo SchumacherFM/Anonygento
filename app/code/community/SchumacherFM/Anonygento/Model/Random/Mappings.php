@@ -111,4 +111,68 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
 
     }
 
+    /**
+     * customer fields => sales_flat_quote fields
+     *
+     * @return array
+     */
+    public static function getQuote()
+    {
+        return array(
+            'email'      => 'customer_email',
+            'firstname'  => 'customer_firstname',
+            'lastname'   => 'customer_lastname',
+            'middle'     => 'customer_middlename',
+            'suffix'     => 'customer_suffix',
+            'prefix'     => 'customer_prefix',
+            'taxvat'     => 'customer_taxvat',
+            'remote_ip'  => 'remote_ip',
+            'anonymized' => 'anonymized',
+
+            // @todo fields not in the customer object but needed
+            'fill'       => array(
+                'password_hash' => array(
+                    'exec' => 'getRandomString',
+                    'args' => array(32)
+                ),
+                'customer_note' => array(
+                    'exec' => 'getLoremIpsum',
+                    'args' => array(80)
+                ),
+            ),
+
+        );
+
+    }
+
+    public static function getQuoteAddress()
+    {
+        return array(
+            'fax'        => 'fax',
+            'street'     => 'street',
+            'email'      => 'email',
+            'telephone'  => 'telephone',
+            'company'    => 'company',
+            'firstname'  => 'firstname',
+            'lastname'   => 'lastname',
+            'middlename' => 'middlename',
+            'suffix'     => 'suffix',
+            'prefix'     => 'prefix',
+            'taxvat'     => 'vat_id',
+            'anonymized' => 'anonymized',
+
+            // @todo fields not in the customer object but needed
+            'fill'       => array(
+
+                'customer_note' => array(
+                    'exec' => 'getLoremIpsum',
+                    'args' => array(80)
+                ),
+            ),
+
+        );
+
+    }
+
+
 }

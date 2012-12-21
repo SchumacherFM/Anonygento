@@ -14,6 +14,20 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
      */
 
     /**
+     * Event prefix
+     *
+     * @var string
+     */
+    protected $_eventPrefix = 'anonygento_random_customer';
+
+    /**
+     * Event object name
+     *
+     * @var string
+     */
+    protected $_eventObject = 'anonygento_random_customer';
+
+    /**
      * path to csv data dir, no slash at the end
      */
     const DATA_PATH = 'app/code/community/SchumacherFM/Anonygento/data';
@@ -69,6 +83,10 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
         $this->_prefixMale      = $this->_loadFile('PrefixMale');
         $this->_prefixFemale    = $this->_loadFile('PrefixFemale');
 
+        Mage::dispatchEvent($this->_eventPrefix . '_init_after', array(
+            $this->_eventObject => $this
+        ));
+
     }
 
     /**
@@ -105,6 +123,11 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
         $this->_currentCustomer->addData($data);
 
         $this->_getRandEmail();
+
+        Mage::dispatchEvent($this->_eventPrefix . '_customer_after', array(
+            $this->_eventObject => $this,
+            'customer'          => $this->_currentCustomer
+        ));
 
         return $this->_currentCustomer;
     }
