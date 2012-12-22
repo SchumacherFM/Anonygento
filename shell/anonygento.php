@@ -27,6 +27,15 @@
 require_once 'abstract.php';
 error_reporting(E_ALL);
 
+//use SchumacherFM\Anonygento\Zend\Console\Prompt;
+//
+//$confirm = new Prompt\Confirm('Are you sure you want to continue?');
+//$result = $confirm->show();
+//if ($result) {
+//    // the user chose to continue
+//}
+//exit;
+
 /**
  * Magento Anonygento Script
  *
@@ -37,12 +46,29 @@ error_reporting(E_ALL);
 class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 {
 
-    protected $_devMode = TRUE;
+    private $_devMode = FALSE;
+
+    /**
+     * @var SchumacherFM_Anonygento_Model_Console_Console
+     */
+    private $_console = null;
+
+    /**
+     * @var SchumacherFM\Anonygento\Model\Zend\Console\Adapter\Posix
+     */
+    private $_consoleInstance = null;
 
     protected function _construct()
     {
-        Varien_Profiler::enable();
-        Varien_Profiler::start('Anonygento');
+        /**
+         * e.g. setting from .bash_profile
+         */
+        $this->_devMode = (isset($_SERVER['ANONYGENTO_DEV']) && $_SERVER['ANONYGENTO_DEV'] === 'true');
+
+        // register Zend Framework 2 autoloader
+        Mage::getModel('schumacherfm_anonygento/autoload_zf2')->register();
+        $this->_console         = Mage::getModel('schumacherfm_anonygento/console_console');
+        $this->_consoleInstance = $this->_console->getInstance();
     }
 
     public function __destruct()
@@ -50,7 +76,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         Varien_Profiler::stop('Anonygento');
         $duration = Varien_Profiler::fetch('Anonygento', 'sum');
 
-        $this->_shellOut('Runs for ' . sprintf('%.2f', $duration) . ' secs or ' . sprintf('%.2f', $duration / 60) . ' min ');
+        $this->_consoleInstance->writeLine('Runs for ' . sprintf('%.2f', $duration) .
+            ' secs or ' . sprintf('%.2f', $duration / 60) . ' min ');
 
     }
 
@@ -60,83 +87,52 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     public function run()
     {
-        $_execCollection = $this->_getAnonymizationCollection();
+        $userResult = $isAdminUser = FALSE;
+
+        if ($this->_devMode !== TRUE) {
+            $prompt = $this->_console->getModelZf2('console_prompt_confirm');
+            $prompt->setPromptText('Anonymize this Magento installation? [y/n]');
+            $userResult = $prompt->show();
+            $isAdminUser = $userResult ? $this->_console->isAdminUser() : FALSE;
+        }
+
+        if (($userResult && $isAdminUser) || $this->_devMode === TRUE) {
+            $this->_runAnonymization();
+        } else {
+            $this->_consoleInstance->writeLine('Nothing done! ' . $username . PHP_EOL . $password,
+                SchumacherFM_Anonygento_Model_Console_Color::GREEN);
+        }
+    }
+
+    private function _runAnonymization()
+    {
+        Varien_Profiler::enable();
+        Varien_Profiler::start('Anonygento');
+
+        $_execCollection = $this->_console->getAnonymizationCollection();
 
         foreach ($_execCollection as $anonExec) {
-            $anonModel = $this->_getModel($anonExec->getValue());
+            $anonModel = $this->_console->getModel($anonExec->getValue());
 
-            $reCalc = $this->_reCalcUnAnonymized($anonExec->getModel());
+            $reCalc = $this->_console->reCalcUnAnonymized($anonExec->getModel());
 
             if ($anonModel) {
-                $this->_shellOut('Running ' . $anonExec->getLabel() . ', work load: ' .
-                    $anonExec->getUnanonymized() . '/' . $reCalc . ' rows');
-                // @to do recalc getUnanonymized count values due to changes in previous run
+                $this->_consoleInstance->writeLine('Running ' . $anonExec->getLabel() . ', work load: ' .
+                        $anonExec->getUnanonymized() . '/' . $reCalc . ' rows',
+                    SchumacherFM_Anonygento_Model_Console_Color::MAGENTA);
+
                 if ($reCalc > 0 || $this->_devMode === TRUE) {
-                    $progessBar = $this->_getProgressBar($reCalc);
+                    $progessBar = $this->_console->getProgressBar($reCalc);
                     $anonModel->setProgressBar($progessBar);
                     $anonModel->run();
                 }
             } else {
-                $this->_shellOut('Model ' . $anonExec->getValue() . ' not found or not necessary!');
+                $this->_consoleInstance->writeLine('Model ' . $anonExec->getValue() . ' not found or not necessary!',
+                    SchumacherFM_Anonygento_Model_Console_Color::LIGHT_RED);
             }
 
         }
-    }
 
-    /**
-     * @param string $string
-     */
-    protected function _shellOut($string = '')
-    {
-        echo $string . PHP_EOL;
-    }
-
-    /**
-     * @param $type
-     *
-     * @return false|Mage_Core_Model_Abstract
-     */
-    protected function _getModel($type)
-    {
-        return Mage::getModel('schumacherfm_anonygento/anonymizations_' . $type);
-    }
-
-    /**
-     * @return object
-     */
-    protected function _getAnonymizationCollection()
-    {
-        return Mage::getModel('schumacherfm_anonygento/options_anonymizations')->getCollection();
-    }
-
-    /**
-     * @param $model
-     *
-     * @return integer
-     */
-    protected function _reCalcUnAnonymized($model)
-    {
-        return Mage::getModel('schumacherfm_anonygento/counter')->unAnonymized($model);
-    }
-
-    /**
-     * @param integer $count
-     *
-     * @return Zend_ProgressBar
-     */
-    protected function _getProgressBar($count)
-    {
-        $pbAdapter = new Zend_ProgressBar_Adapter_Console(
-            array('elements' =>
-                  array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT,
-                      Zend_ProgressBar_Adapter_Console::ELEMENT_BAR /* ,
-                     this is to weird for showing it because of the many recalculations
-                      Zend_ProgressBar_Adapter_Console::ELEMENT_ETA */
-                  )
-            )
-        );
-
-        return new Zend_ProgressBar($pbAdapter, 0, $count);
     }
 
     /**

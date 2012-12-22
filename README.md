@@ -14,6 +14,7 @@ About
 - extension key: SchumacherFM_Anonygento
 - [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
 - [direct download link](https://github.com/SchumacherFM/Anonygento/tarball/master)
+- Integrates parts of the Zend Framework 2
 
 
 What it does?
@@ -51,6 +52,7 @@ Todo / Next Versions
 Compatibility
 -------------
 - Magento >= 1.4
+- php >= 5.3.3
 
 
 Installation Instructions
