@@ -45,7 +45,7 @@ All data comes from self defined csv files which are store in the data folder.
 You provide the random data for the module. There are several files for the
 english language already provided.
 
-@todo if the csv file is empty the a random string is generated.
+@todo if the csv file is empty then a random string is generated.
 
 Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations
 still work correctly.
@@ -57,10 +57,11 @@ Events
 ------
 
 First event will be fired after data has been copied from the random object.
-This allows you to change for specific entities and objects the data.
+This allows you to change for specific entities the data.
 to the object for anonymization.
-Name:       anonygento_anonymizations_copy_after
-Arguments:  copied_object and mappings
+
+Name:       `anonygento_anonymizations_copy_after`
+Arguments:  `copied_object` and `mappings`
 
 Example:
 
@@ -82,8 +83,8 @@ class XXX_YYY_Model_Observer {
 
 Second event will be fired after getCustomer() has been called on the random customer
 model. This allows you to change specific random data for all entities.
-Name:       anonygento_random_customer_getcustomer_after
-Arguments:  customer
+Name:       `anonygento_random_customer_getcustomer_after`
+Arguments:  `customer`
 
 Example:
 
