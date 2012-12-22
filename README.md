@@ -125,10 +125,10 @@ Compatibility
 
 Installation Instructions
 -------------------------
-1.  Git clone it somewhere, symlink it into your Magento installation. (Script will be provided soon)
-2.  Clear the cache, logout from the admin panel and then login again.
-3.  Call the extension from from System -> Tools -> Anonygento (Currently not supported in version 0.0.1).
-3b. Call the extension via shell in the sit directory: php -f shell/anonygento.php
+1. Git clone it somewhere, symlink it into your Magento installation. (Script will be provided soon)
+2. Clear the cache, logout from the admin panel and then login again.
+3. Call the extension from from System -> Tools -> Anonygento (Currently not supported in version 0.0.1).
+4. Call the extension via shell in the `site` directory: `php -f shell/anonygento.php`
 
 
 Shell
@@ -156,11 +156,6 @@ Running customer, work load: XXXX rows
 Running ...
 ```
 
-How to handle the observer?
---------------------------
-There are three events which will be fired in different places.
-@todo describe them
-
 
 Support / Contribution
 ----------------------
@@ -169,7 +164,7 @@ Report a bug or send me a pull request.
 
 Other modules for Magento
 -------------------------
-There is https://github.com/integer-net/Anonymizer but is has serveral limitations
+There is https://github.com/integer-net/Anonymizer but is has several limitations.
 
 
 Licence
