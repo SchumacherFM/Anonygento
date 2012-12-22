@@ -10,7 +10,6 @@
 class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
-
     /**
      * Class constructor
      */
@@ -18,8 +17,8 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     {
         parent::__construct();
         $this->setId('anonygento_grid');
-        $this->_filterVisibility = false;
-        $this->_pagerVisibility = false;
+        $this->_filterVisibility = FALSE;
+        $this->_pagerVisibility  = FALSE;
         $this->setTitle($this->__('Anonygento'));
 
     }
@@ -29,7 +28,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
      */
     protected function _prepareCollection()
     {
-
         $collection = Mage::getModel('schumacherfm_anonygento/options_anonymizations')->getCollection();
         $this->setCollection($collection);
         return parent::_prepareCollection();
@@ -52,10 +50,10 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     {
         $baseUrl = $this->getUrl();
         $this->addColumn('value', array(
-            'header' => $this->__('Value'),
-            'align' => 'left',
-            'index' => 'value',
-            'sortable' => false,
+            'header'   => $this->__('Value'),
+            'align'    => 'left',
+            'index'    => 'value',
+            'sortable' => FALSE,
         ));
 
 //        $this->addColumn('description', array(
@@ -66,58 +64,58 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
 //        ));
 
         $this->addColumn('label', array(
-            'header' => $this->__('Label'),
-            'align' => 'left',
-            'index' => 'label',
-            'sortable' => false,
+            'header'   => $this->__('Label'),
+            'align'    => 'left',
+            'index'    => 'label',
+            'sortable' => FALSE,
         ));
 
         $this->addColumn('unanonymized', array(
-            'header' => $this->__('Unanonymized'),
-            'align' => 'left',
-            'index' => 'unanonymized',
-            'sortable' => false,
+            'header'   => $this->__('Unanonymized'),
+            'align'    => 'left',
+            'index'    => 'unanonymized',
+            'sortable' => FALSE,
         ));
 
         $this->addColumn('anonymized', array(
-            'header' => $this->__('Anonymized'),
-            'align' => 'left',
-            'index' => 'anonymized',
-            'sortable' => false,
+            'header'   => $this->__('Anonymized'),
+            'align'    => 'left',
+            'index'    => 'anonymized',
+            'sortable' => FALSE,
         ));
 
         $this->addColumn('rowcountcached', array(
-            'header' => $this->__('Row count cached?'),
-            'align' => 'left',
-            'index' => 'rowcountcached',
-            'sortable' => false,
+            'header'   => $this->__('Row count cached?'),
+            'align'    => 'left',
+            'index'    => 'rowcountcached',
+            'sortable' => FALSE,
         ));
 
         $this->addColumn('status', array(
-            'header' => $this->__('Status'),
-            'align' => 'left',
-            'index' => 'status',
-            'type' => 'options',
-            'options' => array(0 => $this->__('Sensitive Data!'), 1 => $this->__('Anonymized!')),
+            'header'         => $this->__('Status'),
+            'align'          => 'left',
+            'index'          => 'status',
+            'type'           => 'options',
+            'options'        => array(0 => $this->__('Sensitive Data!'), 1 => $this->__('Anonymized!')),
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
-        $this->addColumn('action',
-            array(
-                'header' => $this->__('View data'),
-                'type' => 'action',
-                'getter' => 'getValue',
-                'actions' => array(
-                    array(
-                        'caption' => $this->__('View'),
-                        'url' => array('base' => '*/*/view'),
-                        'field' => 'exec'
-                    ),
-                ),
-                'filter' => false,
-                'sortable' => false,
-                'is_system' => true,
-            ));
+//        $this->addColumn('action',
+//            array(
+//                'header' => $this->__('View data'),
+//                'type' => 'action',
+//                'getter' => 'getValue',
+//                'actions' => array(
+//                    array(
+//                        'caption' => $this->__('View'),
+//                        'url' => array('base' => '*/*/view'),
+//                        'field' => 'exec'
+//                    ),
+//                ),
+//                'filter' => false,
+//                'sortable' => false,
+//                'is_system' => true,
+//            ));
 
         return parent::_prepareColumns();
     }
@@ -144,7 +142,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
      */
     public function getRowUrl($row)
     {
-        return false;
+        return FALSE;
         //return $this->getUrl('*/*/edit', array('type'=>$row->getId()));
     }
 
@@ -160,16 +158,16 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
 
         $this->getMassactionBlock()->addItem('enable', array(
             'label' => Mage::helper('index')->__('Enable'),
-            'url' => $this->getUrl('*/*/massEnable'),
+            'url'   => $this->getUrl('*/*/massEnable'),
         ));
         $this->getMassactionBlock()->addItem('disable', array(
             'label' => Mage::helper('index')->__('Disable'),
-            'url' => $this->getUrl('*/*/massDisable'),
+            'url'   => $this->getUrl('*/*/massDisable'),
         ));
         $this->getMassactionBlock()->addItem('refresh', array(
-            'label' => Mage::helper('index')->__('Refresh'),
-            'url' => $this->getUrl('*/*/massRefresh'),
-            'selected' => true,
+            'label'    => Mage::helper('index')->__('Refresh'),
+            'url'      => $this->getUrl('*/*/massRefresh'),
+            'selected' => TRUE,
         ));
 
         return $this;

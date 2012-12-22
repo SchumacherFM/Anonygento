@@ -63,6 +63,32 @@ Installation Instructions
 3b. Call the extension via shell in the sit directory: php -f shell/anonygento.php
 
 
+Shell
+-----
+
+Call the script like shown below. This is the view if you choose "no".
+
+```
+$ php -f shell/anonygento.php
+Anonymize this Magento installation? [y/n]n
+Nothing done!
+$
+```
+
+This view shows the result for choosing "yes":
+
+```
+$ php -f anonygento.php
+Anonymize this Magento installation? [y/n]y
+Admin user name: [username]
+Admin password: ***********
+Welcome firstname lastname
+Running customer, work load: XXXX rows
+  0% [-------------------------------------]
+```
+and so on ...
+
+
 How to handle the observer?
 --------------------------
 There are three events which will be fired in different places.
