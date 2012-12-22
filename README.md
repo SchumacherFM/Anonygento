@@ -156,6 +156,7 @@ Running customer, work load: XXXX rows
 Running ...
 ```
 
+There are also nice colors :-)
 
 Support / Contribution
 ----------------------
