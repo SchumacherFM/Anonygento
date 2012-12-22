@@ -24,21 +24,88 @@ This extension anonymizes all customer related data from the following data obje
 - Customers Addresses
 - Orders
 - Order Addresses
+- Order Grid
+- Order Payment
 - Quotes
 - Quote Addresses
+- Quote Payment
+- Credit memo
+- Invoice
+- Shipment
 - Newsletter Subscribers
 - Diverse Grid Collections
-- Fires three events
+
+@Todo Enterprise tables like RMA, Sales credit memo, sales invoice grid, sales order grid,
+sales shipment grid
 
 
 Random Data
 -----------
-All data comes from self defined csv files. You provide the random data for the module.
-There are several files for the english language already provided.
+All data comes from self defined csv files which are store in the data folder.
+You provide the random data for the module. There are several files for the
+english language already provided.
 
-Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations still work correctly.
+@todo if the csv file is empty the a random string is generated.
 
-This module is optimized to handle a large amount of data with less memory.
+Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations
+still work correctly.
+
+This module is optimized to handle a large amount of data.
+
+
+Events
+------
+
+First event will be fired after data has been copied from the random object.
+This allows you to change for specific entities and objects the data.
+to the object for anonymization.
+Name:       anonygento_anonymizations_copy_after
+Arguments:  copied_object and mappings
+
+Example:
+
+```php
+
+class XXX_YYY_Model_Observer {
+
+    public function afterObjectCopy(Varien_Event_Observer $observer)
+    {
+        $copiedObject = $observer->getEvent()->getCopiedObject();
+
+        if($copiedObject->getBillingName()){
+            $copiedObject->setBillingName( 'Lorem ipsum' );
+        }
+
+    }
+}
+```
+
+Second event will be fired after getCustomer() has been called on the random customer
+model. This allows you to change specific random data for all entities.
+Name:       anonygento_random_customer_getcustomer_after
+Arguments:  customer
+
+Example:
+
+```php
+
+class XXX_YYY_Model_Observer {
+
+    public function afterCustomerCalled(Varien_Event_Observer $observer)
+    {
+        $customer = $observer->getEvent()->getCustomer();
+
+        if($customer->getTelephone()){
+            $customer->setTelephone( '0000000000000' );
+        }
+
+    }
+}
+```
+
+Third event: add your own table and mappings
+@todo implement
+
 
 
 Todo / Next Versions
@@ -85,9 +152,8 @@ Admin password: ***********
 Welcome firstname lastname
 Running customer, work load: XXXX rows
   0% [-------------------------------------]
+Running ...
 ```
-and so on ...
-
 
 How to handle the observer?
 --------------------------
