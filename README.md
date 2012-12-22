@@ -3,9 +3,11 @@ Anonygento
 
 Anonymizes all customer related data in a Magento shop!
 
-Anonygento is a Magento module which anonymizes all data especially customer, orders, newsletters. This anonymization
-is useful when you want to hire external developers. Even useful for your internal developers who really not need
-any kind of live data.
+Anonygento is a Magento module which anonymizes all data especially customer, orders, quotes, newsletters, etc.
+This anonymization is useful when you want to hire external developers or for your internal developers who really
+not need any kind of live data.
+
+Do not run this script in the production environment.
 
 
 About
