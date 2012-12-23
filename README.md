@@ -70,9 +70,9 @@ Fired in: `SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection`
 
 Name:       `anonygento_options_anonymizations_collection_after`
 
-Arguments:  `collection`
+Event prefix:  `collection`
 
-Example:
+Example Observer:
 
 ```php
 
@@ -82,13 +82,48 @@ class XXX_YYY_Model_Observer {
     {
         $collection = $observer->getEvent()->getCollection();
 
-        if($customer->getTelephone()){
-            $customer->setTelephone( '0000000000000' );
-        }
+        $option = array(
+          'label' => 'Store locator'
+          'value' => 'namespaceModuleEntity'
+          'model' => 'namespace_module/myAnonymizationProcess'
+        );
 
+        $customProcess = new Varien_Object($option);
+        $customProcess
+            ->setStatus( @todo )
+            ->setUnanonymized( (int)[number of unanonymized rows] )
+            ->setAnonymized( (int)[number of anonymized rows] );
+
+        $collection->addItem($customProcess);
     }
 }
 ```
+
+Extend your entity with the SQL column: `anonymized TINYINT(1) UNSIGNED NOT NULL DEFAULT 0`
+
+Example Model:
+
+```php
+
+class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
+{
+
+    public function run()
+    {
+        $collection = Mage::getModel('namespace_module/name')->getCollection();
+
+        $i = 0;
+        foreach ($collection as $model) {
+            $this->_anonymizeFooBar($model);
+            $this->getProgressBar()->update($i);
+            $i++;
+        }
+        $this->getProgressBar()->finish();
+    }
+}
+```
+
+A real world example follows soon.
 
 ### Event `anonygento_anonymizations_copy_after`
 
@@ -99,7 +134,7 @@ Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_copyObjectDat
 
 Name:       `anonygento_anonymizations_copy_after`
 
-Arguments:  `copied_object` and `mappings`
+Event prefix:  `copied_object` and `mappings`
 
 Example:
 
@@ -128,7 +163,7 @@ Fired in: `SchumacherFM_Anonygento_Model_Random_Customer::getCustomer`
 
 Name:       `anonygento_random_customer_getcustomer_after`
 
-Arguments:  `customer`
+Event prefix:  `customer`
 
 Example:
 

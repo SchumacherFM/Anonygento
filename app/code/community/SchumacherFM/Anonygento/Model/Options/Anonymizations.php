@@ -92,7 +92,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
         foreach ($this->getAllOptions() as $option) {
 
-            $optObj = $this->_array2VO($option);
+            $optObj = new Varien_Object($option);
             $optObj
                 ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']))
                 ->setUnanonymized($rowCountModel->unAnonymized($option['model']))
@@ -104,7 +104,6 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         Mage::dispatchEvent('anonygento_options_anonymizations_collection_after', array(
             'collection' => $this->_collection
         ));
-
 
         if ($this->useCache === 1) {
             $this->_setAdminCollection();
@@ -120,6 +119,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
     /**
      * @return Varien_Data_Collection
+     * @throws Exception
      */
     protected function _getAdminCollection()
     {
@@ -132,8 +132,9 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         $collection = new Varien_Data_Collection();
 
         foreach ($return['items'] as $item) {
+            $objItem = new Varien_Object($item);
             $collection->addItem(
-                $this->_array2VO($item)->setRowcountcached('yes')
+                $objItem->setRowcountcached('yes')
             );
         }
         return $collection;
@@ -147,17 +148,4 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         return (boolean)Mage::getSingleton('admin/session')->hasAnonymizationsCollection();
     }
 
-    /**
-     * array to varien object
-     *
-     * @param array $array
-     *
-     * @return Varien_Object
-     */
-    protected function _array2VO($array)
-    {
-        $obj = new Varien_Object();
-        $obj->addData($array);
-        return $obj;
-    }
 }
