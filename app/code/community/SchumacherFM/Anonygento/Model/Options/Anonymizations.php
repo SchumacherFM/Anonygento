@@ -101,6 +101,11 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
             $this->_collection->addItem($optObj);
         }
 
+        Mage::dispatchEvent('anonygento_options_anonymizations_collection_after', array(
+            'collection' => $this->_collection
+        ));
+
+
         if ($this->useCache === 1) {
             $this->_setAdminCollection();
         }

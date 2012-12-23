@@ -7,6 +7,8 @@ Anonygento is a Magento module which anonymizes all data especially customer, or
 This anonymization is useful when you want to hire external developers or for your internal developers who really
 not need any kind of live data.
 
+Anonygento can be easily extended by custom events / observers.
+
 Do not run this script in the production environment.
 
 
@@ -55,14 +57,48 @@ still work correctly.
 This module is optimized to handle a large amount of data.
 
 
-Events
-------
+Events / Observers
+------------------
 
-First event will be fired after data has been copied from the random object.
-This allows you to change for specific entities the data.
-to the object for anonymization.
+### Event `anonygento_options_anonymizations_collection_after`
+
+This event will be fired after the collection for the whole anonymization process has been generated.
+That means you can extend the console runner to anonymize custom entities. E.g.: store locator, news
+and other payment solutions.
+
+Fired in: `SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection`
+
+Name:       `anonygento_options_anonymizations_collection_after`
+
+Arguments:  `collection`
+
+Example:
+
+```php
+
+class XXX_YYY_Model_Observer {
+
+    public function afterOptionsAnonymizationCollection(Varien_Event_Observer $observer)
+    {
+        $collection = $observer->getEvent()->getCollection();
+
+        if($customer->getTelephone()){
+            $customer->setTelephone( '0000000000000' );
+        }
+
+    }
+}
+```
+
+### Event `anonygento_anonymizations_copy_after`
+
+This event will be fired after data has been copied from the random object.
+This allows you to change the random data for specific entities.
+
+Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_copyObjectData`
 
 Name:       `anonygento_anonymizations_copy_after`
+
 Arguments:  `copied_object` and `mappings`
 
 Example:
@@ -83,9 +119,15 @@ class XXX_YYY_Model_Observer {
 }
 ```
 
-Second event will be fired after getCustomer() has been called on the random customer
+### Event `anonygento_random_customer_getcustomer_after`
+
+An event will be fired after getCustomer() has been called on the random customer
 model. This allows you to change specific random data for all entities.
+
+Fired in: `SchumacherFM_Anonygento_Model_Random_Customer::getCustomer`
+
 Name:       `anonygento_random_customer_getcustomer_after`
+
 Arguments:  `customer`
 
 Example:
@@ -105,11 +147,6 @@ class XXX_YYY_Model_Observer {
     }
 }
 ```
-
-Third event: add your own table and mappings
-@todo implement
-
-
 
 Todo / Next Versions
 --------------------

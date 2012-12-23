@@ -14,20 +14,6 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
      */
 
     /**
-     * Event prefix
-     *
-     * @var string
-     */
-    protected $_eventPrefix = 'anonygento_random_customer';
-
-    /**
-     * Event object name
-     *
-     * @var string
-     */
-    protected $_eventObject = 'customer';
-
-    /**
      * path to csv data dir, no slash at the end
      */
     const DATA_PATH = 'app/code/community/SchumacherFM/Anonygento/data';
@@ -120,8 +106,8 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends Varien_Object
 
         $this->_getRandEmail();
 
-        Mage::dispatchEvent($this->_eventPrefix . '_getcustomer_after', array(
-            $this->_eventObject => $this,
+        Mage::dispatchEvent('anonygento_random_customer_getcustomer_after', array(
+            'customer' => $this,
         ));
 
         return $this->_currentCustomer;

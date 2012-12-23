@@ -76,7 +76,6 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
         return new Zend_ProgressBar($pbAdapter, 0, $count);
     }
 
-
     /**
      * gets a zend framework 2 class
      *
@@ -98,7 +97,6 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
         }
     }
 
-
     /**
      * @param $type
      *
@@ -106,7 +104,16 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
      */
     public function getModel($type)
     {
-        return Mage::getModel('schumacherfm_anonygento/anonymizations_' . $type);
+        $model = Mage::getModel('schumacherfm_anonygento/anonymizations_' . $type);
+
+        if( $model ){
+            return $model;
+        }
+
+        // if no model has been found we search directly for the type
+        // use case: to extend the process for custom tables
+        // event is fired in SchumacherFM_Anonygento_Model_Options_Anonymizations
+        return Mage::getModel($type);
     }
 
     /**
@@ -118,6 +125,8 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
     }
 
     /**
+     * counts a collection with the use of the column anonymized
+     *
      * @param $model
      *
      * @return integer

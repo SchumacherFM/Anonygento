@@ -9,13 +9,6 @@
 abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Varien_Object
 {
     /**
-     * Event prefix
-     *
-     * @var string
-     */
-    protected $_eventPrefix = 'anonygento_anonymizations';
-
-    /**
      * sql column name
      */
     const COLUMN_ANONYMIZED = 'anonymized';
@@ -124,7 +117,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $toObj->setData($newKey, $data);
         }
 
-        Mage::dispatchEvent($this->_eventPrefix . '_copy_after', array(
+        Mage::dispatchEvent('anonygento_anonymizations_copy_after', array(
             'copied_object' => $toObj,
             'mappings'      => $mappings,
         ));
