@@ -245,7 +245,7 @@ The admin password is shown in clear text ... no hidden input :-( but there are 
 
 #### Disabling the confirmation and username query
 
-Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV=true`.
+Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV=true`
 
 This is will enable the dev mode.
 
