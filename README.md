@@ -83,7 +83,7 @@ class XXX_YYY_Model_Observer {
         $collection = $observer->getEvent()->getCollection();
 
         $option = array(
-          'label' => 'Store locator'
+          'label' => 'Some label'
           'value' => 'namespaceModuleEntity'
           'model' => 'namespace_module/myAnonymizationProcess'
         );
@@ -113,13 +113,20 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
         $collection = Mage::getModel('namespace_module/name')->getCollection();
 
         $i = 0;
-        foreach ($collection as $model) {
+        foreach ($collection as $model)
+        {
             $this->_anonymizeFooBar($model);
             $this->getProgressBar()->update($i);
             $i++;
         }
         $this->getProgressBar()->finish();
     }
+
+    protected function _anonymizeFooBar($model)
+    {
+        // your code
+    }
+
 }
 ```
 
@@ -183,12 +190,13 @@ class XXX_YYY_Model_Observer {
 }
 ```
 
+
 Todo / Next Versions
 --------------------
-- Run via backend instead of shell
-- Enterprise tables
-- If no csv file fo a locale is found then generate real random strings
-- Anonymize all prices
+1. If the csv files are not found in the locale folder then generate real random strings
+2. Enterprise tables
+3. Anonymize all prices
+4. Run via backend instead of shell. Use a nice ajax updater
 
 
 Compatibility
@@ -199,16 +207,18 @@ Compatibility
 
 Installation Instructions
 -------------------------
-1. Git clone it somewhere, symlink it into your Magento installation. (Script will be provided soon)
+1. Git clone it somewhere, copy/symlink it into your Magento installation. (Script will be provided soon)
 2. Clear the cache, logout from the admin panel and then login again.
-3. Call the extension from from System -> Tools -> Anonygento (Currently not supported in version 0.0.1).
+3. Call the extension from from System -> Tools -> Anonygento
 4. Call the extension via shell in the `site` directory: `php -f shell/anonygento.php`
 
 
 Shell
 -----
 
-Call the script like shown below. This is the view if you choose "no".
+Call the script like shown below.
+
+#### This is the view if you choose "no".
 
 ```
 $ php -f shell/anonygento.php
@@ -217,7 +227,7 @@ Nothing done!
 $
 ```
 
-This view shows the result for choosing "yes":
+#### This view shows the result for choosing "yes":
 
 ```
 $ php -f anonygento.php
@@ -230,7 +240,14 @@ Running customer, work load: XXXX rows
 Running ...
 ```
 
-There are also nice colors :-)
+The admin password is shown in clear text ... no hidden input :-( but there are also nice colors :-)
+
+
+#### Disabling the confirmation and username query
+
+Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV=true`.
+
+This is will enable the dev mode.
 
 Support / Contribution
 ----------------------

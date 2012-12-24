@@ -42,8 +42,11 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         Varien_Profiler::stop('Anonygento');
         $duration = Varien_Profiler::fetch('Anonygento', 'sum');
 
-        $this->_consoleInstance->writeLine('Runs for ' . sprintf('%.2f', $duration) .
-            ' secs or ' . sprintf('%.2f', $duration / 60) . ' min ');
+        if ($duration > 0) {
+            $this->_consoleInstance->writeLine('Runs for ' . sprintf('%.2f', $duration) .
+                ' secs or ' . sprintf('%.2f', $duration / 60) . ' min ');
+
+        }
 
     }
 
@@ -58,7 +61,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         if ($this->_devMode !== TRUE) {
             $prompt = $this->_console->getModelZf2('console_prompt_confirm');
             $prompt->setPromptText('Anonymize this Magento installation? [y/n]');
-            $userResult = $prompt->show();
+            $userResult  = $prompt->show();
             $isAdminUser = $userResult ? $this->_console->isAdminUser() : FALSE;
         }
 
