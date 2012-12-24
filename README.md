@@ -249,6 +249,13 @@ Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV
 
 This is will enable the dev mode.
 
+
+Performance
+-----------
+
+On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
+and ~9000 quotes lasts for `x` minutes.
+
 Support / Contribution
 ----------------------
 Report a bug or send me a pull request.
