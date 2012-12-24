@@ -39,11 +39,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
      * @param Mage_Sales_Model_Order       $order
+     * @param Mage_Customer_Model_Customer $customer
      */
-    public function anonymizeByOrder(Mage_Customer_Model_Customer $customer, Mage_Sales_Model_Order $order)
+    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
+        if ($customer === null) {
+            $customer = $this->_getRandomCustomer()->getCustomer();
+        }
 
         $orderAddressCollection = $order->getAddressesCollection();
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
@@ -68,7 +71,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
         /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
 
-        $orderFields = SchumacherFM_Anonygento_Model_Random_Mappings::getOrderAddress();
+        $orderFields   = SchumacherFM_Anonygento_Model_Random_Mappings::getOrderAddress();
         $orderFields[] = 'entity_id';
 
         $this->_collectionAddAttributeToSelect($collection, $orderFields);

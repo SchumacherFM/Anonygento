@@ -16,7 +16,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
         $i = 0;
         foreach ($quoteCollection as $quote) {
-            $this->_anonymizeQuote();
+            $this->_anonymizeQuote($quote);
             $this->getProgressBar()->update($i);
             $i++;
         }
@@ -24,29 +24,44 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
     }
 
-    protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote)
+    /**
+     * @param Mage_Sales_Model_Quote       $quote
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
-        $randomCustomer = $this->_getRandomCustomer()->getCustomer();
+        if ($quote->getCustomerId() && !$customer) {
+            $customer = $quote->getCustomer();
+        } elseif (!$customer) {
+            $customer = $this->_getRandomCustomer()->getCustomer();
+        }
 
-        $this->_copyObjectData($randomCustomer, $quote,
+        $this->_copyObjectData($customer, $quote,
             SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
 
-        $this->_anonymizeQuoteAddresses($quote);
+        $this->_anonymizeQuoteAddresses($quote, $customer);
 
         $quote->getResource()->save($quote);
     }
 
-    protected function _anonymizeQuoteAddresses(Mage_Sales_Model_Quote $quote)
+    /**
+     * @param Mage_Sales_Model_Order       $order
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return int
+     */
+    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer)
     {
-        $addresses = $quote->getAddressesCollection();
-
-        foreach ($addresses as $address) {
-            /* @var $address Mage_Sales_Model_Quote_Address */
-            $this->_copyObjectData($randomCustomer, $address,
-                SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
-            $address->getResource()->save($address);
+        if (!$order->getQuoteId()) {
+            return 0;
         }
 
+        $quoteCollection = $this->_getCollection()
+            ->addFieldToFilter('entity_id', array('eq' => (int)$order->getQuoteId()));
+
+        foreach ($quoteCollection as $quote) {
+            $this->_anonymizeQuote($quote, $customer);
+        }
     }
 
     /**
@@ -54,13 +69,13 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      *
      * @return integer
      */
-    public function anonymizeQuoteByCustomer(Mage_Customer_Model_Customer $customer)
+    public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
     {
 
         $quoteCollection     = $this->_getCollection()
             ->addFieldToFilter('customer_id', array('eq' => (int)$customer->getId()));
-        $quoteCollectionSize = $quoteCollection->getSize();
-        if ($quoteCollectionSize == 0) {
+        $quoteCollectionSize = (int)$quoteCollection->getSize();
+        if ($quoteCollectionSize === 0) {
             return $quoteCollectionSize;
         }
 
@@ -69,7 +84,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             $this->_copyObjectData($customer, $quote,
                 SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
 
-            $this->_anonymizeQuoteAddress($customer, $quote);
+            $this->_anonymizeQuoteAddresses($quote, $customer);
             $quote->getResource()->save($quote);
         }
 
@@ -77,12 +92,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
      * @param Mage_Sales_Model_Quote       $quote
+     * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeQuoteAddress(Mage_Customer_Model_Customer $customer, Mage_Sales_Model_Quote $quote)
+    protected function _anonymizeQuoteAddresses(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_quoteAddress')->anonymizeByQuote($customer, $quote);
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_quoteAddress')->anonymizeByQuote($quote, $customer);
     }
 
     /**

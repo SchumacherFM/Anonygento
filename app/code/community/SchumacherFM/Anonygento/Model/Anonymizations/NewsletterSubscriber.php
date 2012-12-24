@@ -40,7 +40,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    public function anonymizeNewsletterByCustomer($customer)
+    public function anonymizeByCustomer($customer)
     {
         $subscriber = Mage::getModel('newsletter/subscriber');
         /* @var $subscriber Mage_Newsletter_Model_Subscriber */

@@ -132,6 +132,10 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
 
 A real world example follows soon.
 
+### Event `anonygento_random_mappings_after`
+
+If you have custom columns/attributes in your tables/entities then you can add them here.
+
 ### Event `anonygento_anonymizations_copy_after`
 
 This event will be fired after data has been copied from the random object.

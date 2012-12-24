@@ -15,7 +15,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
 
         $i = 0;
         foreach ($customerAddressCollection as $address) {
-            $this->_anonymizeCustomerAddress($address);
+            $this->_anonymizeByAddress($address);
             $this->getProgressBar()->update($i);
             $i++;
         }
@@ -26,12 +26,45 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
     /**
      * @param Mage_Customer_Model_Address $address
      */
-    protected function _anonymizeCustomerAddress(Mage_Customer_Model_Address $address)
+    protected function _anonymizeByAddress(Mage_Customer_Model_Address $address)
     {
         $customer       = $this->_randomCustomerModel->getCustomer();
         $addressMapping = SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress();
         $this->_copyObjectData($customer, $address, $addressMapping);
-        $address->save();
+        $address->getResource()->save($address);
+    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
+    {
+        $addressCollection = $customer->getAddressesCollection();
+        /* @var $addressCollection Mage_Customer_Model_Resource_Address_Collection */
+        $this->_collectionAddStaticAnonymized($addressCollection);
+
+        $size           = (int)$addressCollection->getSize();
+        $addressMapping = SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress();
+
+        if ($size === 1) {
+            $address = $addressCollection->getFirstItem();
+            $this->_copyObjectData($customer, $address, $addressMapping);
+            $address->save();
+        } elseif ($size > 1) {
+
+            $i = 0;
+            foreach ($addressCollection as $address) {
+
+                $randomCustomer = $i === 0
+                    ? $customer
+                    : $this->_getRandomCustomer();
+
+                $this->_copyObjectData($randomCustomer, $address, $addressMapping);
+                $address->getResource()->save($address);
+                $i++;
+            }
+        }
+
     }
 
     /**
@@ -46,7 +79,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
 
 // @todo refactor with addtional addFieldToSelect
 //        $this->_collectionAddAttributeToSelect($collection, $orderFields);
-
 
         $this->_collectionAddStaticAnonymized($collection);
 

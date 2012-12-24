@@ -30,7 +30,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeCustomer($customer)
+    protected function _anonymizeCustomer(Mage_Customer_Model_Customer $customer)
     {
         // SchumacherFM_Anonygento_Model_Random_Customer
         $customer = $this->_getRandomCustomer()->getCustomer($customer);
@@ -49,54 +49,33 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeCustomerNewsletter($customer)
+    protected function _anonymizeCustomerNewsletter(Mage_Customer_Model_Customer $customer)
     {
-        // SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')->anonymizeNewsletterByCustomer($customer);
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')->anonymizeByCustomer($customer);
     }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeQuote($customer)
+    protected function _anonymizeQuote(Mage_Customer_Model_Customer $customer)
     {
-        // SchumacherFM_Anonygento_Model_Anonymizations_Quote
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeQuoteByCustomer($customer);
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeByCustomer($customer);
     }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeOrder($customer)
+    protected function _anonymizeOrder(Mage_Customer_Model_Customer $customer)
     {
-        // SchumacherFM_Anonygento_Model_Anonymizations_Order
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_order')->anonymizeOrderByCustomer($customer);
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_order')->anonymizeByCustomer($customer);
     }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeCustomerAddresses($customer)
+    protected function _anonymizeCustomerAddresses(Mage_Customer_Model_Customer $customer)
     {
-        $addressCollection = $customer->getAddressesCollection();
-        /* @var $addressCollection Mage_Customer_Model_Resource_Address_Collection */
-        $this->_collectionAddStaticAnonymized($addressCollection);
-
-        $size           = (int)$addressCollection->getSize();
-        $addressMapping = SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress();
-
-        if ($size === 1) {
-            $address = $addressCollection->getFirstItem();
-            $this->_copyObjectData($customer, $address, $addressMapping);
-            $address->save();
-        } elseif ($size > 1) {
-            // @todo remove bug: now every address has the same data.
-            foreach ($addressCollection as $address) {
-                $this->_copyObjectData($customer, $address, $addressMapping);
-                $address->save();
-            }
-        }
-
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_customerAddress')->anonymizeByCustomer($customer);
     }
 
 }

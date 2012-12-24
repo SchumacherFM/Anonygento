@@ -39,16 +39,19 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
      * @param Mage_Sales_Model_Quote       $quote
+     * @param Mage_Customer_Model_Customer $customer
      */
-    public function anonymizeByQuote(Mage_Customer_Model_Customer $customer, Mage_Sales_Model_Quote $quote)
+    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
+        if ($customer === null) {
+            $customer = $this->_getRandomCustomer()->getCustomer();
+        }
 
         $quoteAddressCollection = $quote->getAddressesCollection();
         /* @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
 
-        $i=0;
+        $i = 0;
         foreach ($quoteAddressCollection as $quoteAddress) {
 
             $this->_copyObjectData($customer, $quoteAddress,
@@ -70,7 +73,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
 
         /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
 
-        $quoteFields = SchumacherFM_Anonygento_Model_Random_Mappings::getQuoteAddress();
+        $quoteFields   = SchumacherFM_Anonygento_Model_Random_Mappings::getQuoteAddress();
         $quoteFields[] = 'entity_id';
 
         $this->_collectionAddAttributeToSelect($collection, $quoteFields);
