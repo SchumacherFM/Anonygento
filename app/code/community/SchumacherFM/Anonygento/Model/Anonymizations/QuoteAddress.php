@@ -48,12 +48,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
         $quoteAddressCollection = $quote->getAddressesCollection();
         /* @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
 
+        $i=0;
         foreach ($quoteAddressCollection as $quoteAddress) {
 
             $this->_copyObjectData($customer, $quoteAddress,
                 SchumacherFM_Anonygento_Model_Random_Mappings::getQuoteAddress());
 
             $quoteAddress->getResource()->save($quoteAddress);
+            $i++;
         }
 
     }
@@ -64,12 +66,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
     protected function _getCollection()
     {
         $collection = Mage::getModel('sales/quote_address')
-            ->getCollection()
-            ->addAttributeToSelect('entity_id');
+            ->getCollection();
 
         /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
 
         $quoteFields = SchumacherFM_Anonygento_Model_Random_Mappings::getQuoteAddress();
+        $quoteFields[] = 'entity_id';
 
         $this->_collectionAddAttributeToSelect($collection, $quoteFields);
 

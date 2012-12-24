@@ -16,7 +16,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
         $i = 0;
         foreach ($quoteCollection as $quote) {
-            $this->_anonymizeQuote($quote);
+            $this->_anonymizeQuote();
             $this->getProgressBar()->update($i);
             $i++;
         }
@@ -31,6 +31,13 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         $this->_copyObjectData($randomCustomer, $quote,
             SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
 
+        $this->_anonymizeQuoteAddresses($quote);
+
+        $quote->getResource()->save($quote);
+    }
+
+    protected function _anonymizeQuoteAddresses(Mage_Sales_Model_Quote $quote)
+    {
         $addresses = $quote->getAddressesCollection();
 
         foreach ($addresses as $address) {
@@ -40,7 +47,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             $address->getResource()->save($address);
         }
 
-        $quote->getResource()->save($quote);
     }
 
     /**
@@ -51,9 +57,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     public function anonymizeQuoteByCustomer(Mage_Customer_Model_Customer $customer)
     {
 
-        $quoteCollection     = $this->_getCollection()->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
+        $quoteCollection     = $this->_getCollection()
+            ->addFieldToFilter('customer_id', array('eq' => (int)$customer->getId()));
         $quoteCollectionSize = $quoteCollection->getSize();
-
         if ($quoteCollectionSize == 0) {
             return $quoteCollectionSize;
         }
@@ -64,7 +70,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
                 SchumacherFM_Anonygento_Model_Random_Mappings::getQuote());
 
             $this->_anonymizeQuoteAddress($customer, $quote);
-
             $quote->getResource()->save($quote);
         }
 
@@ -86,13 +91,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     protected function _getCollection()
     {
         $collection = Mage::getModel('sales/quote')
-            ->getCollection()
-        // @todo must be addFieldToSelect
-            ->addAttributeToSelect('entity_id');
+            ->getCollection();
 
         /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
 
-        $quoteFields = SchumacherFM_Anonygento_Model_Random_Mappings::getQuote();
+        $quoteFields   = SchumacherFM_Anonygento_Model_Random_Mappings::getQuote();
+        $quoteFields[] = 'entity_id';
 
         $this->_collectionAddAttributeToSelect($collection, $quoteFields);
 

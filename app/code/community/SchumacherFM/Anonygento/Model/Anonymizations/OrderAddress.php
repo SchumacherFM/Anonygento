@@ -64,12 +64,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     protected function _getCollection()
     {
         $collection = Mage::getModel('sales/order_address')
-            ->getCollection()
-            ->addAttributeToSelect('entity_id');
+            ->getCollection();
 
         /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
 
         $orderFields = SchumacherFM_Anonygento_Model_Random_Mappings::getOrderAddress();
+        $orderFields[] = 'entity_id';
 
         $this->_collectionAddAttributeToSelect($collection, $orderFields);
 

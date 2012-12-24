@@ -114,7 +114,9 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
         foreach ($mappings as $key => $newKey) {
             $data = $fromObj->getData($key);
-            $toObj->setData($newKey, $data);
+            if ( $data !== null ) {
+                $toObj->setData($newKey, $data);
+            }
         }
 
         Mage::dispatchEvent('anonygento_anonymizations_copy_after', array(
@@ -155,7 +157,10 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
                 continue;
             }
 
-            $collection->addAttributeToSelect($field);
+            $attributeOrField = ($collection instanceof Mage_Eav_Model_Entity_Collection_Abstract)
+                ? 'addAttributeToSelect'
+                : 'addFieldToSelect';
+            $collection->$attributeOrField($field);
         }
 
     }
