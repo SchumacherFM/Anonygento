@@ -27,9 +27,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     protected function _anonymizeOrder(Mage_Sales_Model_Order $order)
     {
         if ($order->getCustomerId()) {
-            $customer = $order->getCustomer();
+            $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
             if (!$customer) {
-                throw new Exception('Customer is null in _anonymizeOrder');
+                Zend_Debug::dump($order->getData());
+                exit;
             }
         } else {
             $customer = $this->_getRandomCustomer()->getCustomer();

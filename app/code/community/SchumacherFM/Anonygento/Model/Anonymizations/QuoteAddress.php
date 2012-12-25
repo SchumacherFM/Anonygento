@@ -34,7 +34,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
 
         $this->_copyObjectData($randomCustomer, $quoteAddress, $this->_getMappings('QuoteAddress'));
 
-        $quoteAddress->getResource()->save($quoteAddress);
+//        $quoteAddress->getResource()->save($quoteAddress);
+        $quoteAddress->save();
     }
 
     /**
@@ -52,7 +53,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
 
         foreach ($quoteAddressCollection as $quoteAddress) {
             $this->_copyObjectData($customer, $quoteAddress, $this->_getMappings('QuoteAddress'));
-            $quoteAddress->getResource()->save($quoteAddress);
+//            $quoteAddress->getResource()->save($quoteAddress);
+            $quoteAddress->save();
         }
 
     }

@@ -108,6 +108,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
             // system attributes
             'customer_id',
+            'entity_id',
 
         ));
 
@@ -128,6 +129,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'prefix'     => 'prefix',
             'taxvat'     => 'vat_id',
             'anonymized' => 'anonymized',
+
+            // system attributes
+            'entity_id',
 
         ));
 
@@ -165,6 +169,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
             // system attributes
             'customer_id',
+            'entity_id',
 
         ));
 
@@ -194,6 +199,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                     'args' => array(80)
                 ),
             ),
+            // system attributes
+            'address_id',
 
         ));
 

@@ -54,7 +54,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
             $this->_copyObjectData($customer, $orderAddress, $this->_getMappings('OrderAddress'));
 
-            $orderAddress->getResource()->save($orderAddress);
+//            $orderAddress->getResource()->save($orderAddress);
+            $orderAddress->save();
         }
 
     }
