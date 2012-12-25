@@ -15,7 +15,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 
     public function run()
     {
-        $customerCollection = $this->_getCustomerCollection(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getCustomer()));
+        $customerMap = $this->_getMappings('Customer');
+
+        $customerCollection = $this->_getCustomerCollection($customerMap);
 
         $i = 0;
         foreach ($customerCollection as $customer) {

@@ -260,6 +260,12 @@ Performance
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
 and ~9000 quotes lasts for `x` minutes.
 
+If you get errors like this one:
+
+`Fatal error: Allowed memory size of xxx bytes exhausted (tried to allocate x bytes) in abc.php on line x`
+
+Just rerun the script.
+
 Support / Contribution
 ----------------------
 Report a bug or send me a pull request.

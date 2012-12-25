@@ -35,8 +35,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
             $customer = $this->_getRandomCustomer()->getCustomer();
         }
 
-        $this->_copyObjectData($customer, $order,
-            SchumacherFM_Anonygento_Model_Random_Mappings::getOrder());
+        $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
 
         $this->_anonymizeOrderAddresses($order);
 
@@ -51,7 +50,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
     {
 
-        $orderCollection     = $this->_getCollection()
+        $orderCollection = $this->_getCollection()
             ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
 
         $orderCollectionSize = $orderCollection->getSize();
@@ -62,8 +61,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
         foreach ($orderCollection as $order) {
 
-            $this->_copyObjectData($customer, $order,
-                SchumacherFM_Anonygento_Model_Random_Mappings::getOrder());
+            $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
 
             $this->_anonymizeOrderAddresses($order, $customer);
             $this->_anonymizeQuote($order, $customer);
@@ -100,11 +98,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         $collection = Mage::getModel('sales/order')
             ->getCollection()
             ->addAttributeToSelect('entity_id');
-
         /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
 
-        $orderFields = SchumacherFM_Anonygento_Model_Random_Mappings::getOrder();
-        $this->_collectionAddAttributeToSelect($collection, $orderFields);
+        $this->_collectionAddAttributeToSelect($collection, $this->_getMappings('Order'));
 
         $this->_collectionAddStaticAnonymized($collection);
 

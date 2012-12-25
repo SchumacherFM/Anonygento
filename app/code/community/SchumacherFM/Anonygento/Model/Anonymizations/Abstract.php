@@ -47,6 +47,25 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
+     * @param string $type
+     *
+     * @return SchumacherFM_Anonygento_Model_Random_Mappings
+     */
+    protected function _getMappings($type)
+    {
+        $mapping = $this->_getInstance('schumacherfm_anonygento/random_mappings');
+        /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
+        $mapped = $mapping->{'set' . $type}();
+
+        Mage::dispatchEvent('anonygento_anonymizations_get_mapping_after', array(
+            'type'   => $type,
+            'mapped' => $mapped,
+        ));
+
+        return $mapped;
+    }
+
+    /**
      * executes and runs one anonymization process
      *
      * @return mixed
@@ -80,13 +99,15 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
-     * @param array   $addAttributeToSelect
-     * @param integer $isAnonymized
+     * @param SchumacherFM_Anonygento_Model_Random_Mappings   $mappings
+     * @param integer                                         $isAnonymized
      *
      * @return Mage_Customer_Model_Resource_Customer_Collection
      */
-    protected function _getCustomerCollection($addAttributeToSelect = array(), $isAnonymized = 0)
+    protected function _getCustomerCollection(SchumacherFM_Anonygento_Model_Random_Mappings $mappings, $isAnonymized = 0)
     {
+        $addAttributeToSelect = $mappings->getEntityAttributes();
+
         $collection = Mage::getModel('customer/customer')
             ->getCollection()
             ->addAttributeToSelect($addAttributeToSelect);
@@ -100,21 +121,24 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     /**
      * copies the data from obj to another using a mapping array
      *
-     * @param object  $fromObj
-     * @param object  $toObj
-     * @param array   $mappings key=>value
+     * @param object                                          $fromObj
+     * @param object                                          $toObj
+     * @param SchumacherFM_Anonygento_Model_Random_Mappings   $mappings
      *
      * @return bool
      */
-    protected function _copyObjectData($fromObj, $toObj, $mappings = array())
+    protected function _copyObjectData($fromObj, $toObj, SchumacherFM_Anonygento_Model_Random_Mappings $mappings)
     {
-        if (count($mappings) === 0) {
+
+        $mapped = $mappings->getData();
+
+        if (count($mapped) === 0) {
             return FALSE;
         }
 
-        foreach ($mappings as $key => $newKey) {
+        foreach ($mapped as $key => $newKey) {
             $data = $fromObj->getData($key);
-            if ( $data !== null ) {
+            if ($data !== null) {
                 $toObj->setData($newKey, $data);
             }
         }
@@ -147,10 +171,14 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     /**
      * @param object $collection
-     * @param array  $fields from the mapping table the values
+     * @param array|SchumacherFM_Anonygento_Model_Random_Mappings  $fields from the mapping table the values
      */
-    protected function _collectionAddAttributeToSelect($collection, $fields = array())
+    protected function _collectionAddAttributeToSelect($collection, $fields )
     {
+        if( $fields instanceof SchumacherFM_Anonygento_Model_Random_Mappings ){
+            $fields = $fields->getData();
+        }
+
         foreach ($fields as $key => $field) {
 
             if ($key === 'fill' || is_array($field)) {

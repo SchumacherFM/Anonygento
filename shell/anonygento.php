@@ -86,14 +86,16 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
             $reCalc = $this->_console->reCalcUnAnonymized($anonExec->getModel());
 
             if ($anonModel) {
-                $this->_consoleInstance->writeLine('Running ' . $anonExec->getLabel() . ', work load: ' .
-                        $anonExec->getUnanonymized() . '/' . $reCalc . ' rows',
-                    SchumacherFM_Anonygento_Model_Console_Color::MAGENTA);
+                $this->_consoleInstance->writeLine(
+                    'Working on ' . $anonExec->getLabel() . ': ' . $reCalc . '/' . $anonExec->getAnonymized(),
+                    SchumacherFM_Anonygento_Model_Console_Color::MAGENTA
+                );
 
                 if ($reCalc > 0 || $this->_devMode === TRUE) {
                     $progessBar = $this->_console->getProgressBar($reCalc);
                     $anonModel->setProgressBar($progessBar);
                     $anonModel->run();
+                    $anonModel = null;
                 }
             } else {
                 $this->_consoleInstance->writeLine('Model ' . $anonExec->getValue() . ' not found or not necessary!',

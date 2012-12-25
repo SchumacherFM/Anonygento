@@ -28,8 +28,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     protected function _anonymizeByAddress(Mage_Customer_Model_Address $address)
     {
-        $customer       = $this->_randomCustomerModel->getCustomer();
-        $addressMapping = SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress();
+        $customer       = $this->_getRandomCustomer()->getCustomer();
+        $addressMapping = $this->_getMappings('CustomerAddress');
         $this->_copyObjectData($customer, $address, $addressMapping);
         $address->getResource()->save($address);
     }
@@ -44,7 +44,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
         $this->_collectionAddStaticAnonymized($addressCollection);
 
         $size           = (int)$addressCollection->getSize();
-        $addressMapping = SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress();
+        $addressMapping = $this->_getMappings('CustomerAddress');
 
         if ($size === 1) {
             $address = $addressCollection->getFirstItem();
@@ -74,11 +74,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
     {
         $collection = Mage::getModel('customer/address')
             ->getCollection()
-            ->addAttributeToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getCustomerAddress()));
+            ->addAttributeToSelect($this->_getMappings('CustomerAddress')->getEntityAttributes());
         /* @var $collection Mage_Customer_Model_Resource_Address_Collection */
-
-// @todo refactor with addtional addFieldToSelect
-//        $this->_collectionAddAttributeToSelect($collection, $orderFields);
 
         $this->_collectionAddStaticAnonymized($collection);
 

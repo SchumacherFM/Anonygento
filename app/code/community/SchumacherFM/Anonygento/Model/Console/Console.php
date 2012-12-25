@@ -63,17 +63,7 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
      */
     public function getProgressBar($count)
     {
-        $pbAdapter = new Zend_ProgressBar_Adapter_Console(
-            array('elements' =>
-                  array(Zend_ProgressBar_Adapter_Console::ELEMENT_PERCENT,
-                      Zend_ProgressBar_Adapter_Console::ELEMENT_BAR /* ,
-                     this is to weird for showing it because of the many recalculations
-                      Zend_ProgressBar_Adapter_Console::ELEMENT_ETA */
-                  )
-            )
-        );
-
-        return new Zend_ProgressBar($pbAdapter, 0, $count);
+        return Mage::getModel('schumacherfm_anonygento/console_progressBar', array('count' => $count));
     }
 
     /**
@@ -106,7 +96,7 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
     {
         $model = Mage::getModel('schumacherfm_anonygento/anonymizations_' . $type);
 
-        if( $model ){
+        if ($model) {
             return $model;
         }
 

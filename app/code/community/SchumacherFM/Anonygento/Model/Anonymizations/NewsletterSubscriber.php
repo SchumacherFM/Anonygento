@@ -25,13 +25,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     /**
      * @param Mage_Newsletter_Model_Subscriber $subscriber
      */
-    protected function _anonymizeNewsletter(Mage_Core_Model_Abstract $subscriber)
+    protected function _anonymizeNewsletter(Mage_Newsletter_Model_Subscriber $subscriber)
     {
 
         $customer = $this->_getRandomCustomer()->getCustomer();
 
-        $this->_copyObjectData($customer, $subscriber,
-            SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber());
+        $this->_copyObjectData($customer, $subscriber, $this->_getMappings('NewsletterSubscriber'));
 
         $subscriber->save();
 
@@ -40,15 +39,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    public function anonymizeByCustomer($customer)
+    public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
     {
         $subscriber = Mage::getModel('newsletter/subscriber');
         /* @var $subscriber Mage_Newsletter_Model_Subscriber */
         $subscriber->loadByCustomer($customer);
 
         if ($subscriber->getId()) {
-            $this->_copyObjectData($customer, $subscriber,
-                SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber());
+            $this->_copyObjectData($customer, $subscriber, $this->_getMappings('NewsletterSubscriber'));
             $subscriber->save();
         }
     }
@@ -60,12 +58,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
     {
         $collection = Mage::getModel('newsletter/subscriber')
             ->getCollection()
-            ->addFieldToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getNewsletterSubscriber()));
+            ->addFieldToSelect($this->_getMappings('NewsletterSubscriber')->getEntityAttributes());
         /* @var $collection Mage_Newsletter_Model_Resource_Subscriber_Collection */
-
-// @todo refactor with addtional addFieldToSelect
-//        $this->_collectionAddAttributeToSelect($collection, $orderFields);
-
 
         $this->_collectionAddStaticAnonymized($collection, 0);
 

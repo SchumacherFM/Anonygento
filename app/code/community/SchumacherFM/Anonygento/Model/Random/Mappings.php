@@ -6,8 +6,16 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @bugs        https://github.com/SchumacherFM/Anonygento/issues
  */
-class SchumacherFM_Anonygento_Model_Random_Mappings
+class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 {
+    /**
+     * @return array
+     */
+    public function getEntityAttributes()
+    {
+        return array_values($this->getData());
+    }
+
     /**
      * these mappings defined the fields which can be overwritten
      * base model is: SchumacherFM_Anonygento_Model_Random_Customer
@@ -15,22 +23,22 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
      * RandomCusteomer => CustomerAddress
      */
 
-    public static function getCustomer()
+    public function setCustomer()
     {
-        return array(
+        return $this->addData(array(
             'prefix'     => 'prefix',
             'email'      => 'email',
             'firstname'  => 'firstname',
             'lastname'   => 'lastname',
             'suffix'     => 'suffix',
             'anonymized' => 'anonymized',
-        );
+        ));
     }
 
-    public static function getCustomerAddress()
+    public function setCustomerAddress()
     {
 
-        return array(
+        return $this->addData(array(
             'anonymized' => 'anonymized',
             'prefix'     => 'prefix',
             'firstname'  => 'firstname',
@@ -39,8 +47,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
             'telephone'  => 'telephone',
             'fax'        => 'fax',
             'street'     => 'street',
-
-        );
+        ));
 
     }
 
@@ -50,22 +57,22 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
      *
      * @return array
      */
-    public static function getNewsletterSubscriber()
+    public function setNewsletterSubscriber()
     {
 
-        return array(
+        return $this->addData(array(
             'anonymized' => 'anonymized',
             'email'      => 'subscriber_email',
-        );
+        ));
 
     }
 
-    public static function getGiftMessage()
+    public function setGiftMessage()
     {
-        return array(
+        return $this->addData(array(
             'anonymized' => 'anonymized',
             'email'      => 'sender',
-        );
+        ));
 
     }
 
@@ -74,9 +81,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
      *
      * @return array
      */
-    public static function getOrder()
+    public function setOrder()
     {
-        return array(
+        return $this->addData(array(
             'email'      => 'customer_email',
             'firstname'  => 'customer_firstname',
             'lastname'   => 'customer_lastname',
@@ -87,13 +94,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
             'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 
-        );
+        ));
 
     }
 
-    public static function getOrderAddress()
+    public function setOrderAddress()
     {
-        return array(
+        return $this->addData(array(
             'fax'        => 'fax',
             'street'     => 'street',
             'email'      => 'email',
@@ -107,7 +114,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
             'taxvat'     => 'vat_id',
             'anonymized' => 'anonymized',
 
-        );
+        ));
 
     }
 
@@ -116,9 +123,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
      *
      * @return array
      */
-    public static function getQuote()
+    public function setQuote()
     {
-        return array(
+        return $this->addData(array(
             'email'      => 'customer_email',
             'firstname'  => 'customer_firstname',
             'lastname'   => 'customer_lastname',
@@ -141,13 +148,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
                 ),
             ),
 
-        );
+        ));
 
     }
 
-    public static function getQuoteAddress()
+    public function setQuoteAddress()
     {
-        return array(
+        return $this->addData(array(
             'fax'        => 'fax',
             'street'     => 'street',
             'email'      => 'email',
@@ -170,9 +177,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings
                 ),
             ),
 
-        );
+        ));
 
     }
-
 
 }

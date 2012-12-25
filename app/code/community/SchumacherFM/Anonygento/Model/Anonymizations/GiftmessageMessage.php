@@ -25,13 +25,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
     /**
      * @param Mage_GiftMessage_Model_Message $subscriber
      */
-    protected function _anonymizeGiftMessage(Mage_Core_Model_Abstract $message)
+    protected function _anonymizeGiftMessage(Mage_GiftMessage_Model_Message $message)
     {
 
         $customer = $this->_getRandomCustomer()->getCustomer();
 
-        $this->_copyObjectData($customer, $message,
-            SchumacherFM_Anonygento_Model_Random_Mappings::getGiftMessage());
+        $this->_copyObjectData($customer, $message, $this->_getMappings('GiftMessage'));
 
         $message->setMessage($this->_getInstance('schumacherfm_anonygento/random_loremIpsum')->getLoremIpsum(mt_rand(20, 40), 'txt'));
         $message->setRecipient($this->_getRandomCustomer()->getEmailWeird());
@@ -47,11 +46,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
     {
         $collection = Mage::getModel('giftmessage/message')
             ->getCollection()
-            ->addFieldToSelect(array_values(SchumacherFM_Anonygento_Model_Random_Mappings::getGiftMessage()));
+            ->addFieldToSelect($this->_getMappings('GiftMessage')->getEntityAttributes());
         /* @var $collection Mage_GiftMessage_Model_Resource_Message_Collection */
-
-// @todo refactor with addtional addFieldToSelect
-//        $this->_collectionAddAttributeToSelect($collection, $orderFields);
 
         $this->_collectionAddStaticAnonymized($collection, 0);
 
