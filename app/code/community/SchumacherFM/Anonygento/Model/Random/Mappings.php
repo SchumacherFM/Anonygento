@@ -13,7 +13,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
      */
     public function getEntityAttributes()
     {
-        return array_values($this->getData());
+        $data = $this->getData();
+
+        if (isset($data['fill'])) {
+            unset($data['fill']);
+        }
+
+        return array_values($data);
     }
 
     /**
@@ -32,6 +38,12 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'lastname'   => 'lastname',
             'suffix'     => 'suffix',
             'anonymized' => 'anonymized',
+            'fill'       => array(
+                'password_hash' => array(
+                    'exec' => 'getRandomString',
+                    'args' => array(32)
+                ),
+            ),
         ));
     }
 
@@ -94,6 +106,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 
+            // system attributes
+            'customer_id',
+
         ));
 
     }
@@ -148,6 +163,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                 ),
             ),
 
+            // system attributes
+            'customer_id',
+
         ));
 
     }
@@ -171,7 +189,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             // @todo fields not in the customer object but needed
             'fill'       => array(
 
-                'customer_note' => array(
+                'customer_notes' => array(
                     'exec' => 'getLoremIpsum',
                     'args' => array(80)
                 ),

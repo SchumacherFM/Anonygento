@@ -35,9 +35,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         } elseif (!$customer) {
             $customer = $this->_getRandomCustomer()->getCustomer();
         }
-
         $this->_copyObjectData($customer, $quote, $this->_getMappings('Quote'));
 
+        // bug, die adressen werden nicht gefunden ...
         $this->_anonymizeQuoteAddresses($quote, $customer);
 
         $quote->getResource()->save($quote);
@@ -107,7 +107,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             ->getCollection();
 
         /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
-        $this->_collectionAddAttributeToSelect($collection, $this->_getMappings('Quote'));
+        $this->_collectionAddAttributeToSelect($collection,
+            $this->_getMappings('Quote')
+        );
 
         $this->_collectionAddStaticAnonymized($collection);
 
