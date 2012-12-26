@@ -80,6 +80,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
         $_execCollection = $this->_console->getAnonymizationCollection();
 
+        echo $this->_console->printInfoTable($_execCollection);
+
         foreach ($_execCollection as $anonExec) {
             $anonModel = $this->_console->getModel($anonExec->getValue());
 
@@ -94,8 +96,10 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                 if ($reCalc > 0 || $this->_devMode === TRUE) {
                     $progessBar = $this->_console->getProgressBar($reCalc);
                     $anonModel->setProgressBar($progessBar);
+
                     $anonModel->run();
                     $anonModel = null;
+
                 }
             } else {
                 $this->_consoleInstance->writeLine('Model ' . $anonExec->getValue() . ' not found or not necessary!',

@@ -126,4 +126,43 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
         return Mage::getModel('schumacherfm_anonygento/counter')->unAnonymized($model);
     }
 
+    /**
+     * @param Varien_Data_Collection $execCollection
+     *
+     * @return Zend_Text_Table
+     */
+    public function printInfoTable(Varien_Data_Collection $execCollection)
+    {
+
+        $table = new Zend_Text_Table(array(
+            'columnWidths' => array(25, 13, 11, 8),
+            'AutoSeparate' => Zend_Text_Table::AUTO_SEPARATE_HEADER
+        ));
+
+        $table->appendRow(array('Label', 'Unanonymized', 'Anonymized', '  Total'));
+        foreach ($execCollection as $entities) {
+
+            $row = new Zend_Text_Table_Row();
+
+            $row->appendColumn(
+                new Zend_Text_Table_Column($entities->getLabel())
+            );
+            $row->appendColumn(
+                new Zend_Text_Table_Column($entities->getUnanonymized() . ' ', Zend_Text_Table_Column::ALIGN_RIGHT)
+            );
+            $row->appendColumn(
+                new Zend_Text_Table_Column($entities->getAnonymized() . ' ', Zend_Text_Table_Column::ALIGN_RIGHT)
+            );
+            $row->appendColumn(
+                new Zend_Text_Table_Column(($entities->getUnanonymized() + $entities->getAnonymized()) . ' ', Zend_Text_Table_Column::ALIGN_RIGHT)
+            );
+
+            $table->appendRow($row);
+
+        }
+
+        return $table;
+
+    }
+
 }
