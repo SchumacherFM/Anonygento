@@ -30,11 +30,19 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      */
     protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
-        if ($quote->getCustomerId() && !$customer) {
+
+        $customerId = (int)$quote->getCustomerId();
+
+        if ($customerId > 0 && !$customer) {
             $customer = $quote->getCustomer();
-        } elseif (!$customer) {
+            /* getCustomer does not always return a customer model */
+            $customerId = (int)$customer->getCustomerId();
+        }
+
+        if ($customerId === 0) {
             $customer = $this->_getRandomCustomer()->getCustomer();
         }
+
         $this->_copyObjectData($customer, $quote, $this->_getMappings('Quote'));
 
         // bug, die adressen werden nicht gefunden ...
