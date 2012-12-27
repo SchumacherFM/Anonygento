@@ -16,6 +16,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         $data = $this->getData();
 
         if (isset($data['fill'])) {
+            foreach ($data['fill'] as $attributeName => $options) {
+                $data[] = $attributeName;
+            }
             unset($data['fill']);
         }
 
@@ -109,6 +112,9 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             // system attributes
             'customer_id',
             'entity_id',
+            'quote_id',
+            'shipping_address_id',
+            'billing_address_id',
 
         ));
 
@@ -137,6 +143,65 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
     }
 
+    public function setOrderGrid()
+    {
+        return $this->addData(array(
+            'anonymized' => 'anonymized',
+
+            // system attributes
+            'entity_id',
+            'customer_id',
+
+        ));
+
+    }
+
+    public function setOrderPayment()
+    {
+        return $this->addData(array(
+
+            'account_status'               => 'account_status',
+            'additional_data'              => 'additional_data',
+            'additional_information'       => 'additional_information',
+            'address_status'               => 'address_status',
+            'anet_trans_method'            => 'anet_trans_method',
+            'cc_approval'                  => 'cc_approval',
+            'cc_avs_status'                => 'cc_avs_status',
+            'cc_cid_status'                => 'cc_cid_status',
+            'cc_debug_request_body'        => 'cc_debug_request_body',
+            'cc_debug_response_body'       => 'cc_debug_response_body',
+            'cc_debug_response_serialized' => 'cc_debug_response_serialized',
+            'cc_exp_month'                 => 'cc_exp_month',
+            'cc_exp_year'                  => 'cc_exp_year',
+            'cc_last4'                     => 'cc_last4',
+            'cc_number_enc'                => 'cc_number_enc',
+            'cc_owner'                     => 'cc_owner',
+            'cc_secure_verify'             => 'cc_secure_verify',
+            'cc_ss_issue'                  => 'cc_ss_issue',
+            'cc_ss_start_month'            => 'cc_ss_start_month',
+            'cc_ss_start_year'             => 'cc_ss_start_year',
+            'cc_status'                    => 'cc_status',
+            'cc_status_description'        => 'cc_status_description',
+            'cc_trans_id'                  => 'cc_trans_id',
+            'cc_type'                      => 'cc_type',
+            'echeck_account_name'          => 'echeck_account_name',
+            'echeck_account_type'          => 'echeck_account_type',
+            'echeck_bank_name'             => 'echeck_bank_name',
+            'echeck_routing_number'        => 'echeck_routing_number',
+            'echeck_type'                  => 'echeck_type',
+            'last_trans_id'                => 'last_trans_id',
+            'paybox_request_number'        => 'paybox_request_number',
+            'po_number'                    => 'po_number',
+            'protection_eligibility'       => 'protection_eligibility',
+
+            'anonymized'                   => 'anonymized',
+            // system attributes
+            'entity_id',
+
+        ));
+
+    }
+
     /**
      * customer fields => sales_flat_quote fields
      *
@@ -155,15 +220,20 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 
-            // @todo fields not in the customer object but needed
             'fill'       => array(
+                // these attributes will be filled every time, regardless if they are empty in the
+                // original datasource or not
                 'password_hash' => array(
-                    'exec' => 'getRandomString',
-                    'args' => array(32)
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(32)
                 ),
                 'customer_note' => array(
-                    'exec' => 'getLoremIpsum',
-                    'args' => array(80)
+                    'model'  => 'schumacherfm_anonygento/random_loremIpsum',
+                    'helper' => NULL,
+                    'method' => 'getLoremIpsum',
+                    'args'   => array(80, 'plain')
                 ),
             ),
 

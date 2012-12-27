@@ -20,33 +20,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
             $this->getProgressBar()->update($i);
             $i++;
         }
+
         $this->getProgressBar()->finish();
 
-    }
-
-    protected function _anonymizeOrder(Mage_Sales_Model_Order $order)
-    {
-        if ($order->getCustomerId()) {
-            $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
-            if (!$customer) {
-                Zend_Debug::dump($order->getData());
-                exit;
-            }
-        } else {
-            $customer = $this->_getRandomCustomer()->getCustomer();
-        }
-
-        $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
-
-        $this->_anonymizeOrderAddresses($order);
-
-        $order->getResource()->save($order);
     }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
      *
-     * @return integer
+     * @return boolean
      */
     public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
     {
@@ -54,23 +36,47 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         $orderCollection = $this->_getCollection()
             ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
 
-        $orderCollectionSize = $orderCollection->getSize();
+        $orderCollectionSize = (int)$orderCollection->getSize();
 
-        if ($orderCollectionSize == 0) {
-            return 0;
+        if ($orderCollectionSize === 0) {
+            return FALSE;
         }
 
         foreach ($orderCollection as $order) {
-
-            $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
-
-            $this->_anonymizeOrderAddresses($order, $customer);
-            $this->_anonymizeQuote($order, $customer);
-
-            $order->getResource()->save($order);
+            $this->_anonymizeOrder($order, $customer);
         }
 
-        return $orderCollectionSize;
+    }
+
+    /**
+     * @param Mage_Sales_Model_Order       $order
+     * @param Mage_Customer_Model_Customer $customer
+     *
+     * @throws Exception
+     */
+    protected function _anonymizeOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    {
+
+        if ($order->getCustomerId() && !$customer) {
+            $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
+            if (!$customer) {
+                throw new Exception('Cant find the customer, please contact the developer!');
+            }
+        } elseif (!$customer) {
+            $customer = $this->_getRandomCustomer()->getCustomer();
+        }
+
+        $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
+
+        $this->_anonymizeOrderAddresses($order, $customer);
+        $this->_anonymizeOrderPayment($order, $customer);
+        $this->_anonymizeQuote($order, $customer);
+
+        $order->getResource()->save($order);
+
+        // update OrderGrid
+        // @see Mage_Sales_Model_Resource_Order_Abstract
+        $order->getResource()->updateGridRecords($order->getId());
     }
 
     /**
@@ -80,6 +86,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
         $this->_getInstance('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order, $customer);
+    }
+
+    /**
+     * @param Mage_Sales_Model_Order       $order
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function _anonymizeOrderPayment(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    {
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_orderPayment')->anonymizeByOrder($order, $customer);
     }
 
     /**

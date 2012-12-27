@@ -143,6 +143,15 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             }
         }
 
+        if (isset($mappings['fill']) && is_array($mappings['fill'])) {
+
+            $fillModel = $this->_getInstance('schumacherfm_anonygento/random_fill');
+            $fillModel->setToObj($toObj);
+            $fillModel->setFill($mappings['fill']);
+            $fillModel->fill();
+
+        }
+
         Mage::dispatchEvent('anonygento_anonymizations_copy_after', array(
             'copied_object' => $toObj,
             'mappings'      => $mappings,
@@ -170,12 +179,12 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
-     * @param object $collection
+     * @param object                                               $collection
      * @param array|SchumacherFM_Anonygento_Model_Random_Mappings  $fields from the mapping table the values
      */
-    protected function _collectionAddAttributeToSelect($collection, $fields )
+    protected function _collectionAddAttributeToSelect($collection, $fields)
     {
-        if( $fields instanceof SchumacherFM_Anonygento_Model_Random_Mappings ){
+        if ($fields instanceof SchumacherFM_Anonygento_Model_Random_Mappings) {
             $fields = $fields->getData();
         }
 
