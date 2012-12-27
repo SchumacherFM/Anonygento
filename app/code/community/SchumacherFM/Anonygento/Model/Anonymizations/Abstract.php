@@ -143,11 +143,12 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             }
         }
 
-        if (isset($mappings['fill']) && is_array($mappings['fill'])) {
+        $fill = $mappings->getFill();
+        if (is_array($fill)) {
 
             $fillModel = $this->_getInstance('schumacherfm_anonygento/random_fill');
             $fillModel->setToObj($toObj);
-            $fillModel->setFill($mappings['fill']);
+            $fillModel->setMappings($mappings);
             $fillModel->fill();
 
         }

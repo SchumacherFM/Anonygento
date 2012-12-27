@@ -32,6 +32,13 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
      */
     protected function _initCurrentCustomer(Mage_Customer_Model_Customer $customer)
     {
+        $paymentData = array(
+            'month'  => mt_rand(1, 12),
+            'year'   => mt_rand(2013, 2022),
+            'last4'  => mt_rand(1000, 9999),
+            'ccType' => $this->_getCcType(),
+        );
+
         if ($customer === null) {
             $this->_currentCustomer = new Varien_Object();
             $this->_currentCustomer->setEntityId(mt_rand());
@@ -41,6 +48,7 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
                 'firstname'  => $this->_getCustomerFirstName(),
                 'middlename' => $this->_getCustomerFirstName(),
                 'lastname'   => $this->_getCustomerLastName(),
+                'name'       => $this->_getCustomerFirstName() . ' ' . $this->_getCustomerLastName(),
                 'anonymized' => 1,
             );
 
@@ -49,7 +57,20 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
 
         } else {
             $this->_currentCustomer = $customer;
+            $this->_currentCustomer->setName($this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getLastname());
         }
+
+        $this->_currentCustomer->addData($paymentData);
+
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getCcType()
+    {
+        $types = array_keys(Mage::getModel('payment/config')->getCcTypes());
+        return $types[mt_rand() % count($types)];
 
     }
 
@@ -58,12 +79,9 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
      */
     protected function _addPaymentRandom()
     {
-        $attr = Mage::getSingleton('schumacherfm_anonygento/random_mappings')->setOrderPayment();
 
-//        $xxx = $attr->getData();
-//        ksort($xxx);
-//        var_export($xxx);
-//        exit;
+     // hmmm...
+     // $attr = Mage::getSingleton('schumacherfm_anonygento/random_mappings')->setOrderPayment();
 
     }
 }

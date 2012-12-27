@@ -68,7 +68,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
             ->getCollection();
 
         /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
-        $this->_collectionAddAttributeToSelect($collection, $this->_getMappings('QuoteAddress'));
+        $this->_collectionAddAttributeToSelect($collection,
+            $this->_getMappings('QuoteAddress')->getEntityAttributes()
+        );
 
         $this->_collectionAddStaticAnonymized($collection);
 

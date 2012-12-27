@@ -70,7 +70,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
         /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
 
-        $this->_collectionAddAttributeToSelect($collection, $this->_getMappings('OrderAddress'));
+        $this->_collectionAddAttributeToSelect($collection, $this->_getMappings('OrderAddress')->getEntityAttributes());
 
         $this->_collectionAddStaticAnonymized($collection);
 

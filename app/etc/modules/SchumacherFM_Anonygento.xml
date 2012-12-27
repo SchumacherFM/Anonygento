@@ -13,6 +13,8 @@
             <codePool>community</codePool>
             <depends>
                 <Mage_Customer />
+                <Mage_Sales />
+                <Mage_Payment />
             </depends>
         </SchumacherFM_Anonygento>
     </modules>

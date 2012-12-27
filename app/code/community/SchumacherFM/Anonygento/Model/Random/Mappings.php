@@ -43,8 +43,10 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'anonymized' => 'anonymized',
             'fill'       => array(
                 'password_hash' => array(
-                    'exec' => 'getRandomString',
-                    'args' => array(32)
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12),
                 ),
             ),
         ));
@@ -160,43 +162,220 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'account_status'               => 'account_status',
-            'additional_data'              => 'additional_data',
-            'additional_information'       => 'additional_information',
-            'address_status'               => 'address_status',
-            'anet_trans_method'            => 'anet_trans_method',
-            'cc_approval'                  => 'cc_approval',
-            'cc_avs_status'                => 'cc_avs_status',
-            'cc_cid_status'                => 'cc_cid_status',
-            'cc_debug_request_body'        => 'cc_debug_request_body',
-            'cc_debug_response_body'       => 'cc_debug_response_body',
-            'cc_debug_response_serialized' => 'cc_debug_response_serialized',
-            'cc_exp_month'                 => 'cc_exp_month',
-            'cc_exp_year'                  => 'cc_exp_year',
-            'cc_last4'                     => 'cc_last4',
-            'cc_number_enc'                => 'cc_number_enc',
-            'cc_owner'                     => 'cc_owner',
-            'cc_secure_verify'             => 'cc_secure_verify',
-            'cc_ss_issue'                  => 'cc_ss_issue',
-            'cc_ss_start_month'            => 'cc_ss_start_month',
-            'cc_ss_start_year'             => 'cc_ss_start_year',
-            'cc_status'                    => 'cc_status',
-            'cc_status_description'        => 'cc_status_description',
-            'cc_trans_id'                  => 'cc_trans_id',
-            'cc_type'                      => 'cc_type',
-            'echeck_account_name'          => 'echeck_account_name',
-            'echeck_account_type'          => 'echeck_account_type',
-            'echeck_bank_name'             => 'echeck_bank_name',
-            'echeck_routing_number'        => 'echeck_routing_number',
-            'echeck_type'                  => 'echeck_type',
-            'last_trans_id'                => 'last_trans_id',
-            'paybox_request_number'        => 'paybox_request_number',
-            'po_number'                    => 'po_number',
-            'protection_eligibility'       => 'protection_eligibility',
+            'name'       => 'cc_owner',
+            'month'      => 'cc_exp_month',
+            'year'       => 'cc_exp_year',
+            'last4'      => 'cc_last4',
+            'ccType'     => 'cc_type',
 
-            'anonymized'                   => 'anonymized',
+            'fill'       => array(
+                /**
+                 * @todo use reality like values instead of the
+                 *       getRandomString method :-(
+                 */
+
+                'account_status'               => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'additional_data'              => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'additional_information'       => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'address_status'               => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'anet_trans_method'            => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_approval'                  => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_avs_status'                => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_cid_status'                => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_debug_request_body'        => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_debug_response_body'       => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_debug_response_serialized' => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_number_enc'                => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_secure_verify'             => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_ss_issue'                  => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_ss_start_month'            => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_ss_start_year'             => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_status'                    => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_status_description'        => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_trans_id'                  => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'echeck_account_name'          => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'echeck_account_type'          => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'echeck_bank_name'             => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'echeck_routing_number'        => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'echeck_type'                  => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'last_trans_id'                => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'paybox_request_number'        => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'po_number'                    => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'protection_eligibility'       => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+
+            ),
+
             // system attributes
+            'anonymized' => 'anonymized',
             'entity_id',
+            'account_status',
+            'additional_data',
+            'additional_information',
+            'address_status',
+            'anet_trans_method',
+            'cc_approval',
+            'cc_avs_status',
+            'cc_cid_status',
+            'cc_debug_request_body',
+            'cc_debug_response_body',
+            'cc_debug_response_serialized',
+            'cc_number_enc',
+            'cc_secure_verify',
+            'cc_ss_issue',
+            'cc_ss_start_month',
+            'cc_ss_start_year',
+            'cc_status',
+            'cc_status_description',
+            'cc_trans_id',
+            'echeck_account_name',
+            'echeck_account_type',
+            'echeck_bank_name',
+            'echeck_routing_number',
+            'echeck_type',
+            'last_trans_id',
+            'paybox_request_number',
+            'po_number',
+            'protection_eligibility',
 
         ));
 
@@ -221,19 +400,17 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'anonymized' => 'anonymized',
 
             'fill'       => array(
-                // these attributes will be filled every time, regardless if they are empty in the
-                // original datasource or not
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
                     'method' => 'getRandomString',
-                    'args'   => array(32)
+                    'args'   => array(12)
                 ),
                 'customer_note' => array(
                     'model'  => 'schumacherfm_anonygento/random_loremIpsum',
                     'helper' => NULL,
                     'method' => 'getLoremIpsum',
-                    'args'   => array(80, 'plain')
+                    'args'   => array(10, 'plain')
                 ),
             ),
 
@@ -263,11 +440,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
             // @todo fields not in the customer object but needed
             'fill'       => array(
-
                 'customer_notes' => array(
-                    'exec' => 'getLoremIpsum',
-                    'args' => array(80)
+                    'model'  => 'schumacherfm_anonygento/random_loremIpsum',
+                    'helper' => NULL,
+                    'method' => 'getLoremIpsum',
+                    'args'   => array(10, 'plain')
                 ),
+
             ),
             // system attributes
             'address_id',

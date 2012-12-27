@@ -43,7 +43,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderGrid extends SchumacherF
     protected function _getCollection()
     {
         $collection = Mage::getResourceModel('sales/order_grid_collection')
-            ->addFieldToSelect($this->_getMappings('OrderGrid')->getEntityAttributes());
+            ->addFieldToSelect(
+                $this->_getMappings('OrderGrid')->getEntityAttributes()
+            );
         /* @var $collection Mage_Sales_Model_Resource_Order_Grid_Collection */
 
         $this->_collectionAddStaticAnonymized($collection, 0);

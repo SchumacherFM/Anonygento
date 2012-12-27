@@ -31,23 +31,25 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
 
-        $customerId = (int)$quote->getCustomerId();
+        if (!$customer) {
 
-        if ($customerId > 0 && !$customer) {
-            $customer = $quote->getCustomer();
-            /* getCustomer does not always return a customer model */
-            $customerId = (int)$customer->getCustomerId();
-        }
+            $customerId = (int)$quote->getCustomerId();
 
-        if ($customerId === 0) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
+            if ($customerId > 0) {
+                $customer = $quote->getCustomer();
+                /* getCustomer does not always return a customer model */
+                $customerId = (int)$customer->getCustomerId();
+            }
+
+            if ($customerId === 0) {
+                $customer = $this->_getRandomCustomer()->getCustomer();
+            }
+
         }
 
         $this->_copyObjectData($customer, $quote, $this->_getMappings('Quote'));
-
-        // bug, die adressen werden nicht gefunden ...
         $this->_anonymizeQuoteAddresses($quote, $customer);
-
+        $this->_anonymizeQuotePayment($quote, $customer);
         $quote->getResource()->save($quote);
     }
 
@@ -55,12 +57,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      * @param Mage_Sales_Model_Order       $order
      * @param Mage_Customer_Model_Customer $customer
      *
-     * @return int
+     * @return boolean
      */
     public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer)
     {
         if (!$order->getQuoteId()) {
-            return 0;
+            return FALSE;
         }
 
         $quoteCollection = $this->_getCollection()
@@ -73,28 +75,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
     /**
      * @param Mage_Customer_Model_Customer $customer
-     *
-     * @return integer
      */
     public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
     {
-
-        $quoteCollection     = $this->_getCollection()
+        $quoteCollection = $this->_getCollection()
             ->addFieldToFilter('customer_id', array('eq' => (int)$customer->getId()));
-        $quoteCollectionSize = (int)$quoteCollection->getSize();
-        if ($quoteCollectionSize === 0) {
-            return $quoteCollectionSize;
-        }
 
         foreach ($quoteCollection as $quote) {
-
-            $this->_copyObjectData($customer, $quote, $this->_getMappings('Quote'));
-
-            $this->_anonymizeQuoteAddresses($quote, $customer);
-            $quote->getResource()->save($quote);
+            $this->_anonymizeQuote($quote, $customer);
         }
-
-        return $quoteCollectionSize;
     }
 
     /**
@@ -107,6 +96,16 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     }
 
     /**
+     * @param Mage_Sales_Model_Quote       $quote
+     * @param Mage_Customer_Model_Customer $customer
+     */
+    protected function _anonymizeQuotePayment(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
+    {
+        // @todo implement this feature
+//        $this->_getInstance('schumacherfm_anonygento/anonymizations_quotePayment')->anonymizeByQuote($quote, $customer);
+    }
+
+    /**
      * @return Mage_Sales_Model_Resource_Quote_Collection
      */
     protected function _getCollection()
@@ -116,7 +115,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
         /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
         $this->_collectionAddAttributeToSelect($collection,
-            $this->_getMappings('Quote')
+            $this->_getMappings('Quote')->getEntityAttributes()
         );
 
         $this->_collectionAddStaticAnonymized($collection);

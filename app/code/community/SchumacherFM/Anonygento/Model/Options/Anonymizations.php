@@ -12,6 +12,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     public $useCache = 0;
 
     /**
+     * the order of this array is important
+     *
      * @var array
      */
     protected $_options = array(
@@ -26,10 +28,11 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         'orderAddress'         => 'sales/order_address',
         'orderGrid'            => 'sales/order_grid_collection',
         'orderPayment'         => 'sales/order_payment',
+
         'quote'                => 'sales/quote',
         'quoteAddress'         => 'sales/quote_address',
-
         'quotePayment'         => 'sales/quote_payment',
+
         'creditmemoGrid'       => 'sales/order_creditmemo_grid_collection',
         'invoiceGrid'          => 'sales/order_invoice_grid_collection',
         'shipmentGrid'         => 'sales/order_shipment_grid_collection',

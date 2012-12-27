@@ -9,33 +9,39 @@
 class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
 {
 
+    /**
+     * @return boolean
+     */
     public function fill()
     {
-        $fill  = $this->getFill();
+        $fill  = $this->getMappings()->getFill();
         $toObj = $this->getToObj();
+        /* @var $toObj Varien_Object */
 
         if (!is_array($fill) || !is_object($toObj)) {
             return FALSE;
         }
 
         foreach ($fill as $attribute => $method) {
-            $newData = $this->_handleMappingMethod($method);
+            $newData  = $this->_handleMappingMethod($method);
+            $origData = $toObj->getData($attribute);
 
-//            $origData = $toObj->getData($attribute);
-//            if (!empty($origData)) {
-            $toObj->setData($attribute, $newData);
-//            }
-
+            if (!empty($origData)) {
+                $toObj->setData($attribute, $newData);
+            }
         }
-
-        Zend_Debug::dump($fill);
-        Zend_Debug::dump($toObj->getData());
-        exit;
-
+        return TRUE;
     }
 
+    /**
+     * @param array $methodOptions
+     *
+     * @return mixed
+     * @throws Exception
+     */
     protected function _handleMappingMethod($methodOptions)
     {
+        $model = new Varien_Object();
         if (isset($methodOptions['model']) && !empty($methodOptions['model'])) {
             $model = Mage::getModel($methodOptions['model']);
         } elseif (isset($methodOptions['helper']) && !empty($methodOptions['helper'])) {
@@ -46,6 +52,9 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
         $args   = isset($methodOptions['args']) ? $methodOptions['args'] : array();
 
         if (!is_object($model) || !method_exists($model, $method)) {
+
+            Zend_Debug::dump($methodOptions);
+
             throw new Exception('Mapping:Fill: Model (' . $methodOptions['model'] . '), helper or method (' .
                 $methodOptions['method'] . ') not found');
         }
