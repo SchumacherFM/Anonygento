@@ -46,7 +46,8 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
         $args   = isset($methodOptions['args']) ? $methodOptions['args'] : array();
 
         if (!is_object($model) || !method_exists($model, $method)) {
-            throw new Exception('Mapping:Fill: Model, helper or method not found');
+            throw new Exception('Mapping:Fill: Model (' . $methodOptions['model'] . '), helper or method (' .
+                $methodOptions['method'] . ') not found');
         }
 
         return call_user_func_array(array($model, $method), $args);
