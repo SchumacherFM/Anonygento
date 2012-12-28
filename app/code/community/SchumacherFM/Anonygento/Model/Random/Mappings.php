@@ -22,7 +22,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             unset($data['fill']);
         }
 
-        return array_values($data);
+        return array_unique(array_values($data));
     }
 
     /**
@@ -45,8 +45,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
-                    'method' => 'getRandomString',
-                    'args'   => array(12),
+                    'method' => 'getHash',
+                    'args'   => array(microtime(TRUE), mt_rand())
                 ),
             ),
         ));
@@ -259,16 +259,12 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                     'args'   => array(12)
                 ),
                 'cc_ss_start_month'            => array(
-                    'model'  => NULL,
-                    'helper' => 'core',
-                    'method' => 'getRandomString',
-                    'args'   => array(12)
+                    'method' => 'mt_rand',
+                    'args'   => array(1, 12)
                 ),
                 'cc_ss_start_year'             => array(
-                    'model'  => NULL,
-                    'helper' => 'core',
-                    'method' => 'getRandomString',
-                    'args'   => array(12)
+                    'method' => 'mt_rand',
+                    'args'   => array(2013, 2022)
                 ),
                 'cc_status'                    => array(
                     'model'  => NULL,
@@ -348,35 +344,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             // system attributes
             'anonymized' => 'anonymized',
             'entity_id',
-            'account_status',
-            'additional_data',
-            'additional_information',
-            'address_status',
-            'anet_trans_method',
-            'cc_approval',
-            'cc_avs_status',
-            'cc_cid_status',
-            'cc_debug_request_body',
-            'cc_debug_response_body',
-            'cc_debug_response_serialized',
-            'cc_number_enc',
-            'cc_secure_verify',
-            'cc_ss_issue',
-            'cc_ss_start_month',
-            'cc_ss_start_year',
-            'cc_status',
-            'cc_status_description',
-            'cc_trans_id',
-            'echeck_account_name',
-            'echeck_account_type',
-            'echeck_bank_name',
-            'echeck_routing_number',
-            'echeck_type',
-            'last_trans_id',
-            'paybox_request_number',
-            'po_number',
-            'protection_eligibility',
-
         ));
 
     }
@@ -403,8 +370,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
-                    'method' => 'getRandomString',
-                    'args'   => array(12)
+                    'method' => 'getHash',
+                    'args'   => array(microtime(TRUE), mt_rand())
                 ),
                 'customer_note' => array(
                     'model'  => 'schumacherfm_anonygento/random_loremIpsum',
@@ -450,6 +417,101 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             ),
             // system attributes
             'address_id',
+
+        ));
+    }
+
+    public function setQuotePayment()
+    {
+        return $this->addData(array(
+
+            // system attributes
+            'anonymized' => 'anonymized',
+            'payment_id',
+            'quote_id',
+
+            'name'       => 'cc_owner',
+            'month'      => 'cc_exp_month',
+            'year'       => 'cc_exp_year',
+            'last4'      => 'cc_last4',
+            'ccType'     => 'cc_type',
+
+            'fill'       => array(
+                /**
+                 * @todo use reality like values instead of the
+                 *       getRandomString method :-(
+                 */
+
+                'additional_data'        => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'additional_information' => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_cid_enc'             => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_number_enc'          => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_ss_owner'            => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'cc_ss_start_month'      => array(
+                    'method' => 'mt_rand',
+                    'args'   => array(1, 12)
+                ),
+                'cc_ss_start_year'       => array(
+                    'method' => 'mt_rand',
+                    'args'   => array(2013, 2022)
+                ),
+                'cc_ss_issue'            => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'po_number'              => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'paypal_payer_id'        => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'paypal_payer_status'    => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+                'paypal_correlation_id'  => array(
+                    'model'  => NULL,
+                    'helper' => 'core',
+                    'method' => 'getRandomString',
+                    'args'   => array(12)
+                ),
+
+            ),
 
         ));
 

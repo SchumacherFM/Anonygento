@@ -41,7 +41,7 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
      */
     protected function _handleMappingMethod($methodOptions)
     {
-        $model = new Varien_Object();
+        $model = NULL;
         if (isset($methodOptions['model']) && !empty($methodOptions['model'])) {
             $model = Mage::getModel($methodOptions['model']);
         } elseif (isset($methodOptions['helper']) && !empty($methodOptions['helper'])) {
@@ -51,15 +51,11 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
         $method = isset($methodOptions['method']) ? $methodOptions['method'] : '';
         $args   = isset($methodOptions['args']) ? $methodOptions['args'] : array();
 
-        if (!is_object($model) || !method_exists($model, $method)) {
-
-            Zend_Debug::dump($methodOptions);
-
-            throw new Exception('Mapping:Fill: Model (' . $methodOptions['model'] . '), helper or method (' .
-                $methodOptions['method'] . ') not found');
+        if (is_object($model) && method_exists($model, $method)) {
+            return call_user_func_array(array($model, $method), $args);
+        } else {
+            return call_user_func_array($method, $args);
         }
-
-        return call_user_func_array(array($model, $method), $args);
 
     }
 
