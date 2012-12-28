@@ -44,7 +44,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             if ($customerId === 0) {
                 $customer = $this->_getRandomCustomer()->getCustomer();
             }
-
         }
 
         $this->_copyObjectData($customer, $quote, $this->_getMappings('Quote'));

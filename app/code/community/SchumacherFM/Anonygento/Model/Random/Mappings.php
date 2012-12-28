@@ -45,8 +45,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
-                    'method' => 'getHash',
-                    'args'   => array(microtime(TRUE), mt_rand())
+                    'method' => 'getRandomString',
+                    'args'   => array(14)
                 ),
             ),
         ));
@@ -370,8 +370,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
-                    'method' => 'getHash',
-                    'args'   => array(microtime(TRUE), mt_rand())
+                    'method' => 'getRandomString',
+                    'args'   => array(14)
                 ),
                 'customer_note' => array(
                     'model'  => 'schumacherfm_anonygento/random_loremIpsum',
