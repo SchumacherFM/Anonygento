@@ -50,7 +50,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
          * stat is also a method
          */
         $this->_consoleGetOpt = new Zend_Console_Getopt(array(
-            'stat' => 'Print statistic summary'
+            'stat'             => 'Print statistic summary',
+            'randomCustomer-i' => 'Prints a random customer with optional customer entity id',
         ));
 
     }
@@ -167,6 +168,17 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
     public function usageHelp()
     {
         return 'Usage:  php -f anonygento.php[ -- [options]]' . PHP_EOL . PHP_EOL;
+    }
+
+    /**
+     * gets a random customer and prints all related data for checking if the anonymisation
+     * process was successful
+     * can take as argument a customer entity id
+     * @todo implement it
+     */
+    protected function _randomCustomer()
+    {
+        $this->_consoleInstance->writeLine('@todo');
     }
 }
 
