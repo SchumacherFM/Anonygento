@@ -24,6 +24,16 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     private $_consoleInstance = null;
 
+    /**
+     * @var Zend_Console_Getopt
+     */
+    private $_consoleGetOpt = null;
+
+    public function run()
+    {
+        $this->_consoleFactory();
+    }
+
     protected function _construct()
     {
         /**
@@ -35,6 +45,39 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         Mage::getModel('schumacherfm_anonygento/autoload_zf2')->register();
         $this->_console         = Mage::getModel('schumacherfm_anonygento/console_console');
         $this->_consoleInstance = $this->_console->getInstance();
+
+        /**
+         * stat is also a method
+         */
+        $this->_consoleGetOpt = new Zend_Console_Getopt(array(
+            'stat' => 'Print statistic summary'
+        ));
+
+    }
+
+    private function _consoleFactory()
+    {
+
+        try {
+            $this->_consoleGetOpt->parse();
+            $options = $this->_consoleGetOpt->getOptions();
+        } catch (Zend_Console_Getopt_Exception $e) {
+            $this->_consoleInstance->writeLine($e->getUsageMessage());
+            exit;
+        }
+
+        if (count($options) === 0) {
+            $options = array('runAnonymization');
+        }
+
+        foreach ($options as $method) {
+            $method = '_' . $method;
+
+            if (method_exists($this, $method)) {
+                $this->$method();
+            }
+        }
+
     }
 
     public function __destruct()
@@ -51,10 +94,20 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
     }
 
     /**
-     * Run script
-     *
+     * executable method
+     * @return Varien_Data_Collection
      */
-    public function run()
+    protected function _stat()
+    {
+        $_execCollection = $this->_console->getAnonymizationCollection();
+        echo $this->_console->printInfoTable($_execCollection);
+        return $_execCollection;
+    }
+
+    /**
+     * executable method
+     */
+    protected function _runAnonymization()
     {
         $userResult = $isAdminUser = FALSE;
 
@@ -66,21 +119,18 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         }
 
         if (($userResult && $isAdminUser) || $this->_devMode === TRUE) {
-            $this->_runAnonymization();
+            $this->_runAnonymizationReal();
         } else {
-            $this->_consoleInstance->writeLine('Nothing done! ' . $username . PHP_EOL . $password,
-                SchumacherFM_Anonygento_Model_Console_Color::GREEN);
+            $this->_consoleInstance->writeLine('Nothing done!', SchumacherFM_Anonygento_Model_Console_Color::GREEN);
         }
     }
 
-    private function _runAnonymization()
+    private function _runAnonymizationReal()
     {
         Varien_Profiler::enable();
         Varien_Profiler::start('Anonygento');
 
-        $_execCollection = $this->_console->getAnonymizationCollection();
-
-        echo $this->_console->printInfoTable($_execCollection);
+        $_execCollection = $this->_stat();
 
         foreach ($_execCollection as $anonExec) {
             $anonModel = $this->_console->getModel($anonExec->getValue());
@@ -116,9 +166,9 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     public function usageHelp()
     {
-        return 'Usage:  php -f anonygento.php' . PHP_EOL . PHP_EOL;
+        return 'Usage:  php -f anonygento.php[ -- [options]]' . PHP_EOL . PHP_EOL;
     }
 }
 
-$shell = new Mage_Shell_Anonygento($argv);
+$shell = new Mage_Shell_Anonygento();
 $shell->run();
