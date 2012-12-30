@@ -43,7 +43,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _getRandomCustomer()
     {
-        return $this->_getInstance('schumacherfm_anonygento/random_customer');
+        return Mage::getSingleton('schumacherfm_anonygento/random_customer');
     }
 
     /**

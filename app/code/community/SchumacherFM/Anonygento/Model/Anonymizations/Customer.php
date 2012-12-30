@@ -53,7 +53,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeCustomerNewsletter(Mage_Customer_Model_Customer $customer)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_newsletterSubscriber')->anonymizeByCustomer($customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_newsletterSubscriber')->anonymizeByCustomer($customer);
     }
 
     /**
@@ -61,7 +61,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeQuote(Mage_Customer_Model_Customer $customer)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeByCustomer($customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByCustomer($customer);
     }
 
     /**
@@ -69,7 +69,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeOrder(Mage_Customer_Model_Customer $customer)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_order')->anonymizeByCustomer($customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_order')->anonymizeByCustomer($customer);
     }
 
     /**
@@ -77,7 +77,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeCustomerAddresses(Mage_Customer_Model_Customer $customer)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_customerAddress')->anonymizeByCustomer($customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_customerAddress')->anonymizeByCustomer($customer);
     }
 
 }

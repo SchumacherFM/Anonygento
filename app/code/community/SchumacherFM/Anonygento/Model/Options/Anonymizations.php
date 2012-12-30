@@ -33,14 +33,15 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         'quoteAddress'         => 'sales/quote_address',
         'quotePayment'         => 'sales/quote_payment',
 
+        // all comments collections are only for FYI
         'creditmemo'           => 'sales/order_creditmemo_collection',
-
-        // only creditmemo is required the other two are FYI
         'creditmemoComment'    => 'sales/order_creditmemo_comment_collection',
-        'creditmemoGrid'       => 'sales/order_creditmemo_grid_collection',
 
-        'invoiceGrid'          => 'sales/order_invoice_grid_collection',
-        'shipmentGrid'         => 'sales/order_shipment_grid_collection',
+        'invoice'              => 'sales/order_invoice_collection',
+        'invoiceComment'       => 'sales/order_invoice_comment_collection',
+
+        'shipment'             => 'sales/order_shipment_collection',
+        'shipmentComment'      => 'sales/order_shipment_comment_collection',
     );
 
     /**

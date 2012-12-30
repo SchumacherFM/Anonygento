@@ -71,6 +71,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         $this->_anonymizeOrderAddresses($order, $customer);
         $this->_anonymizeOrderPayment($order, $customer);
         $this->_anonymizeOrderCreditmemo($order);
+        $this->_anonymizeOrderInvoice($order);
+        $this->_anonymizeOrderShipment($order);
         $this->_anonymizeQuote($order, $customer);
 
         $order->getResource()->save($order);
@@ -85,7 +87,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order, $customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order, $customer);
     }
 
     /**
@@ -94,7 +96,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _anonymizeOrderPayment(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_orderPayment')->anonymizeByOrder($order, $customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderPayment')->anonymizeByOrder($order, $customer);
     }
 
     /**
@@ -102,7 +104,23 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _anonymizeOrderCreditmemo(Mage_Sales_Model_Order $order)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_creditmemo')->anonymizeByOrder($order);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_creditmemo')->anonymizeByOrder($order);
+    }
+
+    /**
+     * @param Mage_Sales_Model_Order       $order
+     */
+    protected function _anonymizeOrderInvoice(Mage_Sales_Model_Order $order)
+    {
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_invoice')->anonymizeByOrder($order);
+    }
+
+    /**
+     * @param Mage_Sales_Model_Order       $order
+     */
+    protected function _anonymizeOrderShipment(Mage_Sales_Model_Order $order)
+    {
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_shipment')->anonymizeByOrder($order);
     }
 
     /**
@@ -111,7 +129,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _anonymizeQuote(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer)
     {
-        $this->_getInstance('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order, $customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order, $customer);
     }
 
     /**
