@@ -572,4 +572,32 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         return $this->setCreditmemoComment();
     }
 
+    public function setReview()
+    {
+        return $this->addData(array(
+
+            'anonymized' => 'anonymized',
+
+            // system attributes
+            'review_id',
+
+            'fill'       => array(
+                'title'  => array(
+                    'model'  => 'schumacherfm_anonygento/random_loremIpsum',
+                    'helper' => NULL,
+                    'method' => 'getLoremIpsum',
+                    'args'   => array(7, 'plain')
+                ),
+                'detail' => array(
+                    'model'  => 'schumacherfm_anonygento/random_loremIpsum',
+                    'helper' => NULL,
+                    'method' => 'getLoremIpsum',
+                    'args'   => array(15, 'plain')
+                ),
+            ),
+
+        ));
+
+    }
+
 }

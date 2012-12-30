@@ -56,9 +56,9 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
     protected function  _sqlWhereAndExec($anonymized = 0)
     {
         $anonymized = (int)$anonymized;
-        $countSql = $this->_currentCollection->getSelectCountSql();
+        $countSql   = $this->_currentCollection->getSelectCountSql();
         /* @var $countSql Varien_Db_Select */
-        $countSql->where('anonymized=' . $anonymized);
+        $countSql->where('anonymized=' . $anonymized . ($anonymized === 0 ? ' or anonymized is null' : ''));
         $result = $this->_readConnection->fetchOne($countSql);
         return (int)$result;
 

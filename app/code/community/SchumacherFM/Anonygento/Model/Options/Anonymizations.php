@@ -40,8 +40,10 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         'invoice'              => 'sales/order_invoice_collection',
         'invoiceComment'       => 'sales/order_invoice_comment_collection',
 
-        'shipment'             => 'sales/order_shipment_collection',
-        'shipmentComment'      => 'sales/order_shipment_comment_collection',
+        'shipment'             => 'sales/order_shipment',
+        'shipmentComment'      => 'sales/order_shipment_comment',
+
+        'review'               => 'review/review',
     );
 
     /**
