@@ -29,11 +29,6 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     private $_consoleGetOpt = null;
 
-    public function run()
-    {
-        $this->_consoleFactory();
-    }
-
     protected function _construct()
     {
         /**
@@ -56,9 +51,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
     }
 
-    private function _consoleFactory()
+    public function run()
     {
-
         try {
             $this->_consoleGetOpt->parse();
             $options = $this->_consoleGetOpt->getOptions();
@@ -72,13 +66,15 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         }
 
         foreach ($options as $method) {
+
+            $argument = $this->_consoleGetOpt->getOption($method);
+
             $method = '_' . $method;
 
             if (method_exists($this, $method)) {
-                $this->$method();
+                $this->$method($argument);
             }
         }
-
     }
 
     public function __destruct()
@@ -172,13 +168,14 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
     /**
      * gets a random customer and prints all related data for checking if the anonymisation
-     * process was successful
+     * process was successful. should be like viewing a single customer in the Magento backend
      * can take as argument a customer entity id
      * @todo implement it
      */
-    protected function _randomCustomer()
+    protected function _randomCustomer($customerEntityId = 0)
     {
-        $this->_consoleInstance->writeLine('@todo');
+        $customerEntityId = (int)$customerEntityId;
+        $this->_consoleInstance->writeLine('@todo: ' . $customerEntityId);
     }
 }
 
