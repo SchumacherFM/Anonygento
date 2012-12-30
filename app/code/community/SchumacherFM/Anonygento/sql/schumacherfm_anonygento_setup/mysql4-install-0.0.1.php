@@ -39,6 +39,7 @@ $entityTableNames = array(
     'giftmessage/message',
     'review/review',
     'rating/rating_option_vote',
+    'sendfriend/sendfriend',
 
 //    'review/review',
 
@@ -58,7 +59,6 @@ if ($this->isEnterpriseEdition()) {
     $entityTableNames[] = 'enterprise_salesarchive/invoice_grid';
     $entityTableNames[] = 'enterprise_salesarchive/shipment_grid';
 }
-
 
 foreach ($entityTableNames as $tableName) {
 

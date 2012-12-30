@@ -645,17 +645,10 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'anonymized' => 'anonymized',
 
             // system attributes
-            'vote_id',
-            'option_id',
+            'log_id',
 
             'fill'       => array(
-                'remote_ip'      => array(
-                    'model'  => 'schumacherfm_anonygento/random_ip',
-                    'helper' => NULL,
-                    'method' => 'shuffleIp',
-                    'args'   => NULL
-                ),
-                'remote_ip_long' => array(
+                'ip' => array(
                     'model'  => 'schumacherfm_anonygento/random_ip',
                     'helper' => NULL,
                     'method' => 'shuffleIpLong',

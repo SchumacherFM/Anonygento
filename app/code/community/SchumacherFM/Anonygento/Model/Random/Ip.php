@@ -53,6 +53,7 @@ class SchumacherFM_Anonygento_Model_Random_Ip extends Varien_Object
     {
         $pow = pow(2, $this->_currentFactor);
 
+        // @todo optimize random algo 8-)
         if ((mt_rand() % 2) == 0 && $longIp > $pow) {
             $long = $longIp - $pow;
         } else {
