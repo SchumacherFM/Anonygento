@@ -108,7 +108,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'suffix'     => 'customer_suffix',
             'prefix'     => 'customer_prefix',
             'taxvat'     => 'customer_taxvat',
-            'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 
             // system attributes
@@ -117,6 +116,15 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'quote_id',
             'shipping_address_id',
             'billing_address_id',
+
+            'fill'       => array(
+                'remote_ip' => array(
+                    'model'  => 'schumacherfm_anonygento/random_ip',
+                    'helper' => NULL,
+                    'method' => 'shuffleIp',
+                    'args'   => NULL
+                ),
+            ),
 
         ));
 
@@ -363,7 +371,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'suffix'     => 'customer_suffix',
             'prefix'     => 'customer_prefix',
             'taxvat'     => 'customer_taxvat',
-            'remote_ip'  => 'remote_ip',
             'anonymized' => 'anonymized',
 
             'fill'       => array(
@@ -378,6 +385,12 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                     'helper' => NULL,
                     'method' => 'getLoremIpsum',
                     'args'   => array(10, 'plain')
+                ),
+                'remote_ip'     => array(
+                    'model'  => 'schumacherfm_anonygento/random_ip',
+                    'helper' => NULL,
+                    'method' => 'shuffleIp',
+                    'args'   => NULL
                 ),
             ),
 
@@ -595,9 +608,61 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                     'args'   => array(15, 'plain')
                 ),
             ),
-
         ));
+    }
 
+    public function setRatingOptionVote()
+    {
+        return $this->addData(array(
+
+            'anonymized' => 'anonymized',
+
+            // system attributes
+            'vote_id',
+            'option_id',
+
+            'fill'       => array(
+                'remote_ip'      => array(
+                    'model'  => 'schumacherfm_anonygento/random_ip',
+                    'helper' => NULL,
+                    'method' => 'shuffleIp',
+                    'args'   => NULL
+                ),
+                'remote_ip_long' => array(
+                    'model'  => 'schumacherfm_anonygento/random_ip',
+                    'helper' => NULL,
+                    'method' => 'shuffleIpLong',
+                    'args'   => NULL
+                ),
+            ),
+        ));
+    }
+
+    public function setSendfriendLog()
+    {
+        return $this->addData(array(
+
+            'anonymized' => 'anonymized',
+
+            // system attributes
+            'vote_id',
+            'option_id',
+
+            'fill'       => array(
+                'remote_ip'      => array(
+                    'model'  => 'schumacherfm_anonygento/random_ip',
+                    'helper' => NULL,
+                    'method' => 'shuffleIp',
+                    'args'   => NULL
+                ),
+                'remote_ip_long' => array(
+                    'model'  => 'schumacherfm_anonygento/random_ip',
+                    'helper' => NULL,
+                    'method' => 'shuffleIpLong',
+                    'args'   => NULL
+                ),
+            ),
+        ));
     }
 
 }

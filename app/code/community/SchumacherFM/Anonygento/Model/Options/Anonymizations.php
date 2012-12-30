@@ -19,31 +19,32 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     protected $_options = array(
 
         // internalKey => modelname
-        'customer'             => 'customer/customer',
-        'customerAddress'      => 'customer/address',
-        'newsletterSubscriber' => 'newsletter/subscriber',
-        'giftmessageMessage'   => 'giftmessage/message',
-
-        'order'                => 'sales/order',
-        'orderAddress'         => 'sales/order_address',
-        'orderGrid'            => 'sales/order_grid_collection',
-        'orderPayment'         => 'sales/order_payment',
-
-        'quote'                => 'sales/quote',
-        'quoteAddress'         => 'sales/quote_address',
-        'quotePayment'         => 'sales/quote_payment',
-
-        // all comments collections are only for FYI
-        'creditmemo'           => 'sales/order_creditmemo_collection',
-        'creditmemoComment'    => 'sales/order_creditmemo_comment_collection',
-
-        'invoice'              => 'sales/order_invoice_collection',
-        'invoiceComment'       => 'sales/order_invoice_comment_collection',
-
-        'shipment'             => 'sales/order_shipment',
-        'shipmentComment'      => 'sales/order_shipment_comment',
-
-        'review'               => 'review/review',
+//        'customer'             => 'customer/customer',
+//        'customerAddress'      => 'customer/address',
+//        'newsletterSubscriber' => 'newsletter/subscriber',
+//        'giftmessageMessage'   => 'giftmessage/message',
+//
+//        'order'                => 'sales/order',
+//        'orderAddress'         => 'sales/order_address',
+//        'orderGrid'            => 'sales/order_grid_collection',
+//        'orderPayment'         => 'sales/order_payment',
+//
+//        'quote'                => 'sales/quote',
+//        'quoteAddress'         => 'sales/quote_address',
+//        'quotePayment'         => 'sales/quote_payment',
+//
+//        // all comments collections are only for FYI
+//        'creditmemo'           => 'sales/order_creditmemo_collection',
+//        'creditmemoComment'    => 'sales/order_creditmemo_comment_collection',
+//
+//        'invoice'              => 'sales/order_invoice_collection',
+//        'invoiceComment'       => 'sales/order_invoice_comment_collection',
+//
+//        'shipment'             => 'sales/order_shipment',
+//        'shipmentComment'      => 'sales/order_shipment_comment',
+//
+//        'review'               => 'review/review',
+        'ratingOptionVote'               => 'rating/rating_option_vote',
     );
 
     /**

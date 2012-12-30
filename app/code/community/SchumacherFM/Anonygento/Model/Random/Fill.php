@@ -23,8 +23,8 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
         }
 
         foreach ($fill as $attribute => $method) {
-            $newData  = $this->_handleMappingMethod($method);
             $origData = $toObj->getData($attribute);
+            $newData  = $this->_handleMappingMethod($method, $origData);
 
             if (!empty($origData)) {
                 $toObj->setData($attribute, $newData);
@@ -34,22 +34,25 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
     }
 
     /**
-     * @param array $methodOptions
+     * @param array          $methodOptions
+     * @param string|integer $origData
      *
      * @return mixed
      * @throws Exception
      */
-    protected function _handleMappingMethod($methodOptions)
+    protected function _handleMappingMethod($methodOptions, $origData)
     {
         $model = NULL;
         if (isset($methodOptions['model']) && !empty($methodOptions['model'])) {
-            $model = Mage::getModel($methodOptions['model']);
+            $model = Mage::getSingleton($methodOptions['model']);
         } elseif (isset($methodOptions['helper']) && !empty($methodOptions['helper'])) {
             $model = Mage::helper($methodOptions['helper']);
         }
 
         $method = isset($methodOptions['method']) ? $methodOptions['method'] : '';
         $args   = isset($methodOptions['args']) ? $methodOptions['args'] : array();
+
+        array_push($args, $origData);
 
         if (is_object($model) && method_exists($model, $method)) {
             return call_user_func_array(array($model, $method), $args);

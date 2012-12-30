@@ -36,8 +36,9 @@ $entityTableNames = array(
     'sales/shipment_comment',
 
     'newsletter/subscriber',
-
     'giftmessage/message',
+    'review/review',
+    'rating/rating_option_vote',
 
 //    'review/review',
 

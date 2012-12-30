@@ -40,7 +40,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         Mage::getModel('schumacherfm_anonygento/autoload_zf2')->register();
         $this->_console         = Mage::getModel('schumacherfm_anonygento/console_console');
         $this->_consoleInstance = $this->_console->getInstance();
-
+        $this->_flushCaches();
         /**
          * stat is also a method
          */
@@ -79,17 +79,22 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         }
     }
 
+    protected function _flushCaches()
+    {
+        Mage::app()->getCacheInstance()->flush();
+        Mage::app()->cleanCache();
+    }
+
     public function __destruct()
     {
+        $this->_flushCaches();
         Varien_Profiler::stop('Anonygento');
         $duration = Varien_Profiler::fetch('Anonygento', 'sum');
 
         if ($duration > 0) {
             $this->_consoleInstance->writeLine('Runs for ' . sprintf('%.2f', $duration) .
                 ' secs or ' . sprintf('%.2f', $duration / 60) . ' min ');
-
         }
-
     }
 
     /**

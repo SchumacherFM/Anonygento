@@ -37,6 +37,10 @@ This extension anonymizes all customer related data from the following data obje
 - Invoice
 - Shipment
 - Newsletter Subscribers
+- Gift messages
+- Review
+- Rating
+- Sendfriend
 
 @Todo Enterprise tables like RMA, Sales credit memo, sales invoice grid, sales order grid,
 sales shipment grid
@@ -52,6 +56,8 @@ english language already provided.
 
 Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations
 still work correctly.
+
+IP addresses in all tables are also anonymized.
 
 This module is optimized to handle a large amount of data.
 
