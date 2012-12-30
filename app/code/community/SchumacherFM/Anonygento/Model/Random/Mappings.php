@@ -531,7 +531,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         ));
     }
 
-
     public function setCreditmemoComment()
     {
         return $this->addData(array(
@@ -550,8 +549,27 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
                 ),
             ),
 
-
         ));
+    }
+
+    public function setInvoice()
+    {
+        return $this->setCreditmemo();
+    }
+
+    public function setInvoiceComment()
+    {
+        return $this->setCreditmemoComment();
+    }
+
+    public function setShipment()
+    {
+        return $this->setCreditmemo();
+    }
+
+    public function setShipmentComment()
+    {
+        return $this->setCreditmemoComment();
     }
 
 }
