@@ -70,11 +70,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
         $this->_anonymizeOrderAddresses($order, $customer);
         $this->_anonymizeOrderPayment($order, $customer);
+        $this->_anonymizeOrderCreditmemo($order);
         $this->_anonymizeQuote($order, $customer);
 
         $order->getResource()->save($order);
-
-        // update OrderGrid
+        // update OrderGrid after order has been saved
         // @see Mage_Sales_Model_Resource_Order_Abstract
         $order->getResource()->updateGridRecords($order->getId());
     }
@@ -95,6 +95,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     protected function _anonymizeOrderPayment(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
         $this->_getInstance('schumacherfm_anonygento/anonymizations_orderPayment')->anonymizeByOrder($order, $customer);
+    }
+
+    /**
+     * @param Mage_Sales_Model_Order       $order
+     */
+    protected function _anonymizeOrderCreditmemo(Mage_Sales_Model_Order $order)
+    {
+        $this->_getInstance('schumacherfm_anonygento/anonymizations_creditmemo')->anonymizeByOrder($order);
     }
 
     /**
