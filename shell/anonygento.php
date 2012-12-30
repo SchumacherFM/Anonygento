@@ -47,6 +47,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         $this->_consoleGetOpt = new Zend_Console_Getopt(array(
             'stat'             => 'Print statistic summary',
             'randomCustomer-i' => 'Prints a random customer with optional customer entity id',
+            'memoryLimit=i'    => 'Sets the PHP memory limit to a new value. Use e.g. 384 for 384M',
+            'runAnonymization' => 'Runs the anonymization process. Additionally used for memoryLimit',
         ));
 
     }
@@ -88,6 +90,16 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
         }
 
+    }
+
+    /**
+     * @param integer $limit
+     */
+    protected function _memoryLimit($limit)
+    {
+        $limit = (int)$limit;
+
+        ini_set('memory_limit', $limit . 'M');
     }
 
     /**
@@ -172,6 +184,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      * process was successful. should be like viewing a single customer in the Magento backend
      * can take as argument a customer entity id
      * @todo implement it
+     *
+     * @param integer  $customerEntityId
      */
     protected function _randomCustomer($customerEntityId = 0)
     {
