@@ -6,14 +6,13 @@
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  * @bugs        https://github.com/SchumacherFM/Anonygento/issues
  */
-class SchumacherFM_Anonygento_Model_Anonymizations_Creditmemo extends SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInShip
+class SchumacherFM_Anonygento_Model_Anonymizations_Invoice extends SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInShip
 {
-
     protected function _construct()
     {
         parent::_construct();
-        $this->setModelName('Creditmemo');
-        $this->setCollectionName('Creditmemos');
+        $this->setModelName('Invoice');
+        $this->setCollectionName('Invoice');
     }
 
     public function run()
