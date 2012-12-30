@@ -96,6 +96,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     protected function _stat()
     {
+        $this->_consoleInstance->writeLine('Memory limit: ' . ini_get('memory_limit'));
         $_execCollection = $this->_console->getAnonymizationCollection();
         echo $this->_console->printInfoTable($_execCollection);
         return $_execCollection;
