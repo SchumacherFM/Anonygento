@@ -26,6 +26,8 @@ $entityTableNames = array(
 
     'sales/creditmemo',
     'sales/creditmemo_grid',
+    'sales/creditmemo_comment',
+
     'sales/invoice',
     'sales/invoice_grid',
     'sales/shipment',
