@@ -30,12 +30,16 @@ $entityTableNames = array(
 
     'sales/invoice',
     'sales/invoice_grid',
+    'sales/invoice_comment',
     'sales/shipment',
     'sales/shipment_grid',
+    'sales/shipment_comment',
 
     'newsletter/subscriber',
 
     'giftmessage/message',
+
+//    'review/review',
 
     /*
      * @todo add tables from enterprise
