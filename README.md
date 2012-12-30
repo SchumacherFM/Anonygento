@@ -37,7 +37,6 @@ This extension anonymizes all customer related data from the following data obje
 - Invoice
 - Shipment
 - Newsletter Subscribers
-- Diverse Grid Collections
 
 @Todo Enterprise tables like RMA, Sales credit memo, sales invoice grid, sales order grid,
 sales shipment grid
@@ -245,6 +244,12 @@ Running ...
 ```
 
 The admin password is shown in clear text ... no hidden input :-( but there are also nice colors :-)
+
+#### Command line options
+
+Adjusting memory limit: `php -f anonygento.php -- --memoryLimit=2048 --runAnonymization`
+
+Statistics: `php -f anonygento.php -- --stat`
 
 
 #### Disabling the confirmation and username query
