@@ -15,9 +15,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 
     public function run()
     {
-        $customerMap = $this->_getMappings('Customer');
 
-        $customerCollection = $this->_getCustomerCollection($customerMap);
+        $customerCollection = $this->_getCollection();
 
         $i = 0;
         foreach ($customerCollection as $customer) {
@@ -35,17 +34,20 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     protected function _anonymizeCustomer(Mage_Customer_Model_Customer $customer)
     {
         // SchumacherFM_Anonygento_Model_Random_Customer
-        $customer = $this->_getRandomCustomer()->getCustomer($customer);
+        $randomCustomer = $this->_getRandomCustomer()->getCustomer($customer);
 
-        $this->_anonymizeCustomerAddresses($customer);
-        $this->_anonymizeCustomerNewsletter($customer);
+        $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings('Customer'));
 
-        $this->_anonymizeOrder($customer);
-        $this->_anonymizeQuote($customer);
+        $this->_anonymizeCustomerAddresses($randomCustomer);
+        $this->_anonymizeCustomerNewsletter($randomCustomer);
+
+        $this->_anonymizeOrder($randomCustomer);
+        $this->_anonymizeQuote($randomCustomer);
 
         // save the customer at the end to ensure that all other entities have been
         // anonymized .. just in case the user aborts the script
         $customer->save();
+//        $customer->getResource()->save($customer);
     }
 
     /**
@@ -80,4 +82,18 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_customerAddress')->anonymizeByCustomer($customer);
     }
 
+    /**
+     * @return Mage_Customer_Model_Resource_Customer_Collection
+     */
+    protected function _getCollection()
+    {
+        $collection = Mage::getModel('customer/customer')
+            ->getCollection()
+            ->addAttributeToSelect($this->_getMappings('Customer')->getEntityAttributes());
+        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
+
+        $this->_collectionAddStaticAnonymized($collection, 0);
+
+        return $collection;
+    }
 }

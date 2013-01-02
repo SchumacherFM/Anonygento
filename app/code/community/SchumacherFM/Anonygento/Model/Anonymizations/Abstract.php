@@ -73,6 +73,13 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     abstract public function run();
 
     /**
+     * loads the current collection
+     *
+     * @return Varien_Data_CollectionDb
+     */
+    abstract protected function _getCollection();
+
+    /**
      * @param Zend_ProgressBar $bar
      */
     public function setProgressBar(Zend_ProgressBar $bar)
@@ -86,36 +93,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     public function getProgressBar()
     {
         return $this->_progressBar;
-    }
-
-    /**
-     * gets the last part of a class name
-     * @return string
-     */
-    protected function _whatsMyName()
-    {
-        $class = explode('_', get_class($this)); // if not $this then
-        return $class[count($class) - 1]; // return is 'Abstract' 8-)
-    }
-
-    /**
-     * @param SchumacherFM_Anonygento_Model_Random_Mappings   $mappings
-     * @param integer                                         $isAnonymized
-     *
-     * @return Mage_Customer_Model_Resource_Customer_Collection
-     */
-    protected function _getCustomerCollection(SchumacherFM_Anonygento_Model_Random_Mappings $mappings, $isAnonymized = 0)
-    {
-        $addAttributeToSelect = $mappings->getEntityAttributes();
-
-        $collection = Mage::getModel('customer/customer')
-            ->getCollection()
-            ->addAttributeToSelect($addAttributeToSelect);
-        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, $isAnonymized);
-
-        return $collection;
     }
 
     /**
