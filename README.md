@@ -156,6 +156,8 @@ Event prefix:  `type` and `mapped`
 This event will be fired after data has been copied from the random object.
 This allows you to change the random data for specific entities.
 
+See the observer in demo1 module.
+
 Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_copyObjectData`
 
 Name:       `anonygento_anonymizations_copy_after`
