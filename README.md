@@ -42,7 +42,7 @@ This extension anonymizes all customer related data from the following data obje
 - Rating
 - Sendfriend
 
-@Todo Enterprise tables like RMA, Sales credit memo, sales invoice grid, sales order grid,
+@Todo Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid,
 sales shipment grid
 
 

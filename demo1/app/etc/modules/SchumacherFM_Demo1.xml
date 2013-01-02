@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SchumacherFM_Demo1>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Customer />
+                <SchumacherFM_Anonygento />
+            </depends>
+        </SchumacherFM_Demo1>
+    </modules>
+</config>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <SchumacherFM_Demo1>
+            <version>1.0.1</version>
+        </SchumacherFM_Demo1>
+    </modules>
+
+    <global>
+        <models>
+            <schumacherfm_demo1>
+                <class>SchumacherFM_Demo1_Model</class>
+                <resourceModel>schumacherfm_demo1_resource</resourceModel>
+            </schumacherfm_demo1>
+            <schumacherfm_demo1_resource>
+                <class>SchumacherFM_Demo1_Model_Resource</class>
+            </schumacherfm_demo1_resource>
+        </models>
+
+        <resources>
+            <schumacherfm_demo1_setup>
+                <setup>
+                    <module>SchumacherFM_Demo1</module>
+                    <class>SchumacherFM_Demo1_Model_Resource_Setup</class>
+                </setup>
+            </schumacherfm_demo1_setup>
+        </resources>
+
+        <events>
+            <anonygento_anonymizations_get_mapping_after>
+                <observers>
+                    <anon_alter_customattribute>
+                        <type>singleton</type>
+                        <class>SchumacherFM_Demo1_Model_Observer</class>
+                        <method>alterMyCustomAttribute</method>
+                    </anon_alter_customattribute>
+                </observers>
+            </anonygento_anonymizations_get_mapping_after>
+        </events>
+
+
+    </global>
+
+</config>
