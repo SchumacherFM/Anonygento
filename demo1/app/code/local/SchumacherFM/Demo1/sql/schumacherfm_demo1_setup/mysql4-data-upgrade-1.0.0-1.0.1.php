@@ -33,6 +33,7 @@ $collection = Mage::getModel('customer/customer')->getCollection()
 $i = 1;
 foreach ($collection as $customer) {
     $customer->setMydemo1('Init' . $i);
+    $customer->setMydemo2(-1);
     $customer->save();
     $i++;
 }

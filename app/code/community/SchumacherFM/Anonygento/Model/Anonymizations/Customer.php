@@ -33,7 +33,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _anonymizeCustomer(Mage_Customer_Model_Customer $customer)
     {
-        // SchumacherFM_Anonygento_Model_Random_Customer
         $randomCustomer = $this->_getRandomCustomer()->getCustomer($customer);
 
         $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings('Customer'));
