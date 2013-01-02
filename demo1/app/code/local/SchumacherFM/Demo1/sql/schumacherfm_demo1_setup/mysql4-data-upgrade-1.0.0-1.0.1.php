@@ -27,7 +27,7 @@
 /* @var $installer SchumacherFM_Demo1_Model_Resource_Setup */
 $installer = $this;
 
-$collection = Mage::getModel('customer')->getCollection()
+$collection = Mage::getModel('customer/customer')->getCollection()
     ->addAttributeToSelect('mydemo1');
 
 $i = 1;
