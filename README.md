@@ -69,7 +69,7 @@ Events / Observers
 
 This event will be fired after the collection for the whole anonymization process has been generated.
 That means you can extend the console runner to anonymize custom entities. E.g.: store locator, news
-and other payment solutions.
+or other payment solutions.
 
 Fired in: `SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection`
 
@@ -137,9 +137,19 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
 
 A real world example follows soon.
 
-### Event `anonygento_random_mappings_after`
 
-If you have custom columns/attributes in your tables/entities then you can add them here.
+### Event `anonygento_anonymizations_get_mapping_after`
+
+If you have custom columns/attributes in your tables/entities then you can anonymize them here.
+
+Please see demo1 module.
+
+Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_getMappings`
+
+Name:       `anonygento_anonymizations_get_mapping_after`
+
+Event prefix:  `type` and `mapped`
+
 
 ### Event `anonygento_anonymizations_copy_after`
 
