@@ -182,35 +182,6 @@ class XXX_YYY_Model_Observer {
 }
 ```
 
-### Event `anonygento_random_customer_getcustomer_after`
-
-An event will be fired after getCustomer() has been called on the random customer
-model. This allows you to change specific random data for all entities.
-
-Fired in: `SchumacherFM_Anonygento_Model_Random_Customer::getCustomer`
-
-Name:       `anonygento_random_customer_getcustomer_after`
-
-Event prefix:  `customer`
-
-Example:
-
-```php
-
-class XXX_YYY_Model_Observer {
-
-    public function afterCustomerCalled(Varien_Event_Observer $observer)
-    {
-        $customer = $observer->getEvent()->getCustomer();
-
-        if($customer->getTelephone()){
-            $customer->setTelephone( '0000000000000' );
-        }
-
-    }
-}
-```
-
 
 Todo / Next Versions
 --------------------

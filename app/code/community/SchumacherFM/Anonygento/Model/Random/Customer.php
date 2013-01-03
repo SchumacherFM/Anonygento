@@ -62,10 +62,6 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
 
         $this->_getRandEmail();
 
-        Mage::dispatchEvent('anonygento_random_customer_getcustomer_after', array(
-            'customer' => $this,
-        ));
-
         return $this->_currentCustomer;
     }
 
