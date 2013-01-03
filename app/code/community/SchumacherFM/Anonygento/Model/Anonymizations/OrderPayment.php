@@ -28,16 +28,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
      */
     protected function _anonymizeOrderPayment(Mage_Sales_Model_Order_Payment $orderPayment, Mage_Customer_Model_Customer $customer = null)
     {
-
-        $randomPayment = $this->_getInstance('schumacherfm_anonygento/random_payment')->getPayment($customer);
-
+        $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
         $this->_copyObjectData($randomPayment, $orderPayment, $this->_getMappings('OrderPayment'));
-
-//        Zend_Debug::dump($orderPayment->getData());
-//        exit;
-
         $orderPayment->getResource()->save($orderPayment);
-
     }
 
     /**

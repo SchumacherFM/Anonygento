@@ -30,6 +30,7 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
                 $toObj->setData($attribute, $newData);
             }
         }
+        $this->setToObj(null);
         return TRUE;
     }
 

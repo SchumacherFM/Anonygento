@@ -24,21 +24,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected $_instances = array();
 
     /**
-     * @param string $type
-     * @param array  $arguments
-     * @param bool   $forceNew
-     *
-     * @return object
-     */
-    protected function _getInstance($type, $arguments = array(), $forceNew = FALSE)
-    {
-        if (!isset($this->_instances[$type]) || $forceNew === TRUE) {
-            $this->_instances[$type] = Mage::getModel($type, $arguments);
-        }
-        return $this->_instances[$type];
-    }
-
-    /**
      * @return SchumacherFM_Anonygento_Model_Random_Customer
      */
     protected function _getRandomCustomer()
@@ -53,7 +38,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _getMappings($type)
     {
-        $mapping = $this->_getInstance('schumacherfm_anonygento/random_mappings');
+        $mapping = Mage::getSingleton('schumacherfm_anonygento/random_mappings');
         /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
         $mapped = $mapping->{'set' . $type}();
 
@@ -122,7 +107,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
         $fill = $mappings->getFill();
         if (is_array($fill)) {
-            $fillModel = $this->_getInstance('schumacherfm_anonygento/random_fill');
+            $fillModel = Mage::getSingleton('schumacherfm_anonygento/random_fill');
             $fillModel->setToObj($toObject);
             $fillModel->setMappings($mappings);
             $fillModel->fill();
