@@ -68,7 +68,8 @@ Events / Observers
 ### Event `anonygento_options_anonymizations_collection_after`
 
 This event will be fired after the collection for the whole anonymization process has been generated.
-That means you can extend the console runner to anonymize custom entities. E.g.: store locator, news
+
+With this event you can extend the console runner to anonymize custom entities. E.g.: store locator, news
 or other payment solutions.
 
 Fired in: `SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection`
@@ -183,13 +184,20 @@ class XXX_YYY_Model_Observer {
 }
 ```
 
+Magento Backend hints
+---------------------
+
+The red label 'sensitive data' will switch to green for each entity when the anonymization
+process ran successful.
+
 
 Todo / Next Versions
 --------------------
-1. If the csv files are not found in the locale folder then generate real random strings
-2. Enterprise tables
-3. Anonymize all prices
-4. Run via backend instead of shell. Use a nice ajax updater
+- Use backend config to anonymize custom entities instead of creating own modules with observer.
+- If the csv files are not found in the locale folder then generate real random strings.
+- Enterprise tables
+- Run via backend instead of shell. Use a nice ajax updater.
+- Anonymize all prices
 
 
 Compatibility
@@ -200,10 +208,10 @@ Compatibility
 
 Installation Instructions
 -------------------------
-1. Git clone it somewhere, copy/symlink it into your Magento installation. (Script will be provided soon)
-2. Clear the cache, logout from the admin panel and then login again.
-3. Call the extension from from System -> Tools -> Anonygento
-4. Call the extension via shell in the `site` directory: `php -f shell/anonygento.php`
+1. Git clone it somewhere, copy/symlink it into your Magento installation.
+2. Call the extension via shell in the `site` directory: `php -f shell/anonygento.php`
+3. Clear the cache, logout from the admin panel and then login again.
+4. Call the extension from from System -> Tools -> Anonygento just to get a summery.
 
 
 Shell
