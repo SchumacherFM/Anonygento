@@ -211,7 +211,7 @@ Installation Instructions
 1. Git clone it somewhere, copy/symlink it into your Magento installation.
 2. Call the extension via shell in the `site` directory: `php -f shell/anonygento.php`
 3. Clear the cache, logout from the admin panel and then login again.
-4. Call the extension from from System -> Tools -> Anonygento just to get a summery.
+4. Call the extension from from System -> Tools -> Anonygento (just to get a summery).
 
 
 Shell
@@ -261,7 +261,8 @@ Performance
 -----------
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
-and ~9000 quotes lasts for `x` minutes.
+and ~9000 quotes lasts for ~20 minutes. With 256MB of memory limit I have to restart the process
+several times.
 
 If you get errors like this one:
 
