@@ -98,13 +98,13 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     /**
      * copies the data from obj to another using a mapping array
      *
-     * @param object                                          $fromObj
-     * @param object                                          $toObj
+     * @param object                                          $fromObject
+     * @param object                                          $toObject
      * @param SchumacherFM_Anonygento_Model_Random_Mappings   $mappings
      *
      * @return bool
      */
-    protected function _copyObjectData($fromObj, $toObj, SchumacherFM_Anonygento_Model_Random_Mappings $mappings)
+    protected function _copyObjectData($fromObject, $toObject, SchumacherFM_Anonygento_Model_Random_Mappings $mappings)
     {
 
         $mapped = $mappings->getData();
@@ -114,23 +114,22 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         }
 
         foreach ($mapped as $key => $newKey) {
-            $data = $fromObj->getData($key);
+            $data = $fromObject->getData($key);
             if ($data !== null) {
-                $toObj->setData($newKey, $data);
+                $toObject->setData($newKey, $data);
             }
         }
 
         $fill = $mappings->getFill();
         if (is_array($fill)) {
             $fillModel = $this->_getInstance('schumacherfm_anonygento/random_fill');
-            $fillModel->setToObj($toObj);
+            $fillModel->setToObj($toObject);
             $fillModel->setMappings($mappings);
             $fillModel->fill();
         }
 
         Mage::dispatchEvent('anonygento_anonymizations_copy_after', array(
-            'copied_object' => $toObj,
-            'mappings'      => $mappings,
+            'to_object' => $toObject,
         ));
 
     }

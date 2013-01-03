@@ -153,8 +153,9 @@ Event prefix:  `type` and `mapped`
 
 ### Event `anonygento_anonymizations_copy_after`
 
-This event will be fired after data has been copied from the random object.
-This allows you to change the random data for specific entities.
+This event will be fired after data has been copied from the random object to the target object.
+
+This allows you to change the random data for specific models.
 
 See the observer in demo1 module.
 
@@ -162,7 +163,7 @@ Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_copyObjectDat
 
 Name:       `anonygento_anonymizations_copy_after`
 
-Event prefix:  `copied_object` and `mappings`
+Event prefix:  `to_object`
 
 Example:
 
@@ -172,10 +173,10 @@ class XXX_YYY_Model_Observer {
 
     public function afterObjectCopy(Varien_Event_Observer $observer)
     {
-        $copiedObject = $observer->getEvent()->getCopiedObject();
+        $toObject = $observer->getEvent()->getToObject();
 
-        if($copiedObject->getBillingName()){
-            $copiedObject->setBillingName( 'Lorem ipsum' );
+        if($toObject instanceof Mage_Sales_Model_Order){
+            $toObject->setCustomerTaxvat( mt_rand() );
         }
 
     }
