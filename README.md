@@ -282,7 +282,7 @@ The admin password is shown in clear text ... no hidden input :-( but there are 
 
 #### Command line options
 
-Adjusting memory limit: `php -f anonygento.php -- --memoryLimit=2048 --runAnonymization`
+Adjusting memory limit (in MB): `php -f anonygento.php -- --memoryLimit=2048 --runAnonymization`
 
 Statistics: `php -f anonygento.php -- --stat`
 
@@ -298,7 +298,7 @@ Performance
 -----------
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
-and ~9000 quotes lasts for ~x minutes. With 256MB of memory limit I have to restart the process
+and ~9000 quotes lasts for ~15 minutes. With 256MB of memory limit I have to restart the process
 several times.
 
 If you get errors like this one:
