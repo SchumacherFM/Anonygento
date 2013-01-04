@@ -4,4 +4,17 @@
 "orderAddress","Order addresses"
 "quote","Quotes"
 "quoteAddress","Quotes addresses"
-"newsletterSubscribers","Newsletter subscribers"
+"newsletterSubscriber","Newsletter subscriber"
+giftmessageMessage,Gift messages
+orderGrid,Order grid
+orderPayment,Order payment
+quotePayment,Quote payment
+creditmemo,Credit memo
+creditmemoComment,Credit memo comment
+invoice,Invoice
+invoiceComment,Invoice comment
+shipment,Shipment
+shipmentComment,Shipment comment
+review,Review
+ratingOptionVote,Rating option vote
+sendfriendLog,Sendfriend log
