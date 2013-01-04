@@ -151,6 +151,43 @@ Name:       `anonygento_anonymizations_get_mapping_after`
 
 Event prefix:  `type` and `mapped`
 
+Example:
+
+```php
+class SchumacherFM_Demo1_Model_Observer
+{
+
+    public function mappingAfterAlterMyCustomAttribute(Varien_Event_Observer $observer)
+    {
+        $event = $observer->getEvent();
+        $type  = $event->getType();
+
+        if ($type !== 'Customer') {
+            return null;
+        }
+
+        $mapped = $event->getMapped();
+
+        $fill = $mapped->getFill();
+
+        // mydemo1 is the custom customer attribute
+        $fill['mydemo1'] = array(
+            'model'  => 'schumacherfm_demo1/mydemo1',
+            'method' => 'changeMydemo1'
+        );
+
+        // mydemo2 is the custom customer attribute
+        $fill['mydemo2'] = array(
+            'method' => 'mt_rand',
+            'args'   => array(100, 1000)
+        );
+
+        $mapped->setFill($fill);
+
+    }
+}
+
+```
 
 ### Event `anonygento_anonymizations_copy_after`
 
@@ -170,9 +207,9 @@ Example:
 
 ```php
 
-class XXX_YYY_Model_Observer {
+class SchumacherFM_Demo1_Model_Observer {
 
-    public function afterObjectCopy(Varien_Event_Observer $observer)
+    public function copyAfterAlterCustomerTelephone(Varien_Event_Observer $observer)
     {
         $toObject = $observer->getEvent()->getToObject();
 
@@ -261,7 +298,7 @@ Performance
 -----------
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
-and ~9000 quotes lasts for ~20 minutes. With 256MB of memory limit I have to restart the process
+and ~9000 quotes lasts for ~x minutes. With 256MB of memory limit I have to restart the process
 several times.
 
 If you get errors like this one:
@@ -269,6 +306,7 @@ If you get errors like this one:
 `Fatal error: Allowed memory size of xxx bytes exhausted (tried to allocate x bytes) in abc.php on line x`
 
 Just rerun the script.
+
 
 Support / Contribution
 ----------------------
