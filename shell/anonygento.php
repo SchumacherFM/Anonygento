@@ -164,7 +164,8 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
                     $anonModel->run();
                     $anonModel = null;
-
+                    // hmm ...
+                    Mage::helper('schumacherfm_anonygento')->setAnonymizations(0);
                 }
             } else {
                 $this->_consoleInstance->writeLine('Model ' . $anonExec->getValue() . ' not found or not necessary!',

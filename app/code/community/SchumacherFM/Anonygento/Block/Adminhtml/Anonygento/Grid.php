@@ -123,11 +123,16 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     /**
      * Decorate status column values
      *
+     * @param $value
+     * @param $row
+     * @param $column
+     * @param $isExport
+     *
      * @return string
      */
     public function decorateStatus($value, $row, $column, $isExport)
     {
-        if ($row->getStatus()) {
+        if ( $row->getStatus() != 0) {
             $cell = '<span class="grid-severity-notice"><span>' . $value . '</span></span>';
         } else {
             $cell = '<span class="grid-severity-critical"><span>' . $value . '</span></span>';
