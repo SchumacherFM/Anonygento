@@ -1,0 +1,20 @@
+"customer","Kunden Konto"
+"customerAddress","Kunden Adressen"
+"order","Bestellungen"
+"orderAddress","Bestelladressen"
+"quote","Aufträge"
+"quoteAddress","Auftragsadressen"
+"newsletterSubscriber","Newsletter Abonennten"
+giftmessageMessage,Geschenk Mitteilungen
+orderGrid,Bestellgrid
+orderPayment,Bestellung Bezahlungen
+quotePayment,Auftrag Bezahlungen
+creditmemo,Gutschriften
+creditmemoComment,Kommentare zu Gutschriften
+invoice,Rechnungen
+invoiceComment,Kommentare zu Rechnungen
+shipment,Lieferungen
+shipmentComment,Kommentare zu Lieferungen
+review,Rezensionen
+ratingOptionVote,Bewertungen
+sendfriendLog,Empfehlungen Logdatei
