@@ -38,7 +38,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _getMappings($type)
     {
-        $mapping = Mage::getSingleton('schumacherfm_anonygento/random_mappings');
+        // do not run as getSingleton
+        $mapping = Mage::getModel('schumacherfm_anonygento/random_mappings');
         /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
         $mapped = $mapping->{'set' . $type}();
 
