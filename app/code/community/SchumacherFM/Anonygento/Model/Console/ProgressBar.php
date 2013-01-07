@@ -9,6 +9,12 @@
 class SchumacherFM_Anonygento_Model_Console_ProgressBar extends Zend_ProgressBar
 {
 
+    /**
+     * @HAL9000_ Progress bars are proof that computers are as bad as humans
+     * at estimating how long it will take them to finish something.
+     *
+     * @param array $arguments
+     */
     public function __construct($arguments = array())
     {
         $count = isset($arguments['count'])

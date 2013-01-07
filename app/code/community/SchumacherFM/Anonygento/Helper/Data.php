@@ -8,7 +8,7 @@
  */
 class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const XML_PATH_ANONYMIZED = 'schumacherfm_anonygento/anonymized/';
+    const XML_PATH_ANONYMIZED = 'dev/schumacherfm_anonygento/';
 
     /**
      * @param string  $type

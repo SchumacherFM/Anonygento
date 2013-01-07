@@ -37,16 +37,16 @@
                 </setup>
             </schumacherfm_anonygento_setup>
         </resources>
-
-
     </global>
+
     <default>
-        <schumacherfm_anonygento>
-            <anonymized>
+        <dev>
+            <schumacherfm_anonygento>
                 <locale>de_DE</locale>
-            </anonymized>
-        </schumacherfm_anonygento>
+            </schumacherfm_anonygento>
+        </dev>
     </default>
+
     <admin>
         <routers>
             <adminhtml>

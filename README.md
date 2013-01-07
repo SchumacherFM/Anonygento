@@ -50,7 +50,7 @@ Random Data
 -----------
 All data comes from self defined csv files which are store in the data folder.
 You provide the random data for the module. There are several files for the
-english language already provided.
+english language already available.
 
 @todo if the csv file is empty then a random string is generated.
 
@@ -61,6 +61,8 @@ IP addresses in all tables are also anonymized.
 
 This module is optimized to handle a large amount of data.
 
+You can configure in the backend section which locale to use. Just navigate
+to System > Advanced > Developer > Anonygento Settings
 
 Events / Observers
 ------------------
