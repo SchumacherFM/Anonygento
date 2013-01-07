@@ -1,2 +1,3 @@
 src/app/code/community/SchumacherFM/Anonygento app/code/community/SchumacherFM/Anonygento
-src/app/etc/modules/*                       app/etc/modules/
+src/app/etc/modules/* app/etc/modules/
+src/shell/* shell/
