@@ -83,15 +83,16 @@ Compatibility
 
 Installation Instructions
 -------------------------
-1. Install modman https://github.com/colinmollenhour/modman
+1. Install modman from https://github.com/colinmollenhour/modman
 2. Switch to Magento root folder
 3. `modman init`
 4. `modman clone git://github.com/SchumacherFM/Anonygento.git`
-5. Create some random names or use the English data
+5. Create yourself some random names or use the English data folder
 
 Demo modules installation
 
-6. `modman link .modman/Anonygento/demo`
+6. `modman link .modman/Anonygento/demo/`
+
 
 #### Backend
 
