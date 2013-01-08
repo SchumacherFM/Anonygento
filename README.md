@@ -44,9 +44,6 @@ This extension anonymizes all customer related data from the following data obje
 
 This module is optimized to handle a large amount of data.
 
-@Todo Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid,
-sales shipment grid
-
 
 Random Data
 -----------
@@ -54,14 +51,13 @@ All data is read from self defined csv files which are store in the module data 
 
 You provide the random data for the module. There are several files for the english language already available.
 
-@todo if the csv file is empty then a random string is generated.
-
 Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations still work correctly.
 
 IP addresses in all tables are also anonymized.
 
 You can configure in the backend section which locale to use. Just navigate
 to System -> Configuration -> Advanced -> Developer -> Anonygento Settings
+
 
 Magento Backend hints
 ---------------------
@@ -74,7 +70,7 @@ Todo / Next Versions
 --------------------
 - Use backend config to anonymize custom entities instead of creating own modules with observer.
 - If the csv files are not found in the locale folder then generate real random strings.
-- Enterprise tables
+- Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid, sales shipment grid
 - Run via backend instead of shell. Use a nice ajax updater.
 - Anonymize all prices
 
