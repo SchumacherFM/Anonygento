@@ -64,12 +64,95 @@ This module is optimized to handle a large amount of data.
 You can configure in the backend section which locale to use. Just navigate
 to System > Advanced > Developer > Anonygento Settings
 
+
+Magento Backend hints
+---------------------
+
+The red label 'sensitive data' will switch to green for each entity when the anonymization
+process ran successful.
+
+
+Todo / Next Versions
+--------------------
+- Use backend config to anonymize custom entities instead of creating own modules with observer.
+- If the csv files are not found in the locale folder then generate real random strings.
+- Enterprise tables
+- Run via backend instead of shell. Use a nice ajax updater.
+- Anonymize all prices
+
+
+Compatibility
+-------------
+- Magento >= 1.4
+- php >= 5.3.3
+
+
+Installation Instructions
+-------------------------
+1. Install modman https://github.com/colinmollenhour/modman
+2. Switch to Magento root folder
+3. `modman init`
+4. `modman clone git://github.com/SchumacherFM/Anonygento.git`
+5. Create some random names or use the English data
+
+
+#### Backend
+
+Clear the cache, logout from the admin panel and then login again.
+
+Call the extension from System -> Tools -> Anonygento (just to get a summery).
+
+For configuration check: System -> Configuration -> Advanced -> Developer -> Anonygento Settings
+
+
+#### Shell
+
+Call the script like shown below.
+
+##### This is the view if you choose "no".
+
+```
+$ php -f shell/anonygento.php
+Anonymize this Magento installation? [y/n]n
+Nothing done!
+$
+```
+
+##### This view shows the result for choosing "yes":
+
+```
+$ php -f anonygento.php
+Anonymize this Magento installation? [y/n]y
+Admin user name: [username]
+Admin password: ***********
+Welcome firstname lastname
+Running customer, work load: XXXX rows
+  0% [-------------------------------------]
+Running ...
+```
+
+The admin password is shown in clear text ... no hidden input :-( but there are also nice colors :-)
+
+##### Command line options
+
+Adjusting memory limit (in MB): `php -f anonygento.php -- --memoryLimit=2048 --runAnonymization`
+
+Statistics: `php -f anonygento.php -- --stat`
+
+
+#### Disabling the confirmation and username query
+
+Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV=true`
+
+This is will enable the dev mode.
+
+
 Events / Observers
 ------------------
 
 ### Event `anonygento_options_anonymizations_collection_after`
 
-This event will be fired after the collection for the whole anonymization process has been generated.
+This event will be fired after the collection (`SchumacherFM_Anonygento_Model_Options_Anonymizations`) has been generated.
 
 With this event you can extend the console runner to anonymize custom entities. E.g.: store locator, news
 or other payment solutions.
@@ -133,6 +216,8 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
     protected function _anonymizeFooBar($model)
     {
         // your code
+        $model->setAnonymized(1);
+        $model->save();
     }
 
 }
@@ -172,13 +257,13 @@ class SchumacherFM_Demo1_Model_Observer
 
         $fill = $mapped->getFill();
 
-        // mydemo1 is the custom customer attribute
+        // mydemo1 is a custom customer attribute
         $fill['mydemo1'] = array(
             'model'  => 'schumacherfm_demo1/mydemo1',
             'method' => 'changeMydemo1'
         );
 
-        // mydemo2 is the custom customer attribute
+        // mydemo2 is a custom customer attribute
         $fill['mydemo2'] = array(
             'method' => 'mt_rand',
             'args'   => array(100, 1000)
@@ -190,6 +275,10 @@ class SchumacherFM_Demo1_Model_Observer
 }
 
 ```
+
+This observer extends also the internal Model->getCollection()->add[Attribute|Field]toSelect() method so that
+your data will be fetched too.
+
 
 ### Event `anonygento_anonymizations_copy_after`
 
@@ -215,85 +304,13 @@ class SchumacherFM_Demo1_Model_Observer {
     {
         $toObject = $observer->getEvent()->getToObject();
 
-        if($toObject instanceof Mage_Sales_Model_Order){
+        // checking for the correct instance is a must
+        if($toObject instanceof Mage_Sales_Model_Order) {
             $toObject->setCustomerTaxvat( mt_rand() );
         }
-
     }
 }
 ```
-
-Magento Backend hints
----------------------
-
-The red label 'sensitive data' will switch to green for each entity when the anonymization
-process ran successful.
-
-
-Todo / Next Versions
---------------------
-- Use backend config to anonymize custom entities instead of creating own modules with observer.
-- If the csv files are not found in the locale folder then generate real random strings.
-- Enterprise tables
-- Run via backend instead of shell. Use a nice ajax updater.
-- Anonymize all prices
-
-
-Compatibility
--------------
-- Magento >= 1.4
-- php >= 5.3.3
-
-
-Installation Instructions
--------------------------
-1. Git clone it somewhere, copy/symlink it into your Magento installation.
-2. Call the extension via shell in the `site` directory: `php -f shell/anonygento.php`
-3. Clear the cache, logout from the admin panel and then login again.
-4. Call the extension from from System -> Tools -> Anonygento (just to get a summery).
-
-
-Shell
------
-
-Call the script like shown below.
-
-#### This is the view if you choose "no".
-
-```
-$ php -f shell/anonygento.php
-Anonymize this Magento installation? [y/n]n
-Nothing done!
-$
-```
-
-#### This view shows the result for choosing "yes":
-
-```
-$ php -f anonygento.php
-Anonymize this Magento installation? [y/n]y
-Admin user name: [username]
-Admin password: ***********
-Welcome firstname lastname
-Running customer, work load: XXXX rows
-  0% [-------------------------------------]
-Running ...
-```
-
-The admin password is shown in clear text ... no hidden input :-( but there are also nice colors :-)
-
-#### Command line options
-
-Adjusting memory limit (in MB): `php -f anonygento.php -- --memoryLimit=2048 --runAnonymization`
-
-Statistics: `php -f anonygento.php -- --stat`
-
-
-#### Disabling the confirmation and username query
-
-Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV=true`
-
-This is will enable the dev mode.
 
 
 Performance
@@ -312,11 +329,13 @@ Just rerun the script.
 
 Support / Contribution
 ----------------------
+
 Report a bug or send me a pull request.
 
 
 Other modules for Magento
 -------------------------
+
 There is https://github.com/integer-net/Anonymizer but is has several limitations.
 
 
