@@ -42,28 +42,26 @@ This extension anonymizes all customer related data from the following data obje
 - Rating
 - Sendfriend
 
+This module is optimized to handle a large amount of data.
+
 @Todo Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid,
 sales shipment grid
 
 
 Random Data
 -----------
-All data comes from self defined csv files which are store in the data folder.
-You provide the random data for the module. There are several files for the
-english language already available.
+All data is read from self defined csv files which are store in the module data folder.
+
+You provide the random data for the module. There are several files for the english language already available.
 
 @todo if the csv file is empty then a random string is generated.
 
-Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations
-still work correctly.
+Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations still work correctly.
 
 IP addresses in all tables are also anonymized.
 
-This module is optimized to handle a large amount of data.
-
 You can configure in the backend section which locale to use. Just navigate
-to System > Advanced > Developer > Anonygento Settings
-
+to System -> Configuration -> Advanced -> Developer -> Anonygento Settings
 
 Magento Backend hints
 ---------------------
@@ -101,8 +99,6 @@ Installation Instructions
 Clear the cache, logout from the admin panel and then login again.
 
 Call the extension from System -> Tools -> Anonygento (just to get a summery).
-
-For configuration check: System -> Configuration -> Advanced -> Developer -> Anonygento Settings
 
 
 #### Shell
