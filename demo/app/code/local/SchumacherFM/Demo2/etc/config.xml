@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <SchumacherFM_Demo2>
+            <version>1.0.0</version>
+        </SchumacherFM_Demo2>
+    </modules>
+
+    <global>
+        <models>
+            <schumacherfm_demo2>
+                <class>SchumacherFM_Demo2_Model</class>
+                <resourceModel>schumacherfm_demo2_resource</resourceModel>
+            </schumacherfm_demo2>
+            <schumacherfm_demo2_resource>
+                <class>SchumacherFM_Demo2_Model_Resource</class>
+            </schumacherfm_demo2_resource>
+        </models>
+
+        <resources>
+            <schumacherfm_demo2_setup>
+                <setup>
+                    <module>SchumacherFM_Demo2</module>
+                    <class>SchumacherFM_Demo2_Model_Resource_Setup</class>
+                </setup>
+            </schumacherfm_demo2_setup>
+        </resources>
+
+        <events>
+            <anonygento_anonymizations_get_mapping_after>
+                <observers>
+                    <anon_alter_customattribute>
+                        <type>singleton</type>
+                        <class>SchumacherFM_Demo2_Model_Observer</class>
+                        <method>mappingAfterAlterMyCustomAttribute</method>
+                    </anon_alter_customattribute>
+                </observers>
+            </anonygento_anonymizations_get_mapping_after>
+
+            <anonygento_anonymizations_copy_after>
+                <observers>
+                    <anon_alter_customattribute>
+                        <type>singleton</type>
+                        <class>SchumacherFM_Demo2_Model_Observer</class>
+                        <method>copyAfterAlterCustomerTelephone</method>
+                    </anon_alter_customattribute>
+                </observers>
+            </anonygento_anonymizations_copy_after>
+
+        </events>
+
+
+    </global>
+
+</config>
