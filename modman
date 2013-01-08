@@ -1,3 +1,6 @@
 src/app/code/community/SchumacherFM/Anonygento app/code/community/SchumacherFM/Anonygento
+src/app/design/adminhtml/default/default/layout/anonygento.xml app/design/adminhtml/default/default/layout/anonygento.xml
+src/app/locale/de_DE/SchumacherFM_Anonygento.csv app/locale/de_DE/SchumacherFM_Anonygento.csv
+src/app/locale/en_US/SchumacherFM_Anonygento.csv app/locale/en_US/SchumacherFM_Anonygento.csv
 src/app/etc/modules/* app/etc/modules/
 src/shell/* shell/
