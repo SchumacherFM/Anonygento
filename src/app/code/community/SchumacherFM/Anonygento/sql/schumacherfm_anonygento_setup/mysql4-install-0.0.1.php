@@ -60,11 +60,11 @@ if ($this->isEnterpriseEdition()) {
     $entityTableNames[] = 'enterprise_salesarchive/shipment_grid';
 }
 
-foreach ($entityTableNames as $tableName) {
+foreach ($entityTableNames as $entity) {
 
     $installer
         ->getConnection()
-        ->addColumn($installer->getTable($tableName), 'anonymized', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0');
+        ->addColumn($installer->getTable($entity), 'anonymized', 'TINYINT(1) UNSIGNED NOT NULL DEFAULT 0');
 
 }
 
@@ -98,12 +98,5 @@ foreach ($attributeEavEntities as $name) {
     ));
 
 }
-
-/*
- * fill values
- *
- * insert into `customer_entity_int` (entity_type_id,attribute_id,entity_id,value)
- SELECT entity_type_id,206,entity_id,0 FROM `customer_entity`
- * */
 
 $installer->endSetup();
