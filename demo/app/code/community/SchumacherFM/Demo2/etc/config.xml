@@ -28,25 +28,15 @@
         </resources>
 
         <events>
-            <anonygento_anonymizations_get_mapping_after>
+            <anonygento_options_anonymizations_collection_after>
                 <observers>
                     <anon_alter_customattribute>
                         <type>singleton</type>
                         <class>SchumacherFM_Demo2_Model_Observer</class>
-                        <method>mappingAfterAlterMyCustomAttribute</method>
+                        <method>afterAnonOptionCollection</method>
                     </anon_alter_customattribute>
                 </observers>
-            </anonygento_anonymizations_get_mapping_after>
-
-            <anonygento_anonymizations_copy_after>
-                <observers>
-                    <anon_alter_customattribute>
-                        <type>singleton</type>
-                        <class>SchumacherFM_Demo2_Model_Observer</class>
-                        <method>copyAfterAlterCustomerTelephone</method>
-                    </anon_alter_customattribute>
-                </observers>
-            </anonygento_anonymizations_copy_after>
+            </anonygento_options_anonymizations_collection_after>
 
         </events>
 

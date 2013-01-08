@@ -3,11 +3,11 @@ Anonygento Demo 1
 
 Anonymize a custom entity attribute in the customer EAV model.
 
-This script creates first the custom attribute in case you want to run this module.
+This module creates first the custom attribute.
 
-After that it updates the custom attribute for every customer with a unique value (Init[int]).
+After that it updates the custom attribute for every customer with a unique value (Init[integer]).
 
-The anonymization process sets this value to 'Anon[int]'.
+The anonymization process sets this value to 'Anon[integer]'.
 
 
 Anonygento Demo 2

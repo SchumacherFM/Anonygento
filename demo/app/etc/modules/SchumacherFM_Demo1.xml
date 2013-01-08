@@ -3,10 +3,10 @@
     <modules>
         <SchumacherFM_Demo1>
             <active>true</active>
-            <codePool>local</codePool>
+            <codePool>community</codePool>
             <depends>
-                <Mage_Customer />
-                <SchumacherFM_Anonygento />
+                <Mage_Customer/>
+                <SchumacherFM_Anonygento/>
             </depends>
         </SchumacherFM_Demo1>
     </modules>
