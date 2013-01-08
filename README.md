@@ -89,6 +89,9 @@ Installation Instructions
 4. `modman clone git://github.com/SchumacherFM/Anonygento.git`
 5. Create some random names or use the English data
 
+Demo modules installation
+
+6. `modman link .modman/Anonygento/demo`
 
 #### Backend
 
