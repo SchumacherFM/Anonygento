@@ -1,5 +1,5 @@
 <?php
 
-class SchumacherFM_Demo2_Model_Resource_Setup extends Mage_Eav_Model_Entity_Setup
+class SchumacherFM_Demo2_Model_Resource_Setup extends SchumacherFM_Anonygento_Model_Resource_Setup
 {
 }
