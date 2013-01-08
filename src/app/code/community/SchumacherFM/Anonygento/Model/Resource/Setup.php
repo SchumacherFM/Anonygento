@@ -40,7 +40,7 @@ class SchumacherFM_Anonygento_Model_Resource_Setup extends Mage_Eav_Model_Entity
     /**
      * adds to an eav entity the attribute anonymized
      *
-     * @param $entityName
+     * @param string $entityName
      *
      * @return SchumacherFM_Anonygento_Model_Resource_Setup
      */

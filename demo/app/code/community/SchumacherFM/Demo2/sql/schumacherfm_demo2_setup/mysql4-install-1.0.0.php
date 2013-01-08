@@ -4,8 +4,9 @@
 $installer = $this;
 $installer->startSetup();
 
-$entity = 'catalog/product';
+$installer->addAnonymizedColumn('catalog/product');
 
-$installer->addAnonymizedColumn($entity)->addAnonymizedAttribute($entity);
+// only for EAV models
+$installer->addAnonymizedAttribute('catalog_product');
 
 $installer->endSetup();
