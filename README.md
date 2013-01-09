@@ -170,8 +170,8 @@ class XXX_YYY_Model_Observer {
         $collection = $observer->getEvent()->getCollection();
 
         $option = array(
-          'label' => 'Some label'
-          'value' => 'namespaceModuleEntity'
+          'label' => 'Some label',
+          'value' => 'namespaceModule_Model_Name',
           'model' => 'namespace_module/myAnonymizationProcess'
         );
 
