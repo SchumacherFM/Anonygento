@@ -60,6 +60,7 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
         /* @var $countSql Varien_Db_Select */
         $countSql->where('anonymized=' . $anonymized . ($anonymized === 0 ? ' or anonymized is null' : ''));
         $result = $this->_readConnection->fetchOne($countSql);
+        $this->_currentCollection = null;
         return (int)$result;
 
     }
@@ -79,7 +80,9 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
          */
         $this->_currentCollection->addStaticField('anonymized');
         $this->_currentCollection->addAttributeToFilter('anonymized', $anonymized);
-        return (int)$this->_currentCollection->getSize();
+        $result = (int)$this->_currentCollection->getSize();
+        $this->_currentCollection = null;
+        return $result;
 
     }
 

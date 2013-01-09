@@ -18,7 +18,7 @@ class SchumacherFM_Demo2_Model_Observer
             'model' => 'catalog/product'
         );
 
-        $rowCountModel = Mage::getModel('schumacherfm_anonygento/counter');
+        $rowCountModel = Mage::getSingleton('schumacherfm_anonygento/counter');
 
         $optObj = new Varien_Object($option);
         $optObj

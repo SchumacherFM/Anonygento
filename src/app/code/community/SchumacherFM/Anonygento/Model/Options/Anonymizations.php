@@ -102,7 +102,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
         $this->_collection = new Varien_Data_Collection();
 
-        $rowCountModel = Mage::getModel('schumacherfm_anonygento/counter');
+        $rowCountModel = Mage::getSingleton('schumacherfm_anonygento/counter');
 
         foreach ($this->getAllOptions() as $option) {
 
