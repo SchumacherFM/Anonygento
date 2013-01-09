@@ -64,17 +64,16 @@ foreach ($entityTableNames as $entity) {
     $installer->addAnonymizedColumn($entity);
 }
 
-$attributeEavEntities = array(
-    'customer',
-    'customer_address',
-    'creditmemo',
-    'order',
-    'invoice',
-    'shipment',
+/**
+ * Adding the attribute anonymized to the EAV models
+ */
+$eavTypes = Mage::getModel('eav/entity_type')->getCollection();
+/* @var $eavTypes Mage_Eav_Model_Resource_Entity_Type_Collection */
+$eavTypes->addFieldToFilter('entity_type_code', array('nlike' => 'catalog%'));
 
-);
-foreach ($attributeEavEntities as $name) {
-    $installer->addAnonymizedAttribute($name);
+foreach ($eavTypes as $type) {
+    /* @var $type Mage_Eav_Model_Entity_Type */
+    $installer->addAnonymizedAttribute($type->getEntityTypeCode());
 }
 
 $installer->endSetup();
