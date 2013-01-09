@@ -13,6 +13,7 @@ class SchumacherFM_Demo2_Model_Observer
         $collection = $event->getCollection();
 
         $option = array(
+            'label' => 'Catalog Product',
             'value' => 'catalogProduct',
             'model' => 'catalog/product'
         );
