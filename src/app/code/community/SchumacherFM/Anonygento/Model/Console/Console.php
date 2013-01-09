@@ -88,22 +88,22 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
     }
 
     /**
-     * @param $type
+     * @param string $modelName
      *
      * @return false|Mage_Core_Model_Abstract
      */
-    public function getModel($type)
+    public function getModel($modelName)
     {
-        $model = Mage::getModel('schumacherfm_anonygento/anonymizations_' . $type);
-
+        /**
+         * custom anonymization models can be load here
+         * event is fired in: SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection
+         */
+        $model = Mage::getModel('schumacherfm_anonygento/anonymizations_' . $modelName);
         if ($model) {
             return $model;
         }
 
-        // if no model has been found we search directly for the type
-        // use case: to extend the process for custom tables
-        // event is fired in SchumacherFM_Anonygento_Model_Options_Anonymizations
-        return Mage::getModel($type);
+        return Mage::getModel($modelName);
     }
 
     /**

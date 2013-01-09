@@ -108,7 +108,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
             $optObj = new Varien_Object($option);
             $optObj
-                /* @see SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid column: Status */
+            /* @see SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid column: Status */
                 ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']))
                 ->setUnanonymized($rowCountModel->unAnonymized($option['model']))
                 ->setAnonymized($rowCountModel->anonymized($option['model']));

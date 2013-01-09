@@ -13,9 +13,13 @@ class SchumacherFM_Demo2_Model_Observer
         $collection = $event->getCollection();
 
         $option = array(
-            'label' => 'Catalog Product',
-            'value' => 'catalogProduct',
-            'model' => 'catalog/product'
+            'label'               => 'Catalog Product',
+
+            // name of the anonymization model
+            'value'               => 'schumacherfm_demo2/catalogProduct',
+
+            // name of your custom model
+            'model'               => 'catalog/product',
         );
 
         $rowCountModel = Mage::getSingleton('schumacherfm_anonygento/counter');
@@ -28,9 +32,6 @@ class SchumacherFM_Demo2_Model_Observer
             ->setAnonymized($rowCountModel->anonymized($option['model']));
 
         $collection->addItem($optObj);
-
-        Zend_Debug::dump($collection);
-        exit;
 
     }
 
