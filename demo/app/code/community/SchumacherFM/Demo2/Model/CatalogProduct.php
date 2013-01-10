@@ -3,14 +3,27 @@
 class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
 
+    protected $_mapping;
+
+    protected function _construct()
+    {
+        parent::_construct();
+
+        $this->_mapping = new Varien_Object(array(
+            'name' => 'name',
+            'anonymized' => 'anonymized',
+        ));
+
+    }
+
     public function run()
     {
 
-        $orderCollection = $this->_getCollection();
+        $collection = $this->_getCollection();
 
         $i = 0;
-        foreach ($orderCollection as $order) {
-            $this->_anonymizeOrder($order);
+        foreach ($collection as $product) {
+            $this->_anonymizeProduct($product);
             $this->getProgressBar()->update($i);
             $i++;
         }
@@ -20,61 +33,22 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
-     *
-     * @return boolean
-     */
-    public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
-    {
-
-        $orderCollection = $this->_getCollection()
-            ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
-
-        $orderCollectionSize = (int)$orderCollection->getSize();
-
-        if ($orderCollectionSize === 0) {
-            return FALSE;
-        }
-
-        foreach ($orderCollection as $order) {
-            $this->_anonymizeOrder($order, $customer);
-        }
-
-    }
-
-    /**
-     * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Mage_Catalog_Model_Product $product
      *
      * @throws Exception
      */
-    protected function _anonymizeOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    protected function _anonymizeProduct(Mage_Catalog_Model_Product $product)
     {
 
-        if ($order->getCustomerId() && !$customer) {
-            $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
-            if (!$customer) {
-                throw new Exception('Cant find the customer, please contact the developer!');
-            }
-        } elseif (!$customer) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
-        }
+        $randomProductData = new Varien_Object(array(
+            'name'       => 'RandName ' . mt_rand(),
+            'anonymized' => 1,
+        ));
 
-        $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
+        $this->_copyObjectData($randomProductData, $product, $this->_mapping);
 
-        $this->_anonymizeOrderAddresses($order, $customer);
-        $this->_anonymizeOrderPayment($order, $customer);
-        $this->_anonymizeOrderCreditmemo($order);
-        $this->_anonymizeOrderInvoice($order);
-        $this->_anonymizeOrderShipment($order);
-        $this->_anonymizeQuote($order, $customer);
-
-        $order->getResource()->save($order);
-        // update OrderGrid after order has been saved
-        // @see Mage_Sales_Model_Resource_Order_Abstract
-        $order->getResource()->updateGridRecords($order->getId());
+        $product->getResource()->save($product);
     }
-
 
     /**
      * @return Mage_Sales_Model_Resource_Order_Collection
@@ -86,7 +60,7 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
         /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
 
         $this->_collectionAddAttributeToSelect($collection,
-            $this->_getMappings('Order')->getEntityAttributes()
+            array('sku', 'name')
         );
 
         $this->_collectionAddStaticAnonymized($collection);

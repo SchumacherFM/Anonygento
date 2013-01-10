@@ -154,6 +154,8 @@ This event will be fired after the collection (`SchumacherFM_Anonygento_Model_Op
 With this event you can extend the console runner to anonymize custom entities. E.g.: store locator, news
 or other payment solutions.
 
+Please see Demo2 module.
+
 Fired in: `SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection`
 
 Name:       `anonygento_options_anonymizations_collection_after`
@@ -164,7 +166,7 @@ Example Observer:
 
 ```php
 
-class XXX_YYY_Model_Observer {
+class Namespace_Modul_Model_Observer {
 
     public function afterOptionsAnonymizationCollection(Varien_Event_Observer $observer)
     {
@@ -172,22 +174,41 @@ class XXX_YYY_Model_Observer {
 
         $option = array(
           'label' => 'Some label',
-          'value' => 'namespaceModule_Model_Name',
-          'model' => 'namespace_module/myAnonymizationProcess'
+          'value' => 'namespace_module/myAnonymizationProcess',
+          'model' => 'namespace_module/myModel'
         );
 
-        $customProcess = new Varien_Object($option);
-        $customProcess
-            ->setStatus( @todo )
-            ->setUnanonymized( (int)[number of unanonymized rows] )
-            ->setAnonymized( (int)[number of anonymized rows] );
-
-        $collection->addItem($customProcess);
+        $collection->addItem(new Varien_Object($option));
     }
 }
 ```
 
-Extend your entity with the SQL column: `anonymized TINYINT(1) UNSIGNED NOT NULL DEFAULT 0`
+Your model `namespace_module/myModel` must have a resource collection.
+
+Extend your entity with the SQL column: `anonymized TINYINT(1) UNSIGNED NOT NULL DEFAULT 0`. Use the following
+setup structure:
+
+#### Setup class in Model/Resource/Setup.php
+
+```php
+class Namespace_Modul_Model_Resource_Setup extends SchumacherFM_Anonygento_Model_Resource_Setup {}
+```
+
+##### mysql4/install/upgrade
+
+```php
+/* @var $installer Namespace_Modul_Model_Resource_Setup */
+$installer = $this;
+$installer->startSetup();
+
+// for non EAV models and to extend EAV _entity table
+$installer->addAnonymizedColumn('catalog/product');
+
+// only for EAV models
+$installer->addAnonymizedAttribute('catalog_product');
+
+$installer->endSetup();
+```
 
 Example Model:
 
