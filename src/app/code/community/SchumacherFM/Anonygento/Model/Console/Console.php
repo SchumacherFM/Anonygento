@@ -14,6 +14,10 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
      */
     public function isAdminUser()
     {
+        return TRUE;
+
+        /* disabled, not really necessary */
+
         $line = $this->getModelZf2('console_prompt_line');
 
         $line->setPromptText('Admin user name: ');

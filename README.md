@@ -120,15 +120,10 @@ $
 ```
 $ php -f anonygento.php
 Anonymize this Magento installation? [y/n]y
-Admin user name: [username]
-Admin password: ***********
-Welcome firstname lastname
 Running customer, work load: XXXX rows
   0% [-------------------------------------]
 Running ...
 ```
-
-The admin password is shown in clear text ... no hidden input :-( but there are also nice colors :-)
 
 ##### Command line options
 
