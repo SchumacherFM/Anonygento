@@ -43,6 +43,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
         $mapped = $mapping->{'set' . $type}();
 
+        $mapped->{'set' . self::COLUMN_ANONYMIZED}(self::COLUMN_ANONYMIZED);
+
         Mage::dispatchEvent('anonygento_anonymizations_get_mapping_after', array(
             'type'   => $type,
             'mapped' => $mapped,
@@ -98,6 +100,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         if (count($mapped) === 0) {
             return FALSE;
         }
+
+        $fromObject->{'set' . self::COLUMN_ANONYMIZED}(1);
 
         foreach ($mapped as $key => $newKey) {
             $data = $fromObject->getData($key);

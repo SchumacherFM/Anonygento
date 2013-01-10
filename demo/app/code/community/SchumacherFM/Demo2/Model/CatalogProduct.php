@@ -10,8 +10,7 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
         parent::_construct();
 
         $this->_mapping = new Varien_Object(array(
-            'name' => 'name',
-            'anonymized' => 'anonymized',
+            'randName' => 'name',
         ));
 
     }
@@ -41,8 +40,7 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
     {
 
         $randomProductData = new Varien_Object(array(
-            'name'       => 'RandName ' . mt_rand(),
-            'anonymized' => 1,
+            'randName' => 'RandName ' . mt_rand()
         ));
 
         $this->_copyObjectData($randomProductData, $product, $this->_mapping);

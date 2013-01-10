@@ -49,7 +49,6 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
                 'middlename' => $this->_getCustomerFirstName(),
                 'lastname'   => $this->_getCustomerLastName(),
                 'name'       => $this->_getCustomerFirstName() . ' ' . $this->_getCustomerLastName(),
-                'anonymized' => 1,
             );
 
             $this->_currentCustomer->addData($data);

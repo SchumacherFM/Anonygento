@@ -38,13 +38,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     public function setCustomer()
     {
         return $this->addData(array(
-            'prefix'     => 'prefix',
-            'email'      => 'email',
-            'firstname'  => 'firstname',
-            'lastname'   => 'lastname',
-            'suffix'     => 'suffix',
-            'anonymized' => 'anonymized',
-            'fill'       => array(
+            'prefix'    => 'prefix',
+            'email'     => 'email',
+            'firstname' => 'firstname',
+            'lastname'  => 'lastname',
+            'suffix'    => 'suffix',
+
+            'fill'      => array(
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
@@ -59,14 +59,14 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
 
         return $this->addData(array(
-            'anonymized' => 'anonymized',
-            'prefix'     => 'prefix',
-            'firstname'  => 'firstname',
-            'lastname'   => 'lastname',
-            'company'    => 'company',
-            'telephone'  => 'telephone',
-            'fax'        => 'fax',
-            'street'     => 'street',
+
+            'prefix'    => 'prefix',
+            'firstname' => 'firstname',
+            'lastname'  => 'lastname',
+            'company'   => 'company',
+            'telephone' => 'telephone',
+            'fax'       => 'fax',
+            'street'    => 'street',
         ));
 
     }
@@ -81,8 +81,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
 
         return $this->addData(array(
-            'anonymized' => 'anonymized',
-            'email'      => 'subscriber_email',
+
+            'email' => 'subscriber_email',
         ));
 
     }
@@ -90,8 +90,8 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     public function setGiftMessage()
     {
         return $this->addData(array(
-            'anonymized' => 'anonymized',
-            'email'      => 'sender',
+
+            'email' => 'sender',
         ));
 
     }
@@ -104,14 +104,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     public function setOrder()
     {
         return $this->addData(array(
-            'email'      => 'customer_email',
-            'firstname'  => 'customer_firstname',
-            'lastname'   => 'customer_lastname',
-            'middle'     => 'customer_middlename',
-            'suffix'     => 'customer_suffix',
-            'prefix'     => 'customer_prefix',
-            'taxvat'     => 'customer_taxvat',
-            'anonymized' => 'anonymized',
+            'email'     => 'customer_email',
+            'firstname' => 'customer_firstname',
+            'lastname'  => 'customer_lastname',
+            'middle'    => 'customer_middlename',
+            'suffix'    => 'customer_suffix',
+            'prefix'    => 'customer_prefix',
+            'taxvat'    => 'customer_taxvat',
 
             // system attributes
             'customer_id',
@@ -120,7 +119,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'shipping_address_id',
             'billing_address_id',
 
-            'fill'       => array(
+            'fill'      => array(
                 'remote_ip' => array(
                     'model'  => 'schumacherfm_anonygento/random_ip',
                     'helper' => NULL,
@@ -147,7 +146,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'suffix'     => 'suffix',
             'prefix'     => 'prefix',
             'taxvat'     => 'vat_id',
-            'anonymized' => 'anonymized',
 
             // system attributes
             'entity_id',
@@ -159,7 +157,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     public function setOrderGrid()
     {
         return $this->addData(array(
-            'anonymized' => 'anonymized',
 
             // system attributes
             'entity_id',
@@ -173,13 +170,13 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'name'       => 'cc_owner',
-            'month'      => 'cc_exp_month',
-            'year'       => 'cc_exp_year',
-            'last4'      => 'cc_last4',
-            'ccType'     => 'cc_type',
+            'name'   => 'cc_owner',
+            'month'  => 'cc_exp_month',
+            'year'   => 'cc_exp_year',
+            'last4'  => 'cc_last4',
+            'ccType' => 'cc_type',
 
-            'fill'       => array(
+            'fill'   => array(
                 /**
                  * @todo use reality like values instead of the
                  *       getRandomString method :-(
@@ -353,7 +350,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             ),
 
             // system attributes
-            'anonymized' => 'anonymized',
+
             'entity_id',
         ));
 
@@ -367,16 +364,15 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     public function setQuote()
     {
         return $this->addData(array(
-            'email'      => 'customer_email',
-            'firstname'  => 'customer_firstname',
-            'lastname'   => 'customer_lastname',
-            'middle'     => 'customer_middlename',
-            'suffix'     => 'customer_suffix',
-            'prefix'     => 'customer_prefix',
-            'taxvat'     => 'customer_taxvat',
-            'anonymized' => 'anonymized',
+            'email'     => 'customer_email',
+            'firstname' => 'customer_firstname',
+            'lastname'  => 'customer_lastname',
+            'middle'    => 'customer_middlename',
+            'suffix'    => 'customer_suffix',
+            'prefix'    => 'customer_prefix',
+            'taxvat'    => 'customer_taxvat',
 
-            'fill'       => array(
+            'fill'      => array(
                 'password_hash' => array(
                     'model'  => NULL,
                     'helper' => 'core',
@@ -419,7 +415,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             'suffix'     => 'suffix',
             'prefix'     => 'prefix',
             'taxvat'     => 'vat_id',
-            'anonymized' => 'anonymized',
 
             // @todo fields not in the customer object but needed
             'fill'       => array(
@@ -442,17 +437,17 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         return $this->addData(array(
 
             // system attributes
-            'anonymized' => 'anonymized',
+
             'payment_id',
             'quote_id',
 
-            'name'       => 'cc_owner',
-            'month'      => 'cc_exp_month',
-            'year'       => 'cc_exp_year',
-            'last4'      => 'cc_last4',
-            'ccType'     => 'cc_type',
+            'name'   => 'cc_owner',
+            'month'  => 'cc_exp_month',
+            'year'   => 'cc_exp_year',
+            'last4'  => 'cc_last4',
+            'ccType' => 'cc_type',
 
-            'fill'       => array(
+            'fill'   => array(
                 /**
                  * @todo use reality like values instead of the
                  *       getRandomString method :-(
@@ -537,8 +532,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'anonymized' => 'anonymized',
-
             // system attributes
             'entity_id',
             'order_id',
@@ -551,12 +544,10 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'anonymized' => 'anonymized',
-
             // system attributes
             'entity_id',
 
-            'fill'       => array(
+            'fill' => array(
                 'comment' => array(
                     'model'  => 'schumacherfm_anonygento/random_loremIpsum',
                     'helper' => NULL,
@@ -592,12 +583,10 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'anonymized' => 'anonymized',
-
             // system attributes
             'review_id',
 
-            'fill'       => array(
+            'fill' => array(
                 'title'  => array(
                     'model'  => 'schumacherfm_anonygento/random_loremIpsum',
                     'helper' => NULL,
@@ -618,13 +607,11 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'anonymized' => 'anonymized',
-
             // system attributes
             'vote_id',
             'option_id',
 
-            'fill'       => array(
+            'fill' => array(
                 'remote_ip'      => array(
                     'model'  => 'schumacherfm_anonygento/random_ip',
                     'helper' => NULL,
@@ -645,12 +632,10 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         return $this->addData(array(
 
-            'anonymized' => 'anonymized',
-
             // system attributes
             'log_id',
 
-            'fill'       => array(
+            'fill' => array(
                 'ip' => array(
                     'model'  => 'schumacherfm_anonygento/random_ip',
                     'helper' => NULL,

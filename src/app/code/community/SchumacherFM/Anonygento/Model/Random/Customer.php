@@ -55,7 +55,6 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
             'telephone'  => $this->_getCustomerTelephone(),
             'fax'        => $this->_getCustomerTelephone(),
             'remote_ip'  => $this->_getCustomerIp(),
-            'anonymized' => 1,
         );
 
         $this->_currentCustomer->addData($data);
