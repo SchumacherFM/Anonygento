@@ -131,6 +131,9 @@ Adjusting memory limit (in MB): `php -f anonygento.php -- --memoryLimit=2048 --r
 
 Statistics: `php -f anonygento.php -- --stat`
 
+If all fails and you still get our of memory errors:
+
+Limiting the collection size: `php -f anonygento.php -- --collectionLimit=400 --runAnonymization`
 
 #### Disabling the confirmation and username query
 

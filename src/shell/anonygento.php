@@ -199,6 +199,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                         $anonModel->setProgressBar($progessBar);
                         $anonModel->setOptions($this->_options);
                         $anonModel->run();
+                        unset($anonModel);
                         $anonModel = null;
                     }
 
