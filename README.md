@@ -47,7 +47,7 @@ This module is optimized to handle a large amount of data.
 
 Random Data
 -----------
-All data is read from self defined csv files which are store in the module data folder.
+All data is read from self defined csv files which are stored in the module data folder and there in a locale subfolder.
 
 You provide the random data for the module. There are several files for the english language already available.
 
@@ -68,6 +68,7 @@ process ran successful.
 
 Todo / Next Versions
 --------------------
+- Assign a store view to a locale to get e.g. country specific random names.
 - Use backend config to anonymize custom entities instead of creating own modules with observer.
 - If the csv files are not found in the locale folder then generate real random strings.
 - Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid, sales shipment grid
