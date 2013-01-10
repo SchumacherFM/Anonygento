@@ -102,7 +102,6 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
         if ($model) {
             return $model;
         }
-
         return Mage::getModel($modelName);
     }
 

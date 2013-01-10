@@ -84,13 +84,13 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     /**
      * copies the data from obj to another using a mapping array
      *
-     * @param object                                          $fromObject
-     * @param object                                          $toObject
-     * @param SchumacherFM_Anonygento_Model_Random_Mappings   $mappings
+     * @param object                  $fromObject
+     * @param object                  $toObject
+     * @param Varien_Object           $mappings
      *
      * @return bool
      */
-    protected function _copyObjectData($fromObject, $toObject, SchumacherFM_Anonygento_Model_Random_Mappings $mappings)
+    protected function _copyObjectData($fromObject, $toObject, Varien_Object $mappings)
     {
 
         $mapped = $mappings->getData();

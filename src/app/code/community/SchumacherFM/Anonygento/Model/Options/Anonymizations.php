@@ -16,33 +16,31 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
      *
      * @var array
      */
-    protected $_options = array(
-
-        // internalKey => modelname
-        'customer'             => 'customer/customer',
-        'customerAddress'      => 'customer/address',
-        'newsletterSubscriber' => 'newsletter/subscriber',
-        'giftmessageMessage'   => 'giftmessage/message',
-
-        'order'                => 'sales/order',
-        'orderAddress'         => 'sales/order_address',
-        'orderGrid'            => 'sales/order_grid_collection',
-        'orderPayment'         => 'sales/order_payment',
-
-        'quote'                => 'sales/quote',
-        'quoteAddress'         => 'sales/quote_address',
-        'quotePayment'         => 'sales/quote_payment',
-
-        // all comments collections are only for FYI
-        'creditmemo'           => 'sales/order_creditmemo_collection',
-        'creditmemoComment'    => 'sales/order_creditmemo_comment_collection',
-
-        'invoice'              => 'sales/order_invoice_collection',
-        'invoiceComment'       => 'sales/order_invoice_comment_collection',
-
-        'shipment'             => 'sales/order_shipment',
-        'shipmentComment'      => 'sales/order_shipment_comment',
-
+    protected $_options = array(// internalKey => modelname
+//        'customer'             => 'customer/customer',
+//        'customerAddress'      => 'customer/address',
+//        'newsletterSubscriber' => 'newsletter/subscriber',
+//        'giftmessageMessage'   => 'giftmessage/message',
+//
+//        'order'                => 'sales/order',
+//        'orderAddress'         => 'sales/order_address',
+//        'orderGrid'            => 'sales/order_grid_collection',
+//        'orderPayment'         => 'sales/order_payment',
+//
+//        'quote'                => 'sales/quote',
+//        'quoteAddress'         => 'sales/quote_address',
+//        'quotePayment'         => 'sales/quote_payment',
+//
+//        // all comments collections are only for FYI
+//        'creditmemo'           => 'sales/order_creditmemo_collection',
+//        'creditmemoComment'    => 'sales/order_creditmemo_comment_collection',
+//
+//        'invoice'              => 'sales/order_invoice_collection',
+//        'invoiceComment'       => 'sales/order_invoice_comment_collection',
+//
+//        'shipment'             => 'sales/order_shipment',
+//        'shipmentComment'      => 'sales/order_shipment_comment',
+//
         'review'               => 'review/review',
         'ratingOptionVote'     => 'rating/rating_option_vote',
         'sendfriendLog'        => 'sendfriend/sendfriend',
@@ -87,7 +85,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     protected $_collection = null;
 
     /**
-     * @return Varien_Data_Collection
+     * @return null|Varien_Data_Collection
+     * @throws Exception
      */
     public function getCollection()
     {
@@ -102,23 +101,27 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
         $this->_collection = new Varien_Data_Collection();
 
-        $rowCountModel = Mage::getSingleton('schumacherfm_anonygento/counter');
-
         foreach ($this->getAllOptions() as $option) {
-
-            $optObj = new Varien_Object($option);
-            $optObj
-            /* @see SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid column: Status */
-                ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option['value']))
-                ->setUnanonymized($rowCountModel->unAnonymized($option['model']))
-                ->setAnonymized($rowCountModel->anonymized($option['model']));
-
-            $this->_collection->addItem($optObj);
+            $this->_collection->addItem(new Varien_Object($option));
         }
 
         Mage::dispatchEvent('anonygento_options_anonymizations_collection_after', array(
             'collection' => $this->_collection
         ));
+
+        $rowCountModel = Mage::getSingleton('schumacherfm_anonygento/counter');
+        foreach ($this->_collection as $option) {
+
+            if (!$option->getValue() || !$option->getModel()) {
+                throw new Exception('Missing value or model in the anonymization collection');
+            }
+
+            $option
+            /* @see SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid column: Status */
+                ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option->getValue()))
+                ->setUnanonymized($rowCountModel->unAnonymized($option->getModel()))
+                ->setAnonymized($rowCountModel->anonymized($option->getModel()));
+        }
 
         if ($this->useCache === 1) {
             $this->_setAdminCollection();
