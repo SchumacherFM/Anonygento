@@ -91,6 +91,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
             ->addAttributeToSelect($this->_getMappings('Customer')->getEntityAttributes());
         /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
 
+        $collection->getSelect()->limit( 200 );
+
         $this->_collectionAddStaticAnonymized($collection, 0);
 
         return $collection;
