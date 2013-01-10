@@ -233,8 +233,8 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
 
     protected function _anonymizeFooBar($model)
     {
-        // your code
-        $model->setAnonymized(1);
+        // please see Demo2 module
+        $this->_copyObjectData( ... );
         $model->save();
     }
 
