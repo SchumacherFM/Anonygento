@@ -72,13 +72,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('customer/address')
-            ->getCollection()
-            ->addAttributeToSelect($this->_getMappings('CustomerAddress')->getEntityAttributes());
-        /* @var $collection Mage_Customer_Model_Resource_Address_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection);
-
-        return $collection;
+        return parent::_getCollection('customer/address', 'CustomerAddress');
     }
 }

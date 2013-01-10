@@ -18,7 +18,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderGrid extends SchumacherF
 
         $i = 0;
         foreach ($gridCollection as $gridOrder) {
-            $this->_anonymizeOrderGrid($gridOrder);
+//            $this->_anonymizeOrderGrid($gridOrder);
             $this->getProgressBar()->update($i);
             $i++;
         }
@@ -42,15 +42,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderGrid extends SchumacherF
      */
     protected function _getCollection()
     {
-        $collection = Mage::getResourceModel('sales/order_grid_collection')
-            ->addFieldToSelect(
-                $this->_getMappings('OrderGrid')->getEntityAttributes()
-            );
-        /* @var $collection Mage_Sales_Model_Resource_Order_Grid_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('sales/order_grid_collection', 'OrderGrid');
     }
 
 }

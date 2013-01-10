@@ -50,14 +50,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sales/quote_payment')
-            ->getCollection()
-            ->addFieldToSelect($this->_getMappings('QuotePayment')->getEntityAttributes());
-        /* @var $collection Mage_Sales_Model_Resource_Quote_Payment_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('sales/quote_payment', 'QuotePayment');
     }
 
 }

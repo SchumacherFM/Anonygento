@@ -37,14 +37,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('review/review')
-            ->getCollection()
-            ->addFieldToSelect(array('entity_id', 'review_id'));
-        /* @var $collection Mage_Review_Model_Resource_Review_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('review/review')->addFieldToSelect(array('entity_id', 'review_id'));;
     }
 
 }

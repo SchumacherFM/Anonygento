@@ -56,14 +56,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('newsletter/subscriber')
-            ->getCollection()
-            ->addFieldToSelect($this->_getMappings('NewsletterSubscriber')->getEntityAttributes());
-        /* @var $collection Mage_Newsletter_Model_Resource_Subscriber_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('newsletter/subscriber', 'NewsletterSubscriber');
     }
 
 }

@@ -69,12 +69,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sales/order_' . strtolower($this->getModelName()))->getCollection();
-        $collection->addFieldToSelect(
-            $this->_getMappings($this->getModelName())->getEntityAttributes()
-        );
-        $this->_collectionAddStaticAnonymized($collection, 0);
-        return $collection;
+        return parent::_getCollection('sales/order_' . strtolower($this->getModelName()), $this->getModelName());
     }
 
 }

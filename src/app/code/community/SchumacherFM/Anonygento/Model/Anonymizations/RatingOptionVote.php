@@ -37,14 +37,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('rating/rating_option_vote')
-            ->getCollection()
-            ->addFieldToSelect($this->_getMappings('RatingOptionVote')->getEntityAttributes());
-        /* @var $collection Mage_Rating_Model_Resource_Rating_Option_Vote_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('rating/rating_option_vote', 'RatingOptionVote');
     }
 
 }

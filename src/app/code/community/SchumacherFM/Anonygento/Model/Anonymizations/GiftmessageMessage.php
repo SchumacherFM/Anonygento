@@ -44,14 +44,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('giftmessage/message')
-            ->getCollection()
-            ->addFieldToSelect($this->_getMappings('GiftMessage')->getEntityAttributes());
-        /* @var $collection Mage_GiftMessage_Model_Resource_Message_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('giftmessage/message', 'GiftMessage');
     }
 
 }

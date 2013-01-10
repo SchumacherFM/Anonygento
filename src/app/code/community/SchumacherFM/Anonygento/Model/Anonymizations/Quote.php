@@ -108,16 +108,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sales/quote')
-            ->getCollection();
-
-        /* @var $collection Mage_Sales_Model_Resource_Quote_Collection */
-        $this->_collectionAddAttributeToSelect($collection,
-            $this->_getMappings('Quote')->getEntityAttributes()
-        );
-
-        $this->_collectionAddStaticAnonymized($collection);
-
-        return $collection;
+        return parent::_getCollection('sales/quote', 'Quote');
     }
 }

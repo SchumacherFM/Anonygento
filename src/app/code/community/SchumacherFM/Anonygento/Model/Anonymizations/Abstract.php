@@ -61,13 +61,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     abstract public function run();
 
     /**
-     * loads the current collection
-     *
-     * @return Varien_Data_CollectionDb
-     */
-    abstract protected function _getCollection();
-
-    /**
      * @param Zend_ProgressBar $bar
      */
     public function setProgressBar(Zend_ProgressBar $bar)
@@ -167,4 +160,35 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     }
 
+    /**
+     * @param string $modelName
+     * @param string $mappingName
+     *
+     * @return Varien_Data_Collection_Db
+     */
+    protected function _getCollection($modelName, $mappingName = NULL)
+    {
+        $collection = stristr($modelName, '_collection') !== FALSE
+            ? Mage::getResourceModel($modelName)
+            : Mage::getModel($modelName)->getCollection();
+
+        if ($mappingName !== NULL) {
+            $this->_collectionAddAttributeToSelect($collection,
+                $this->_getMappings($mappingName)->getEntityAttributes()
+            );
+        }
+
+        /* getOptions() please see shell class */
+        if ($this->getOptions() && $this->getOptions()->getCollectionLimit()) {
+            $offset = $this->getOptions()->getCollectionLimit() * $this->getOptions()->getCurrentRun();
+
+echo $this->getOptions()->getCollectionLimit() . " / $offset" . PHP_EOL;
+
+            $collection->getSelect()->limit($this->getOptions()->getCollectionLimit(), $offset);
+        }
+
+        $this->_collectionAddStaticAnonymized($collection, 0);
+
+        return $collection;
+    }
 }

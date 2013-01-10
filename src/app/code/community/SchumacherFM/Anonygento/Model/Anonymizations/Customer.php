@@ -25,7 +25,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
             $i++;
         }
         $this->getProgressBar()->finish();
-
     }
 
     /**
@@ -86,15 +85,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('customer/customer')
-            ->getCollection()
-            ->addAttributeToSelect($this->_getMappings('Customer')->getEntityAttributes());
-        /* @var $collection Mage_Customer_Model_Resource_Customer_Collection */
-
-        $collection->getSelect()->limit( 200 );
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('customer/customer', 'Customer');
     }
 }

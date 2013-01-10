@@ -53,14 +53,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sales/order_payment')
-            ->getCollection()
-            ->addFieldToSelect($this->_getMappings('OrderPayment')->getEntityAttributes());
-        /* @var $collection Mage_Sales_Model_Resource_Order_Payment_Collection */
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
+        return parent::_getCollection('sales/order_payment', 'OrderPayment');
     }
 
 }

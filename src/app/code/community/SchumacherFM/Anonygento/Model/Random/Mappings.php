@@ -585,6 +585,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
             // system attributes
             'review_id',
+            'entity_id',
 
             'fill' => array(
                 'title'  => array(

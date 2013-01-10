@@ -38,12 +38,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sendfriend/sendfriend')
-            ->getCollection()
-            ->addFieldToSelect($this->_getMappings('SendfriendLog')->getEntityAttributes());
-        /* @var $collection Mage_Sendfriend_Model_Resource_Sendfriend_Collection */
-        $this->_collectionAddStaticAnonymized($collection, 0);
-        return $collection;
+        return parent::_getCollection('sendfriend/sendfriend', 'SendfriendLog');
     }
 
 }

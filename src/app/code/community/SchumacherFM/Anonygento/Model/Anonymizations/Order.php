@@ -137,16 +137,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sales/order')
-            ->getCollection();
-        /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
-
-        $this->_collectionAddAttributeToSelect($collection,
-            $this->_getMappings('Order')->getEntityAttributes()
-        );
-
-        $this->_collectionAddStaticAnonymized($collection);
-
-        return $collection;
+        return parent::_getCollection('sales/order', 'Order');
     }
 }

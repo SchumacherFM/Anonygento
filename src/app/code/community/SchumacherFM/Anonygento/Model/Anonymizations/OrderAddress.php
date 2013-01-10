@@ -65,15 +65,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
      */
     protected function _getCollection()
     {
-        $collection = Mage::getModel('sales/order_address')
-            ->getCollection();
-
-        /* @var $collection Mage_Sales_Model_Resource_Order_Collection */
-
-        $this->_collectionAddAttributeToSelect($collection, $this->_getMappings('OrderAddress')->getEntityAttributes());
-
-        $this->_collectionAddStaticAnonymized($collection);
-
-        return $collection;
+        return parent::_getCollection('sales/order_address', 'OrderAddress');
     }
 }

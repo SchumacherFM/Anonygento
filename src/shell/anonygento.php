@@ -29,6 +29,13 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     private $_consoleGetOpt = null;
 
+    /**
+     * internal option container, will be passed to the anonymization models
+     *
+     * @var Varien_Object
+     */
+    private $_options = null;
+
     protected function _construct()
     {
         /**
@@ -45,11 +52,14 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
          * stat is also a method
          */
         $this->_consoleGetOpt = new Zend_Console_Getopt(array(
-            'stat'             => 'Print statistic summary',
-            'randomCustomer-i' => 'Prints a random customer with optional customer entity id',
-            'memoryLimit=i'    => 'Sets the PHP memory limit to a new value. Use e.g. 384 for 384M',
-            'runAnonymization' => 'Runs the anonymization process. Additionally used for memoryLimit',
+            'stat'              => 'Print statistic summary',
+            'randomCustomer-i'  => 'Prints a random customer with optional customer entity id',
+            'memoryLimit=i'     => 'Sets the PHP memory limit to a new value. Use e.g. 384 for 384M',
+            'collectionLimit=i' => 'Sets the collection size to a new value',
+            'runAnonymization'  => 'Runs the anonymization process. Additionally used for memoryLimit',
         ));
+
+        $this->_options = new Varien_Object();
 
     }
 
@@ -103,8 +113,18 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
     protected function _memoryLimit($limit)
     {
         $limit = (int)$limit;
-
         ini_set('memory_limit', $limit . 'M');
+    }
+
+    /**
+     * @param integer $limit
+     */
+    protected function _collectionLimit($limit)
+    {
+        $limit = (int)$limit;
+        if ($limit > 0) {
+            $this->_options->setCollectionLimit($limit);
+        }
     }
 
     /**
@@ -114,6 +134,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
     protected function _stat()
     {
         $this->_consoleInstance->writeLine('Memory limit: ' . ini_get('memory_limit'));
+        $this->_consoleInstance->writeLine('Collection limit: ' . ((int)$this->_options->getCollectionLimit()));
         $_execCollection = $this->_console->getAnonymizationCollection();
         echo $this->_console->printInfoTable($_execCollection);
         return $_execCollection;
@@ -159,11 +180,28 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                 );
 
                 if ($reCalc > 0 || $this->_devMode === TRUE) {
-                    $progessBar = $this->_console->getProgressBar($reCalc);
-                    $anonModel->setProgressBar($progessBar);
 
-                    $anonModel->run();
-                    $anonModel = null;
+//                    $this->_options->setTotalRows($reCalc);
+
+                    $pgReCalc  = $this->_options->getCollectionLimit()
+                        ? $this->_options->getCollectionLimit()
+                        : $reCalc;
+                    $modelRuns = ceil($reCalc / $pgReCalc);
+
+                    for ($i = 0; $i < $modelRuns; $i++) {
+                        $this->_options->setCurrentRun($i);
+                        $progessBar = $this->_console->getProgressBar($pgReCalc);
+
+                        if ($anonModel === null) {
+                            $anonModel = $this->_console->getModel($anonExec->getValue());
+                        }
+
+                        $anonModel->setProgressBar($progessBar);
+                        $anonModel->setOptions($this->_options);
+                        $anonModel->run();
+                        $anonModel = null;
+                    }
+
                     // hmm ...
                     Mage::helper('schumacherfm_anonygento')->setAnonymizations(0);
                 }
