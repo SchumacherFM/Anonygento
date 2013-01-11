@@ -23,6 +23,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
             $this->getProgressBar()->update($i);
             $i++;
         }
+        $collection = null;
         $this->getProgressBar()->finish();
     }
 
@@ -35,6 +36,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
         $this->_anonymizeModelComments($model);
         $model->getResource()->save($model);
         $model->getResource()->updateGridRecords($model->getOrderId());
+        $model = null;
     }
 
     /**
@@ -50,6 +52,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
             $this->_copyObjectData($emptyCopy, $comment, $this->_getMappings($this->getModelName() . 'Comment'));
             $comment->getResource()->save($comment);
         }
+        $commentsCollection = null;
     }
 
     /**
@@ -61,6 +64,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
         foreach ($collection as $collectionModel) {
             $this->_anonymizeModel($collectionModel, $this->getModelName());
         }
+        $collection = null;
 
     }
 

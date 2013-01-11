@@ -19,6 +19,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
             $this->getProgressBar()->update($i);
             $i++;
         }
+        $newsLetterSubscriberCollection = null;
         $this->getProgressBar()->finish();
     }
 
@@ -49,6 +50,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
             $this->_copyObjectData($customer, $subscriber, $this->_getMappings('NewsletterSubscriber'));
             $subscriber->save();
         }
+        $subscriber = null;
     }
 
     /**

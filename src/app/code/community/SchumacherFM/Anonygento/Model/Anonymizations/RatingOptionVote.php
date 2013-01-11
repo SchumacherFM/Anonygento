@@ -19,6 +19,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
             $this->getProgressBar()->update($i);
             $i++;
         }
+        $collection = null;
         $this->getProgressBar()->finish();
     }
 

@@ -174,10 +174,10 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
             $reCalc = $this->_console->reCalcUnAnonymized($anonExec->getModel());
 
             if ($anonModel) {
-                $this->_consoleInstance->writeLine(
-                    'Working on ' . $anonExec->getLabel() . ': ' . $reCalc . '/' . $anonExec->getAnonymized(),
-                    SchumacherFM_Anonygento_Model_Console_Color::MAGENTA
-                );
+//                $this->_consoleInstance->writeLine(
+//                    'Working on ' . $anonExec->getLabel() . ': ' . $reCalc . '/' . $anonExec->getAnonymized(),
+//                    SchumacherFM_Anonygento_Model_Console_Color::MAGENTA
+//                );
 
                 if ($reCalc > 0 || $this->_devMode === TRUE) {
 
@@ -189,17 +189,22 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                     $modelRuns = ceil($reCalc / $pgReCalc);
 
                     for ($i = 0; $i < $modelRuns; $i++) {
+
                         $this->_options->setCurrentRun($i);
-                        $progessBar = $this->_console->getProgressBar($pgReCalc);
 
                         if ($anonModel === null) {
                             $anonModel = $this->_console->getModel($anonExec->getValue());
                         }
 
+                        $this->_consoleInstance->writeLine(
+                            'Working on ' . $anonExec->getLabel() . ' Total: ' . $reCalc . ' Cycle: ' . ($i * $pgReCalc),
+                            SchumacherFM_Anonygento_Model_Console_Color::MAGENTA
+                        );
+
+                        $progessBar = $this->_console->getProgressBar($pgReCalc);
                         $anonModel->setProgressBar($progessBar);
                         $anonModel->setOptions($this->_options);
                         $anonModel->run();
-                        unset($anonModel);
                         $anonModel = null;
                     }
 

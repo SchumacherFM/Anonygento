@@ -11,15 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
 
     public function run()
     {
-        $collection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($collection as $quotePayment) {
-            $this->_anonymizeQuotePayment($quotePayment);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeQuotePayment');
     }
 
     /**
@@ -31,6 +23,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
         $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
         $this->_copyObjectData($randomPayment, $quotePayment, $this->_getMappings('QuotePayment'));
         $quotePayment->getResource()->save($quotePayment);
+        $quotePayment = null;
     }
 
     /**
@@ -43,6 +36,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
         foreach ($paymentCollection as $payment) {
             $this->_anonymizeQuotePayment($payment, $customer);
         }
+        $paymentCollection = null;
     }
 
     /**

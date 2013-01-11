@@ -11,18 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
     public function run()
     {
-
-        $orderCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($orderCollection as $order) {
-            $this->_anonymizeOrder($order);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-
-        $this->getProgressBar()->finish();
-
+        parent::run($this->_getCollection(), '_anonymizeOrder');
     }
 
     /**
@@ -45,6 +34,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         foreach ($orderCollection as $order) {
             $this->_anonymizeOrder($order, $customer);
         }
+        $orderCollection = null;
 
     }
 

@@ -19,6 +19,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
             $this->getProgressBar()->update($i);
             $i++;
         }
+        $messageCollection = null;
         $this->getProgressBar()->finish();
     }
 

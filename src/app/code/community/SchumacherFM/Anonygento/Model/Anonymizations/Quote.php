@@ -11,17 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
     public function run()
     {
-
-        $quoteCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($quoteCollection as $quote) {
-            $this->_anonymizeQuote($quote);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $this->getProgressBar()->finish();
-
+        parent::run($this->_getCollection(), '_anonymizeQuote');
     }
 
     /**
@@ -50,6 +40,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
         $quote->getResource()->save($quote);
+        $quote = null;
     }
 
     /**
@@ -70,6 +61,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         foreach ($quoteCollection as $quote) {
             $this->_anonymizeQuote($quote, $customer);
         }
+        $quoteCollection = null;
     }
 
     /**
@@ -83,6 +75,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         foreach ($quoteCollection as $quote) {
             $this->_anonymizeQuote($quote, $customer);
         }
+        $quoteCollection = null;
     }
 
     /**

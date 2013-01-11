@@ -54,11 +54,23 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
-     * executes and runs one anonymization process
+     * runs the anonymization process
      *
-     * @return mixed
+     * @param Varien_Data_Collection_Db $collection
+     * @param string                    $anonymizationMethod
      */
-    abstract public function run();
+    public function run($collection, $anonymizationMethod)
+    {
+        $i = 0;
+        foreach ($collection as $model) {
+            $this->$anonymizationMethod($model);
+            $this->getProgressBar()->update($i);
+            $i++;
+        }
+        $collection = null;
+        $this->getProgressBar()->finish();
+
+    }
 
     /**
      * @param Zend_ProgressBar $bar
@@ -181,9 +193,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         /* getOptions() please see shell class */
         if ($this->getOptions() && $this->getOptions()->getCollectionLimit()) {
             $offset = $this->getOptions()->getCollectionLimit() * $this->getOptions()->getCurrentRun();
-
-echo $this->getOptions()->getCollectionLimit() . " / $offset" . PHP_EOL;
-
             $collection->getSelect()->limit($this->getOptions()->getCollectionLimit(), $offset);
         }
 
@@ -191,4 +200,5 @@ echo $this->getOptions()->getCollectionLimit() . " / $offset" . PHP_EOL;
 
         return $collection;
     }
+
 }

@@ -10,57 +10,6 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
 {
 
     /**
-     * @return bool
-     */
-    public function isAdminUser()
-    {
-        return TRUE;
-
-        /* disabled, not really necessary */
-
-        $line = $this->getModelZf2('console_prompt_line');
-
-        $line->setPromptText('Admin user name: ');
-        $username = $line->show();
-
-        // @todo hide the password input
-        $line->setPromptText('Admin password: ');
-        $password = $line->show();
-
-        $adminUser = $this->_checkAdminUser($username, $password);
-
-        if ($adminUser) {
-            $this->getInstance()->writeLine('Welcome ' . $adminUser->getName(), SchumacherFM_Anonygento_Model_Console_Color::YELLOW);
-            return TRUE;
-        } else {
-            $this->getInstance()->writeLine('Admin user not found!', SchumacherFM_Anonygento_Model_Console_Color::RED);
-            return FALSE;
-        }
-
-    }
-
-    /**
-     * @param string $username
-     * @param string $password
-     *
-     * @return bool|Mage_Admin_Model_User
-     */
-    protected function _checkAdminUser($username, $password)
-    {
-        // @todo check ACL, create ACL for console
-
-        $adminUser = Mage::getModel('admin/user');
-        /* @var $adminUser Mage_Admin_Model_User */
-        $isAdmin = $adminUser->authenticate($username, $password);
-        if ($isAdmin) {
-            return $adminUser->loadByUsername($username);
-        } else {
-            return FALSE;
-        }
-
-    }
-
-    /**
      * @param integer $count
      *
      * @return Zend_ProgressBar
@@ -165,6 +114,56 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
         }
 
         return $table;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdminUser()
+    {
+        return TRUE;
+
+        /* disabled, not really necessary */
+
+        $line = $this->getModelZf2('console_prompt_line');
+
+        $line->setPromptText('Admin user name: ');
+        $username = $line->show();
+
+        // @todo hide the password input
+        $line->setPromptText('Admin password: ');
+        $password = $line->show();
+
+        $adminUser = $this->_checkAdminUser($username, $password);
+
+        if ($adminUser) {
+            $this->getInstance()->writeLine('Welcome ' . $adminUser->getName(), SchumacherFM_Anonygento_Model_Console_Color::YELLOW);
+            return TRUE;
+        } else {
+            $this->getInstance()->writeLine('Admin user not found!', SchumacherFM_Anonygento_Model_Console_Color::RED);
+            return FALSE;
+        }
+
+    }
+
+    /**
+     * @param string $username
+     * @param string $password
+     *
+     * @return bool|Mage_Admin_Model_User
+     */
+    protected function _checkAdminUser($username, $password)
+    {
+        // @todo check ACL, create ACL for console
+
+        $adminUser = Mage::getModel('admin/user');
+        /* @var $adminUser Mage_Admin_Model_User */
+        $isAdmin = $adminUser->authenticate($username, $password);
+        if ($isAdmin) {
+            return $adminUser->loadByUsername($username);
+        } else {
+            return FALSE;
+        }
 
     }
 

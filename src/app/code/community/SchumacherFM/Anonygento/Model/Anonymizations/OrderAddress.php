@@ -11,17 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
     public function run()
     {
-
-        $orderAddressCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($orderAddressCollection as $orderAddress) {
-            $this->_anonymizeOrderAddress($orderAddress);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $this->getProgressBar()->finish();
-
+        parent::run($this->_getCollection(), '_anonymizeOrderAddress');
     }
 
     /**
@@ -31,10 +21,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     {
 
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-
         $this->_copyObjectData($randomCustomer, $orderAddress, $this->_getMappings('OrderAddress'));
-
         $orderAddress->getResource()->save($orderAddress);
+        $orderAddress = null;
     }
 
     /**
@@ -57,6 +46,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 //            $orderAddress->getResource()->save($orderAddress);
             $orderAddress->save();
         }
+        $orderAddressCollection = null;
 
     }
 

@@ -15,16 +15,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 
     public function run()
     {
-
-        $customerCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($customerCollection as $customer) {
-            $this->_anonymizeCustomer($customer);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeCustomer');
     }
 
     /**

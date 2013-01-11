@@ -19,6 +19,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
             $this->getProgressBar()->update($i);
             $i++;
         }
+        $reviewCollection = null;
         $this->getProgressBar()->finish();
     }
 
@@ -37,7 +38,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('review/review')->addFieldToSelect(array('entity_id', 'review_id'));;
+        return parent::_getCollection('review/review')->addFieldToSelect(array('entity_id', 'review_id'));
+        ;
     }
 
 }

@@ -11,15 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
 
     public function run()
     {
-        $collection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($collection as $orderPayment) {
-            $this->_anonymizeOrderPayment($orderPayment);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeOrderPayment');
     }
 
     /**
@@ -31,6 +23,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
         $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
         $this->_copyObjectData($randomPayment, $orderPayment, $this->_getMappings('OrderPayment'));
         $orderPayment->getResource()->save($orderPayment);
+        $orderPayment = null;
     }
 
     /**
@@ -39,12 +32,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
      */
     public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
-
         $paymentCollection = $order->getPaymentsCollection();
 
         foreach ($paymentCollection as $payment) {
             $this->_anonymizeOrderPayment($payment, $customer);
         }
+        $paymentCollection = null;
 
     }
 
