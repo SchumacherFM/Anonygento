@@ -32,42 +32,42 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
      * these mappings defined the fields which can be overwritten
      * base model is: SchumacherFM_Anonygento_Model_Random_Customer
      *
-     * RandomCusteomer => CustomerAddress
+     * RandomCustomer => CustomerAddress
      */
 
     public function setCustomer()
     {
-        return $this->addData(array(
-            'prefix'    => 'prefix',
-            'email'     => 'email',
-            'firstname' => 'firstname',
-            'lastname'  => 'lastname',
-            'suffix'    => 'suffix',
-
-            'fill'      => array(
-                'password_hash' => array(
-                    'model'  => NULL,
-                    'helper' => 'core',
-                    'method' => 'getRandomString',
-                    'args'   => array(14)
-                ),
-            ),
-        ));
+//        return $this->addData(array(
+//            'prefix'    => 'prefix',
+//            'email'     => 'email',
+//            'firstname' => 'firstname',
+//            'lastname'  => 'lastname',
+//            'suffix'    => 'suffix',
+//
+//            'fill'      => array(
+//                'password_hash' => array(
+//                    'model'  => NULL,
+//                    'helper' => 'core',
+//                    'method' => 'getRandomString',
+//                    'args'   => array(14)
+//                ),
+//            ),
+//        ));
     }
 
     public function setCustomerAddress()
     {
 
-        return $this->addData(array(
-
-            'prefix'    => 'prefix',
-            'firstname' => 'firstname',
-            'lastname'  => 'lastname',
-            'company'   => 'company',
-            'telephone' => 'telephone',
-            'fax'       => 'fax',
-            'street'    => 'street',
-        ));
+//        return $this->addData(array(
+//
+//            'prefix'    => 'prefix',
+//            'firstname' => 'firstname',
+//            'lastname'  => 'lastname',
+//            'company'   => 'company',
+//            'telephone' => 'telephone',
+//            'fax'       => 'fax',
+//            'street'    => 'street',
+//        ));
 
     }
 
@@ -80,19 +80,19 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     public function setNewsletterSubscriber()
     {
 
-        return $this->addData(array(
-
-            'email' => 'subscriber_email',
-        ));
+//        return $this->addData(array(
+//
+//            'email' => 'subscriber_email',
+//        ));
 
     }
 
     public function setGiftMessage()
     {
-        return $this->addData(array(
-
-            'email' => 'sender',
-        ));
+//        return $this->addData(array(
+//
+//            'email' => 'sender',
+//        ));
 
     }
 

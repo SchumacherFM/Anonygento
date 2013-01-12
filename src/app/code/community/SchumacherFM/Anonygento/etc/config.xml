@@ -85,22 +85,82 @@
             <customer>
                 <active>1</active>
                 <model>customer/customer</model>
+                <mapping>
+                    <!--RandomCustomer => customer-->
+                    <prefix>prefix</prefix>
+                    <email>email</email>
+                    <firstname>firstname</firstname>
+                    <lastname>lastname</lastname>
+                    <suffix>suffix</suffix>
+                    <fill>
+                        <password_hash>
+                            <!--<model></model>-->
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0 type="integer">14</a0>
+                            </args>
+                        </password_hash>
+                    </fill>
+                </mapping>
             </customer>
             <customerAddress>
                 <active>1</active>
                 <model>customer/address</model>
+                <mapping>
+                    <!--RandomCustomer => customerAddress-->
+                    <prefix>prefix</prefix>
+                    <firstname>firstname</firstname>
+                    <lastname>lastname</lastname>
+                    <company>company</company>
+                    <telephone>telephone</telephone>
+                    <fax>fax</fax>
+                    <street>street</street>
+                </mapping>
             </customerAddress>
             <newsletterSubscriber>
                 <active>1</active>
                 <model>newsletter/subscriber</model>
+                <mapping>
+                    <email>subscriber_email</email>
+                </mapping>
             </newsletterSubscriber>
             <giftmessageMessage>
                 <active>1</active>
                 <model>giftmessage/message</model>
+                <mapping>
+                    <email>sender</email>
+                </mapping>
             </giftmessageMessage>
             <order>
                 <active>1</active>
                 <model>sales/order</model>
+                <mapping>
+                    <email>customer_email</email>
+                    <firstname>customer_firstname</firstname>
+                    <lastname>customer_lastname</lastname>
+                    <middle>customer_middlename</middle>
+                    <suffix>customer_suffix</suffix>
+                    <prefix>customer_prefix</prefix>
+                    <taxvat>customer_taxvat</taxvat>
+
+                    // system attributes
+                    'customer_id',
+                    'entity_id',
+                    'quote_id',
+                    'shipping_address_id',
+                    'billing_address_id',
+
+                    'fill'      => array(
+                        'remote_ip' => array(
+                            'model'  => 'schumacherfm_anonygento/random_ip',
+                            'helper' => NULL,
+                            'method' => 'shuffleIp',
+                            'args'   => NULL
+                        ),
+                    ),
+
+                </mapping>
             </order>
             <orderAddress>
                 <active>1</active>
