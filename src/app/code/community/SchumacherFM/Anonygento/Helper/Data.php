@@ -35,10 +35,18 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
         */
 
         $locale = Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . 'locale');
-        if( $locale || empty($locale) ){
+        if ($locale || empty($locale)) {
             $locale = (string)Mage::getConfig()->getNode('default')->schumacherfm->anonygento->locale;
         }
         return $locale;
+    }
+
+    /**
+     * @return Mage_Core_Model_Config_Element
+     */
+    public function getConfigNode()
+    {
+        return Mage::getConfig()->getNode('anonygento');
     }
 
 }

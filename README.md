@@ -109,7 +109,8 @@ Call the script like shown below.
 ##### This is the view if you choose "no".
 
 ```
-$ php -f shell/anonygento.php
+$ cd shell
+$ php -f anonygento.php
 Anonymize this Magento installation? [y/n]n
 Nothing done!
 $
@@ -118,6 +119,7 @@ $
 ##### This view shows the result for choosing "yes":
 
 ```
+$ cd shell
 $ php -f anonygento.php
 Anonymize this Magento installation? [y/n]y
 Running customer, work load: XXXX rows
@@ -142,43 +144,31 @@ Add to your e.g. .bash_profile or type it into the shell: `export ANONYGENTO_DEV
 This is will enable the dev mode.
 
 
-Events / Observers
-------------------
+Extending the anonymization process
+-----------------------------------
 
-### Event `anonygento_options_anonymizations_collection_after`
+Adding custom entities for anonymization you can simply extend the config.xml
 
-This event will be fired after the collection (`SchumacherFM_Anonygento_Model_Options_Anonymizations`) has been generated.
-
-With this event you can extend the console runner to anonymize custom entities. E.g.: store locator, news
+With this additional config you can extend the console runner to anonymize custom entities. E.g.: store locator, news
 or other payment solutions.
 
 Please see Demo2 module.
 
-Fired in: `SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection`
+#### Example config:
 
-Name:       `anonygento_options_anonymizations_collection_after`
-
-Event prefix:  `collection`
-
-Example Observer:
-
-```php
-
-class Namespace_Modul_Model_Observer {
-
-    public function afterOptionsAnonymizationCollection(Varien_Event_Observer $observer)
-    {
-        $collection = $observer->getEvent()->getCollection();
-
-        $option = array(
-          'label' => 'Some label',
-          'value' => 'namespace_module/myAnonymizationProcess',
-          'model' => 'namespace2_moduleX/aModel'
-        );
-
-        $collection->addItem(new Varien_Object($option));
-    }
-}
+```xml
+<config>
+    <anonygento>
+        <anonymizations>
+            <catalogProduct>
+                <active>1</active>
+                <label>Some label</label>
+                <model>namespace2_moduleX/aModel</model>
+                <anonymizationModel>namespace_module/myAnonymizationProcess</anonymizationModel>
+            </catalogProduct>
+        </anonymizations>
+    </anonygento>
+</config>
 ```
 
 Your model `namespace2_moduleX/aModel` must have a resource collection.
@@ -239,8 +229,10 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
 }
 ```
 
-A real world example follows soon.
 
+
+Events / Observers
+------------------
 
 ### Event `anonygento_anonymizations_get_mapping_after`
 

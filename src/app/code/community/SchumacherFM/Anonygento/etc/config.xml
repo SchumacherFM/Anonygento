@@ -77,4 +77,98 @@
             </modules>
         </translate>
     </adminhtml>
+
+    <!--main config for the order of the work load for the anonymization process-->
+    <!--extend also here with your own anonymization process-->
+    <anonygento>
+        <anonymizations>
+            <customer>
+                <active>1</active>
+                <model>customer/customer</model>
+            </customer>
+            <customerAddress>
+                <active>1</active>
+                <model>customer/address</model>
+            </customerAddress>
+            <newsletterSubscriber>
+                <active>1</active>
+                <model>newsletter/subscriber</model>
+            </newsletterSubscriber>
+            <giftmessageMessage>
+                <active>1</active>
+                <model>giftmessage/message</model>
+            </giftmessageMessage>
+            <order>
+                <active>1</active>
+                <model>sales/order</model>
+            </order>
+            <orderAddress>
+                <active>1</active>
+                <model>sales/order_address</model>
+            </orderAddress>
+            <orderGrid>
+                <active>1</active>
+                <model>sales/order_grid_collection</model>
+            </orderGrid>
+            <orderPayment>
+                <active>1</active>
+                <model>sales/order_payment</model>
+            </orderPayment>
+            <quote>
+                <active>1</active>
+                <model>sales/quote</model>
+            </quote>
+            <quoteAddress>
+                <active>1</active>
+                <model>sales/quote_address</model>
+            </quoteAddress>
+            <quotePayment>
+                <active>1</active>
+                <model>sales/quote_payment</model>
+            </quotePayment>
+
+            <!--all comments collections are only for FYI-->
+            <creditmemo>
+                <active>1</active>
+                <model>sales/order_creditmemo_collection</model>
+            </creditmemo>
+            <creditmemoComment>
+                <active>1</active>
+                <model>sales/order_creditmemo_comment_collection</model>
+            </creditmemoComment>
+
+            <invoice>
+                <active>1</active>
+                <model>sales/order_invoice_collection</model>
+            </invoice>
+            <invoiceComment>
+                <active>1</active>
+                <model>sales/order_invoice_comment_collection</model>
+            </invoiceComment>
+
+            <shipment>
+                <active>1</active>
+                <model>sales/order_shipment</model>
+            </shipment>
+            <shipmentComment>
+                <active>1</active>
+                <model>sales/order_shipment_comment</model>
+            </shipmentComment>
+
+            <review>
+                <active>1</active>
+                <model>review/review</model>
+            </review>
+            <ratingOptionVote>
+                <active>1</active>
+                <model>rating/rating_option_vote</model>
+            </ratingOptionVote>
+            <sendfriendLog>
+                <active>1</active>
+                <model>sendfriend/sendfriend</model>
+            </sendfriendLog>
+
+        </anonymizations>
+    </anonygento>
+
 </config>

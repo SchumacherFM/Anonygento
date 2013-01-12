@@ -26,21 +26,18 @@
                 </setup>
             </schumacherfm_demo2_setup>
         </resources>
-
-        <events>
-            <anonygento_options_anonymizations_collection_after>
-                <observers>
-                    <anon_alter_customattribute>
-                        <type>singleton</type>
-                        <class>SchumacherFM_Demo2_Model_Observer</class>
-                        <method>afterAnonOptionCollection</method>
-                    </anon_alter_customattribute>
-                </observers>
-            </anonygento_options_anonymizations_collection_after>
-
-        </events>
-
-
     </global>
+
+    <anonygento>
+        <anonymizations>
+            <catalogProduct>
+                <active>1</active>
+                <label>Catalog Product</label>
+                <model>catalog/product</model>
+                <anonymizationModel>schumacherfm_demo2/catalogProduct</anonymizationModel>
+            </catalogProduct>
+        </anonymizations>
+    </anonygento>
+
 
 </config>

@@ -12,56 +12,36 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     public $useCache = 0;
 
     /**
-     * the order of this array is important
-     *
-     * @var array
-     */
-    protected $_options = array(// internalKey => modelname
-        'customer'             => 'customer/customer',
-        'customerAddress'      => 'customer/address',
-        'newsletterSubscriber' => 'newsletter/subscriber',
-        'giftmessageMessage'   => 'giftmessage/message',
-
-        'order'                => 'sales/order',
-        'orderAddress'         => 'sales/order_address',
-        'orderGrid'            => 'sales/order_grid_collection',
-        'orderPayment'         => 'sales/order_payment',
-
-        'quote'                => 'sales/quote',
-        'quoteAddress'         => 'sales/quote_address',
-        'quotePayment'         => 'sales/quote_payment',
-
-        // all comments collections are only for FYI
-        'creditmemo'           => 'sales/order_creditmemo_collection',
-        'creditmemoComment'    => 'sales/order_creditmemo_comment_collection',
-
-        'invoice'              => 'sales/order_invoice_collection',
-        'invoiceComment'       => 'sales/order_invoice_comment_collection',
-
-        'shipment'             => 'sales/order_shipment',
-        'shipmentComment'      => 'sales/order_shipment_comment',
-
-        'review'               => 'review/review',
-        'ratingOptionVote'     => 'rating/rating_option_vote',
-        'sendfriendLog'        => 'sendfriend/sendfriend',
-    );
-
-    /**
      * Retrieve all options array
      *
      * @return array
      */
     public function getAllOptions()
     {
-        $return = array();
-        foreach ($this->_options as $opt => $modelName) {
-            $return[] = array(
-                'label' => Mage::helper('schumacherfm_anonygento')->__($opt),
-                'value' => $opt,
-                'model' => $modelName
-            );
-        }
+        // @see config.xml
+        $anonymizations = Mage::helper('schumacherfm_anonygento')->getConfigNode()->anonymizations->children();
 
+        $return = array();
+        foreach ($anonymizations as $node) {
+            if (!isset($node->active) || (int)$node->active !== 1) {
+                continue;
+            }
+
+            $anon_model = isset($node->anonymizationModel) && (string)$node->anonymizationModel !== ''
+                ? (string)$node->anonymizationModel
+                : (string)$node->getName();
+
+            $label = isset($node->label) && (string)$node->label !== ''
+                ? (string)$node->label
+                : Mage::helper('schumacherfm_anonygento')->__($anon_model);
+
+            $return[] = array(
+                'label' => $label,
+                'value' => $anon_model,
+                'model' => (string)$node->model
+            );
+
+        }
         return $return;
     }
 
@@ -104,10 +84,6 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         foreach ($this->getAllOptions() as $option) {
             $this->_collection->addItem(new Varien_Object($option));
         }
-
-        Mage::dispatchEvent('anonygento_options_anonymizations_collection_after', array(
-            'collection' => $this->_collection
-        ));
 
         $rowCountModel = Mage::getSingleton('schumacherfm_anonygento/counter');
         foreach ($this->_collection as $option) {
