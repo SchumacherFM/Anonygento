@@ -8,7 +8,7 @@
  */
 class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
 {
-    const XML_PATH_ANONYMIZED = 'dev/schumacherfm_anonygento/';
+    const XML_PATH_ANONYMIZED = 'schumacherfm/anonygento/';
 
     /**
      * @param string  $type
@@ -28,7 +28,17 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function getLocaleForData()
     {
-        return Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . 'locale');
+        /*
+           sometimes getStoreConfig returns NULL if called in the shell, that's weired :-(
+           if the custom user settings from System > Configuration > Advanced > SchumacherFM
+           are not applied then check here.
+        */
+
+        $locale = Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . 'locale');
+        if( $locale || empty($locale) ){
+            $locale = (string)Mage::getConfig()->getNode('default')->schumacherfm->anonygento->locale;
+        }
+        return $locale;
     }
 
 }

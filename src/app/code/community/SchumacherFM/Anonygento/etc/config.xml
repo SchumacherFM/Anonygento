@@ -40,11 +40,11 @@
     </global>
 
     <default>
-        <dev>
-            <schumacherfm_anonygento>
+        <schumacherfm>
+            <anonygento>
                 <locale>de_DE</locale>
-            </schumacherfm_anonygento>
-        </dev>
+            </anonygento>
+        </schumacherfm>
     </default>
 
     <admin>

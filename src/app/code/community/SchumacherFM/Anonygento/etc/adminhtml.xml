@@ -11,7 +11,6 @@
                             <action>adminhtml/anonygento</action>
                             <sort_order>250</sort_order>
                         </schumacherfm_anonygento>
-
                     </children>
                 </tools>
             </children>
@@ -38,4 +37,25 @@
             </admin>
         </resources>
     </acl>
+
+    <acl>
+   		<resources>
+   			<admin>
+   				<children>
+   					<system>
+   						<children>
+   							<config>
+   								<children>
+   									<schumacherfm translate="title" module="schumacherfm_anonygento">
+   										<title>@SchumacherFM (Config)</title>
+   									</schumacherfm>
+   								</children>
+   							</config>
+   						</children>
+   					</system>
+   				</children>
+   			</admin>
+   		</resources>
+   	</acl>
+
 </config>

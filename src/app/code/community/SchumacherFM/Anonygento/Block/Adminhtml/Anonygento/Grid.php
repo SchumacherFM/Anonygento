@@ -20,7 +20,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
         $this->_filterVisibility = FALSE;
         $this->_pagerVisibility  = FALSE;
         $this->setTitle($this->__('Anonygento'));
-
     }
 
     /**
