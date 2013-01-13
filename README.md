@@ -147,7 +147,49 @@ This is will enable the dev mode.
 Extending the anonymization process
 -----------------------------------
 
-Adding custom entities for anonymization you can simply extend the config.xml
+#### Custom attributes
+
+To anonymize custom attributes in the e.g. customer eav model you can add the following
+xml config. No PHP programming is necessary except if you need custom random strings.
+
+```xml
+<config>
+    <anonygento>
+        <anonymizations>
+            <!--extending the customer anonymization process with two custom attributes-->
+            <customer>
+                <mapping>
+                    <fill>
+                        <myAttributeName1>
+                            <model>schumacherfm_demo1/mydemo1</model>
+                            <method>changeMydemo1</method>
+                        </myAttributeName1>
+                        <myAttributeName2>
+                            <method>mt_rand</method>
+                            <args>
+                                <a0>100</a0>
+                                <a1>1000</a1>
+                            </args>
+                        </myAttributeName2>
+                        <myAttributeName3>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </myAttributeName3>
+                    </fill>
+                </mapping>
+            </customer>
+        </anonymizations>
+    </anonygento>
+</config>
+```
+
+
+#### Custom entities
+
+Adding custom entities for anonymization you can simply extend the config.xml.
 
 With this additional config you can extend the console runner to anonymize custom entities. E.g.: store locator, news
 or other payment solutions.
@@ -233,60 +275,6 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
 
 Events / Observers
 ------------------
-
-### Event `anonygento_anonymizations_get_mapping_after`
-
-If you have custom columns/attributes in your tables/entities then you can anonymize them here.
-
-Please see demo1 module.
-
-Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_getMappings`
-
-Name:       `anonygento_anonymizations_get_mapping_after`
-
-Event prefix:  `type` and `mapped`
-
-Example:
-
-```php
-class SchumacherFM_Demo1_Model_Observer
-{
-
-    public function mappingAfterAlterMyCustomAttribute(Varien_Event_Observer $observer)
-    {
-        $event = $observer->getEvent();
-        $type  = $event->getType();
-
-        if ($type !== 'Customer') {
-            return null;
-        }
-
-        $mapped = $event->getMapped();
-
-        $fill = $mapped->getFill();
-
-        // mydemo1 is a custom customer attribute
-        $fill['mydemo1'] = array(
-            'model'  => 'schumacherfm_demo1/mydemo1',
-            'method' => 'changeMydemo1'
-        );
-
-        // mydemo2 is a custom customer attribute
-        $fill['mydemo2'] = array(
-            'method' => 'mt_rand',
-            'args'   => array(100, 1000)
-        );
-
-        $mapped->setFill($fill);
-
-    }
-}
-
-```
-
-This observer extends also the internal Model->getCollection()->add[Attribute|Field]toSelect() method so that
-your data will be fetched too.
-
 
 ### Event `anonygento_anonymizations_copy_after`
 
