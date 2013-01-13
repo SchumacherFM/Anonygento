@@ -79,7 +79,9 @@ Todo / Next Versions
 Compatibility
 -------------
 - Magento >= 1.4
-- php >= 5.3.3
+- php >= 5.3.5
+
+Tested with php 5.3.19 and 5.4
 
 
 Installation Instructions
@@ -150,7 +152,7 @@ Extending the anonymization process
 #### Custom attributes
 
 To anonymize custom attributes in the e.g. customer eav model you can add the following
-xml config. No PHP programming is necessary except if you need custom random strings.
+xml to the config.xml. No PHP programming is necessary except if you need custom random strings.
 
 ```xml
 <config>
@@ -185,6 +187,8 @@ xml config. No PHP programming is necessary except if you need custom random str
     </anonygento>
 </config>
 ```
+
+Please see Demo1 module.
 
 
 #### Custom entities
@@ -314,13 +318,16 @@ Performance
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
 and ~9000 quotes lasts for ~15 minutes. With 256MB of memory limit I have to restart the process
-several times.
+several times. I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
 
 If you get errors like this one:
 
 `Fatal error: Allowed memory size of xxx bytes exhausted (tried to allocate x bytes) in abc.php on line x`
 
 Just rerun the script.
+
+On a Ubuntu virtual machine with standard LAMP system (php 5.3.10 Suhosin) the script fails.
+Even with memory limit -1 the script will not run.
 
 
 Support / Contribution
