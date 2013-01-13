@@ -52,7 +52,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <schumacherfm_anonygento after="Mage_Adminhtml">SchumacherFM_Anonygento_Adminhtml</schumacherfm_anonygento>
+                        <schumacherfm_anonygento before="Mage_Adminhtml">SchumacherFM_Anonygento_Adminhtml</schumacherfm_anonygento>
                     </modules>
                 </args>
             </adminhtml>

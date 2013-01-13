@@ -55,13 +55,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'sortable' => FALSE,
         ));
 
-//        $this->addColumn('description', array(
-//            'header' => $this->__('Description'),
-//            'align' => 'left',
-//            'index' => 'description',
-//            'sortable' => false,
-//        ));
-
         $this->addColumn('label', array(
             'header'   => $this->__('Label'),
             'align'    => 'left',
@@ -90,22 +83,22 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
-//        $this->addColumn('action',
-//            array(
-//                'header' => $this->__('View data'),
-//                'type' => 'action',
-//                'getter' => 'getValue',
-//                'actions' => array(
-//                    array(
-//                        'caption' => $this->__('View'),
-//                        'url' => array('base' => '*/*/view'),
-//                        'field' => 'exec'
-//                    ),
-//                ),
-//                'filter' => false,
-//                'sortable' => false,
-//                'is_system' => true,
-//            ));
+        $this->addColumn('action',
+            array(
+                'header'    => $this->__('View data'),
+                'type'      => 'action',
+                'getter'    => 'getConfigName',
+                'actions'   => array(
+                    array(
+                        'caption' => $this->__('View'),
+                        'url'     => array('base' => '*/*/view'),
+                        'field'   => 'gridView'
+                    ),
+                ),
+                'filter'    => FALSE,
+                'sortable'  => FALSE,
+                'is_system' => TRUE,
+            ));
 
         return parent::_prepareColumns();
     }
@@ -123,7 +116,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     public function decorateStatus($value, $row, $column, $isExport)
     {
 
-        if ( $row->getUnanonymized() == 0) {
+        if ($row->getUnanonymized() == 0) {
             $cell = '<span class="grid-severity-notice"><span>' . $this->__('Anonymized!') . '</span></span>';
         } else {
             $cell = '<span class="grid-severity-critical"><span>' . $this->__('Sensitive Data!') . '</span></span>';
@@ -140,8 +133,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
      */
     public function getRowUrl($row)
     {
-        return FALSE;
-        //return $this->getUrl('*/*/edit', array('type'=>$row->getId()));
+        return $this->getUrl('*/*/view', array('gridView' => $row->getConfigName()));
     }
 
 }

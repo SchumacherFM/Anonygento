@@ -36,7 +36,8 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
             $return[] = array(
                 'label' => $label,
                 'value' => $anon_model,
-                'model' => (string)$node->model
+                'model' => (string)$node->model,
+                'config_name' => (string)$node->getName()
             );
 
         }

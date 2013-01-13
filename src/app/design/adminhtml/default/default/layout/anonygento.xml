@@ -6,4 +6,10 @@
             <block type="schumacherfm_anonygento/adminhtml_anonygento" name="anonygento"></block>
         </reference>
     </adminhtml_anonygento_index>
+
+    <adminhtml_anonygento_view>
+        <reference name="content">
+            <block type="schumacherfm_anonygento/adminhtml_view" name="anonygento_view"></block>
+        </reference>
+    </adminhtml_anonygento_view>
 </layout>

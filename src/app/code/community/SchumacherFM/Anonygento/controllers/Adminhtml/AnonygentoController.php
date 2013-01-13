@@ -22,32 +22,10 @@ class SchumacherFM_Anonygento_Adminhtml_AnonygentoController extends Mage_Adminh
         $this->renderLayout();
     }
 
-    /**
-     * Action for saving an action
-     *
-     * @return void
-     */
-    public function saveAction()
+    public function viewAction()
     {
-//        try {
-        /** @var $anonygento SchumacherFM_Anonygento_Model_Anonygento */
-        $anonygento = Mage::getModel('schumacherfm_anonygento/anonygento');
-        $exec = $this->getRequest()->getParam('exec');
-
-        Zend_Debug::dump($exec);
-        exit;
-
-//            $anonygento->anonymizeAll();
-//            foreach ($anonygento->getResults() as $resultLabel => $resultCount) {
-//                Mage::getSingleton('adminhtml/session')->addSuccess(
-//                    Mage::helper('schumacherfm_anonygento')->__('Anonymized %s %s.', $resultCount, $resultLabel)
-//                );
-//            }
-//        } catch (Exception $e) {
-//            Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-//        }
-
-        $this->_redirectReferer();
+        $this->loadLayout();
+        $this->renderLayout();
     }
 
     /**
