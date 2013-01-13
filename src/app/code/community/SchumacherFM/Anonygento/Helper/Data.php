@@ -10,22 +10,6 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_ANONYMIZED = 'schumacherfm/anonygento/';
 
-    /**
-     * @param string  $type
-     * @param integer $value
-     */
-    public function setAnonymizations($type, $value)
-    {
-        $value = (int)$value;
-        Mage::app()->getStore()->setConfig(self::XML_PATH_ANONYMIZED . $type, $value);
-
-    }
-
-    public function getAnonymizations($type)
-    {
-        return (int)Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . $type);
-    }
-
     public function getLocaleForData()
     {
         /*

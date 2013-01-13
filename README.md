@@ -321,7 +321,7 @@ Performance
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
 and ~9000 quotes lasts for ~15 minutes. With 256MB of memory limit I have to restart the process
-several times.
+several times. Setting the memory limit to 2048 the script runs without interruptions.
 
 If you get errors like this one:
 

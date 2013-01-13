@@ -9,8 +9,6 @@
 
 class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 {
-    public $useCache = 0;
-
     /**
      * Retrieve all options array
      *
@@ -70,11 +68,6 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
      */
     public function getCollection()
     {
-
-        if ($this->_hasAdminCollection() && $this->useCache === 1) {
-            return $this->_getAdminCollection();
-        }
-
         if ($this->_collection !== null) {
             return $this->_collection;
         }
@@ -94,52 +87,11 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
 
             $option
             /* @see SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid column: Status */
-                ->setStatus(Mage::helper('schumacherfm_anonygento')->getAnonymizations($option->getValue()))
+                ->setStatus(0)
                 ->setUnanonymized($rowCountModel->unAnonymized($option->getModel()))
                 ->setAnonymized($rowCountModel->anonymized($option->getModel()));
         }
-
-        if ($this->useCache === 1) {
-            $this->_setAdminCollection();
-        }
         return $this->_collection;
-
-    }
-
-    protected function _setAdminCollection()
-    {
-        Mage::getSingleton('admin/session')->setAnonymizationsCollection($this->_collection->toArray());
-    }
-
-    /**
-     * @return Varien_Data_Collection
-     * @throws Exception
-     */
-    protected function _getAdminCollection()
-    {
-        $return = Mage::getSingleton('admin/session')->getAnonymizationsCollection();
-
-        if (!isset($return['items'])) {
-            throw new Exception('items key is empty for getAnonymizationsCollection');
-        }
-
-        $collection = new Varien_Data_Collection();
-
-        foreach ($return['items'] as $item) {
-            $objItem = new Varien_Object($item);
-            $collection->addItem(
-                $objItem->setRowcountcached('yes')
-            );
-        }
-        return $collection;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function _hasAdminCollection()
-    {
-        return (boolean)Mage::getSingleton('admin/session')->hasAnonymizationsCollection();
     }
 
 }

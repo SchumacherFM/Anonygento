@@ -174,10 +174,6 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
             $reCalc = $this->_console->reCalcUnAnonymized($anonExec->getModel());
 
             if ($anonModel) {
-//                $this->_consoleInstance->writeLine(
-//                    'Working on ' . $anonExec->getLabel() . ': ' . $reCalc . '/' . $anonExec->getAnonymized(),
-//                    SchumacherFM_Anonygento_Model_Console_Color::MAGENTA
-//                );
 
                 if ($reCalc > 0 || $this->_devMode === TRUE) {
 
@@ -197,7 +193,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                         }
 
                         $this->_consoleInstance->writeLine(
-                            'Working on ' . $anonExec->getLabel() . ' Total: ' . $reCalc . ' Cycle: ' . ($i * $pgReCalc),
+                            'Working on ' . $anonExec->getLabel() . ' Total: ' . $reCalc . ' Run: ' . ($i * $pgReCalc),
                             SchumacherFM_Anonygento_Model_Console_Color::MAGENTA
                         );
 
@@ -208,8 +204,6 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                         $anonModel = null;
                     }
 
-                    // hmm ...
-                    Mage::helper('schumacherfm_anonygento')->setAnonymizations(0);
                 }
             } else {
                 $this->_consoleInstance->writeLine('Model ' . $anonExec->getValue() . ' not found or not necessary!',
