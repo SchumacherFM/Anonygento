@@ -11,16 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
 
     public function run()
     {
-        $newsLetterSubscriberCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($newsLetterSubscriberCollection as $subscriber) {
-            $this->_anonymizeNewsletter($subscriber);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $newsLetterSubscriberCollection = null;
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeNewsletter');
     }
 
     /**
@@ -31,7 +22,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
 
         $customer = $this->_getRandomCustomer()->getCustomer();
 
-        $this->_copyObjectData($customer, $subscriber, $this->_getMappings('NewsletterSubscriber'));
+        $this->_copyObjectData($customer, $subscriber, $this->_getMappings('newsletterSubscriber'));
 
         $subscriber->save();
 
@@ -47,7 +38,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
         $subscriber->loadByCustomer($customer);
 
         if ($subscriber->getId()) {
-            $this->_copyObjectData($customer, $subscriber, $this->_getMappings('NewsletterSubscriber'));
+            $this->_copyObjectData($customer, $subscriber, $this->_getMappings('newsletterSubscriber'));
             $subscriber->save();
         }
         $subscriber = null;
@@ -58,7 +49,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('newsletter/subscriber', 'NewsletterSubscriber');
+        return parent::_getCollection('newsletter/subscriber', 'newsletterSubscriber');
     }
 
 }

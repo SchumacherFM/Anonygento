@@ -28,16 +28,6 @@
         </resources>
 
         <events>
-            <anonygento_anonymizations_get_mapping_after>
-                <observers>
-                    <anon_alter_customattribute>
-                        <type>singleton</type>
-                        <class>SchumacherFM_Demo1_Model_Observer</class>
-                        <method>mappingAfterAlterMyCustomAttribute</method>
-                    </anon_alter_customattribute>
-                </observers>
-            </anonygento_anonymizations_get_mapping_after>
-
             <anonygento_anonymizations_copy_after>
                 <observers>
                     <anon_alter_customattribute>
@@ -47,10 +37,30 @@
                     </anon_alter_customattribute>
                 </observers>
             </anonygento_anonymizations_copy_after>
-
         </events>
-
-
     </global>
+
+    <anonygento>
+        <anonymizations>
+            <!--extending the customer anonymization process with two custom attributes-->
+            <customer>
+                <mapping>
+                    <fill>
+                        <mydemo1>
+                            <model>schumacherfm_demo1/mydemo1</model>
+                            <method>changeMydemo1</method>
+                        </mydemo1>
+                        <mydemo2>
+                            <method>mt_rand</method>
+                            <args>
+                                <a0>100</a0>
+                                <a1>1000</a1>
+                            </args>
+                        </mydemo2>
+                    </fill>
+                </mapping>
+            </customer>
+        </anonymizations>
+    </anonygento>
 
 </config>

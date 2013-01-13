@@ -44,9 +44,9 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
     /**
      * @return Mage_Core_Model_Config_Element
      */
-    public function getConfigNode()
+    public function getAnonymizationsConfig()
     {
-        return Mage::getConfig()->getNode('anonygento');
+        return Mage::getConfig()->getNode('anonygento')->anonymizations->children();
     }
 
 }

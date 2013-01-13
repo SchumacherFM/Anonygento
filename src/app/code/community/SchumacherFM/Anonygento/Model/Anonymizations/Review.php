@@ -11,16 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
 
     public function run()
     {
-        $reviewCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($reviewCollection as $review) {
-            $this->_anonymizeReview($review);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $reviewCollection = null;
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeReview');
     }
 
     /**
@@ -29,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
     protected function _anonymizeReview(Mage_Review_Model_Review $review)
     {
         $customer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($customer, $review, $this->_getMappings('Review'));
+        $this->_copyObjectData($customer, $review, $this->_getMappings('review'));
         $review->save();
     }
 

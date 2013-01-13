@@ -15,16 +15,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
      */
     protected function _run()
     {
-        $collection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($collection as $collectionModel) {
-            $this->_anonymizeModel($collectionModel);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $collection = null;
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeModel');
     }
 
     /**
@@ -73,7 +64,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/order_' . strtolower($this->getModelName()), $this->getModelName());
+        return parent::_getCollection('sales/order_' . $this->getModelName(), $this->getModelName());
     }
 
 }

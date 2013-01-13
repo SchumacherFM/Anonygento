@@ -36,7 +36,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             }
         }
 
-        $this->_copyObjectData($customer, $quote, $this->_getMappings('Quote'));
+        $this->_copyObjectData($customer, $quote, $this->_getMappings('quote'));
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
         $quote->getResource()->save($quote);
@@ -101,6 +101,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/quote', 'Quote');
+        return parent::_getCollection('sales/quote', 'quote');
     }
 }

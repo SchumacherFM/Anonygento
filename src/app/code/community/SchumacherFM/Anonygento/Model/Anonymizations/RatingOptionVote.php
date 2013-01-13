@@ -11,16 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
 
     public function run()
     {
-        $collection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($collection as $vote) {
-            $this->_anonymizeRatingVote($vote);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $collection = null;
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeRatingVote');
     }
 
     /**
@@ -29,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
     protected function _anonymizeRatingVote(Mage_Rating_Model_Rating_Option_Vote $vote)
     {
         $emptyObject = new Varien_Object(array('anonymized' => 1));
-        $this->_copyObjectData($emptyObject, $vote, $this->_getMappings('RatingOptionVote'));
+        $this->_copyObjectData($emptyObject, $vote, $this->_getMappings('ratingOptionVote'));
         $vote->getResource()->save($vote);
     }
 
@@ -38,7 +29,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('rating/rating_option_vote', 'RatingOptionVote');
+        return parent::_getCollection('rating/rating_option_vote', 'ratingOptionVote');
     }
 
 }

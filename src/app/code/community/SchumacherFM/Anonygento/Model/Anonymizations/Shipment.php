@@ -11,8 +11,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Shipment extends SchumacherFM
     protected function _construct()
     {
         parent::_construct();
-        $this->setModelName('Shipment');
-        $this->setCollectionName('Shipments');
+        $this->setModelName('shipment');
+        $this->setCollectionName('shipments');
     }
 
     public function run()

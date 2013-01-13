@@ -27,12 +27,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
         $orderCollectionSize = (int)$orderCollection->getSize();
 
-        if ($orderCollectionSize === 0) {
-            return FALSE;
-        }
-
-        foreach ($orderCollection as $order) {
-            $this->_anonymizeOrder($order, $customer);
+        if ($orderCollectionSize > 0) {
+            foreach ($orderCollection as $order) {
+                $this->_anonymizeOrder($order, $customer);
+            }
         }
         $orderCollection = null;
 
@@ -56,7 +54,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
             $customer = $this->_getRandomCustomer()->getCustomer();
         }
 
-        $this->_copyObjectData($customer, $order, $this->_getMappings('Order'));
+        $this->_copyObjectData($customer, $order, $this->_getMappings('order'));
 
         $this->_anonymizeOrderAddresses($order, $customer);
         $this->_anonymizeOrderPayment($order, $customer);
@@ -69,6 +67,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         // update OrderGrid after order has been saved
         // @see Mage_Sales_Model_Resource_Order_Abstract
         $order->getResource()->updateGridRecords($order->getId());
+        $order = null;
     }
 
     /**
@@ -127,6 +126,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/order', 'Order');
+        return parent::_getCollection('sales/order', 'order');
     }
 }

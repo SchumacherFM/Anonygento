@@ -12,8 +12,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Creditmemo extends Schumacher
     protected function _construct()
     {
         parent::_construct();
-        $this->setModelName('Creditmemo');
-        $this->setCollectionName('Creditmemos');
+        $this->setModelName('creditmemo');
+        $this->setCollectionName('creditmemos');
     }
 
     public function run()

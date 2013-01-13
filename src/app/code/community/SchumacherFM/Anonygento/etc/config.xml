@@ -98,7 +98,7 @@
                             <helper>core</helper>
                             <method>getRandomString</method>
                             <args>
-                                <a0 type="integer">14</a0>
+                                <a0>14</a0>
                             </args>
                         </password_hash>
                     </fill>
@@ -144,88 +144,566 @@
                     <prefix>customer_prefix</prefix>
                     <taxvat>customer_taxvat</taxvat>
 
-                    // system attributes
-                    'customer_id',
-                    'entity_id',
-                    'quote_id',
-                    'shipping_address_id',
-                    'billing_address_id',
-
-                    'fill'      => array(
-                        'remote_ip' => array(
-                            'model'  => 'schumacherfm_anonygento/random_ip',
-                            'helper' => NULL,
-                            'method' => 'shuffleIp',
-                            'args'   => NULL
-                        ),
-                    ),
+                    <!--system attributes-->
+                    <system>
+                        <customer_id/>
+                        <entity_id/>
+                        <quote_id/>
+                        <shipping_address_id/>
+                        <billing_address_id/>
+                    </system>
+                    <fill>
+                        <remote_ip>
+                            <model>schumacherfm_anonygento/random_ip</model>
+                            <!--<helper></helper>-->
+                            <method>shuffleIp</method>
+                            <!--<args></args>-->
+                        </remote_ip>
+                    </fill>
 
                 </mapping>
             </order>
             <orderAddress>
                 <active>1</active>
                 <model>sales/order_address</model>
+                <mapping>
+                    <fax>fax</fax>
+                    <street>street</street>
+                    <email>email</email>
+                    <telephone>telephone</telephone>
+                    <company>company</company>
+                    <firstname>firstname</firstname>
+                    <lastname>lastname</lastname>
+                    <middlename>middlename</middlename>
+                    <suffix>suffix</suffix>
+                    <prefix>prefix</prefix>
+                    <taxvat>vat_id</taxvat>
+                    <system>
+                        <entity_id/>
+                    </system>
+                </mapping>
             </orderAddress>
             <orderGrid>
                 <active>1</active>
                 <model>sales/order_grid_collection</model>
+                <mapping>
+                    <system>
+                        <entity_id/>
+                        <customer_id/>
+                    </system>
+                </mapping>
             </orderGrid>
             <orderPayment>
                 <active>1</active>
                 <model>sales/order_payment</model>
+                <mapping>
+                    <name>cc_owner</name>
+                    <month>cc_exp_month</month>
+                    <year>cc_exp_year</year>
+                    <last4>cc_last4</last4>
+                    <ccType>cc_type</ccType>
+                    <fill>
+                        <!--@todo use reality like values instead of the getRandomString method :-(-->
+                        <account_status>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <b0>12</b0>
+                            </args>
+                        </account_status>
+                        <additional_data>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <b1>12</b1>
+                            </args>
+                        </additional_data>
+                        <additional_information>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </additional_information>
+                        <address_status>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </address_status>
+                        <anet_trans_method>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </anet_trans_method>
+                        <cc_approval>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_approval>
+                        <cc_avs_status>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_avs_status>
+                        <cc_cid_status>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_cid_status>
+                        <cc_debug_request_body>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_debug_request_body>
+                        <cc_debug_response_body>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_debug_response_body>
+                        <cc_debug_response_serialized>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_debug_response_serialized>
+                        <cc_number_enc>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_number_enc>
+                        <cc_secure_verify>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_secure_verify>
+                        <cc_ss_issue>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_ss_issue>
+                        <cc_ss_start_month>
+                            <method>mt_rand</method>
+                            <args>
+                                <a0>1</a0>
+                                <a1>12</a1>
+                            </args>
+                        </cc_ss_start_month>
+                        <cc_ss_start_year>
+                            <method>mt_rand</method>
+                            <args>
+                                <a0>2014</a0>
+                                <a1>2022</a1>
+                            </args>
+                        </cc_ss_start_year>
+                        <cc_status>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_status>
+                        <cc_status_description>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_status_description>
+                        <cc_trans_id>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_trans_id>
+                        <echeck_account_name>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </echeck_account_name>
+                        <echeck_account_type>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </echeck_account_type>
+                        <echeck_bank_name>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </echeck_bank_name>
+                        <echeck_routing_number>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </echeck_routing_number>
+                        <echeck_type>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </echeck_type>
+                        <last_trans_id>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </last_trans_id>
+                        <paybox_request_number>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </paybox_request_number>
+                        <po_number>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </po_number>
+                        <protection_eligibility>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </protection_eligibility>
+                    </fill>
+                    <system>
+                        <entity_id/>
+                    </system>
+                </mapping>
             </orderPayment>
             <quote>
                 <active>1</active>
                 <model>sales/quote</model>
+                <mapping>
+                    <email>customer_email</email>
+                    <firstname>customer_firstname</firstname>
+                    <lastname>customer_lastname</lastname>
+                    <middle>customer_middlename</middle>
+                    <suffix>customer_suffix</suffix>
+                    <prefix>customer_prefix</prefix>
+                    <taxvat>customer_taxvat</taxvat>
+
+                    <fill>
+                        <password_hash>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>14</a0>
+                            </args>
+                        </password_hash>
+                        <customer_note>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
+                            <args>
+                                <a0>10</a0>
+                                <a1>plain</a1>
+                            </args>
+                        </customer_note>
+                        <remote_ip>
+                            <model>schumacherfm_anonygento/random_ip</model>
+                            <method>shuffleIp</method>
+                        </remote_ip>
+                    </fill>
+                    <system>
+                        <customer_id/>
+                        <entity_id/>
+                    </system>
+                </mapping>
             </quote>
             <quoteAddress>
                 <active>1</active>
                 <model>sales/quote_address</model>
+                <mapping>
+                    <fax>fax</fax>
+                    <street>street</street>
+                    <email>email</email>
+                    <telephone>telephone</telephone>
+                    <company>company</company>
+                    <firstname>firstname</firstname>
+                    <lastname>lastname</lastname>
+                    <middlename>middlename</middlename>
+                    <suffix>suffix</suffix>
+                    <prefix>prefix</prefix>
+                    <taxvat>taxvat</taxvat>
+                    <fill>
+                        <customer_notes>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
+                            <args>
+                                <a0>10</a0>
+                                <a1>plain</a1>
+                            </args>
+                        </customer_notes>
+                    </fill>
+                    <system>
+                        <address_id/>
+                    </system>
+                </mapping>
             </quoteAddress>
             <quotePayment>
                 <active>1</active>
                 <model>sales/quote_payment</model>
+                <mapping>
+                    <system>
+                        <payment_id/>
+                        <quote_id/>
+
+                    </system>
+
+                    <name>cc_owner</name>
+                    <month>cc_exp_month</month>
+                    <year>cc_exp_year</year>
+                    <last4>cc_last4</last4>
+                    <ccType>cc_type</ccType>
+                    <fill>
+                        <additional_data>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </additional_data>
+                        <additional_information>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </additional_information>
+                        <cc_cid_enc>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_cid_enc>
+                        <cc_number_enc>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_number_enc>
+                        <cc_ss_owner>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_ss_owner>
+                        <cc_ss_start_month>
+                            <method>mt_rand</method>
+                            <args>
+                                <a0>1</a0>
+                                <a1>12</a1>
+                            </args>
+                        </cc_ss_start_month>
+                        <cc_ss_start_year>
+                            <method>mt_rand</method>
+                            <args>
+                                <a0>2014</a0>
+                                <a1>2022</a1>
+                            </args>
+                        </cc_ss_start_year>
+                        <cc_ss_issue>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </cc_ss_issue>
+                        <po_number>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </po_number>
+                        <paypal_payer_id>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </paypal_payer_id>
+                        <paypal_payer_status>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </paypal_payer_status>
+                        <paypal_correlation_id>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>12</a0>
+                            </args>
+                        </paypal_correlation_id>
+                    </fill>
+                </mapping>
             </quotePayment>
 
             <!--all comments collections are only for FYI-->
             <creditmemo>
                 <active>1</active>
                 <model>sales/order_creditmemo_collection</model>
+                <mapping>
+                    <system>
+                        <entity_id/>
+                        <order_id/>
+                        <shipping_address_id/>
+                        <billing_address_id/>
+                    </system>
+                </mapping>
             </creditmemo>
             <creditmemoComment>
                 <active>1</active>
                 <model>sales/order_creditmemo_comment_collection</model>
+                <mapping>
+                    <system>
+                        <entity_id/>
+                    </system>
+                    <fill>
+                        <comment>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
+                            <args>
+                                <a0>10</a0>
+                                <a1>plain</a1>
+                            </args>
+                        </comment>
+                    </fill>
+                </mapping>
             </creditmemoComment>
 
             <invoice>
                 <active>1</active>
                 <model>sales/order_invoice_collection</model>
+                <mapping>
+                    <update>creditmemo</update>
+                </mapping>
             </invoice>
             <invoiceComment>
                 <active>1</active>
                 <model>sales/order_invoice_comment_collection</model>
+                <mapping>
+                    <update>creditmemoComment</update>
+                </mapping>
             </invoiceComment>
 
             <shipment>
                 <active>1</active>
                 <model>sales/order_shipment</model>
+                <mapping>
+                    <update>creditmemo</update>
+                </mapping>
             </shipment>
             <shipmentComment>
                 <active>1</active>
                 <model>sales/order_shipment_comment</model>
+                <mapping>
+                    <update>creditmemoComment</update>
+                </mapping>
             </shipmentComment>
 
             <review>
                 <active>1</active>
                 <model>review/review</model>
+                <mapping>
+                    <system>
+                        <review_id/>
+                        <entity_id/>
+                    </system>
+                    <fill>
+                        <title>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
+                            <args>
+                                <a0>7</a0>
+                                <a1>plain</a1>
+                            </args>
+                        </title>
+                        <detail>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
+                            <args>
+                                <a0>15</a0>
+                                <a1>plain</a1>
+                            </args>
+                        </detail>
+                    </fill>
+                </mapping>
             </review>
             <ratingOptionVote>
                 <active>1</active>
                 <model>rating/rating_option_vote</model>
+                <mapping>
+                    <system>
+                        <vote_id/>
+                        <option_id/>
+                    </system>
+                    <fill>
+                        <remote_ip>
+                            <model>schumacherfm_anonygento/random_ip</model>
+                            <method>shuffleIp</method>
+                        </remote_ip>
+                        <detail>
+                            <model>schumacherfm_anonygento/random_ip</model>
+                            <method>shuffleIpLong</method>
+                        </detail>
+                    </fill>
+                </mapping>
             </ratingOptionVote>
             <sendfriendLog>
                 <active>1</active>
                 <model>sendfriend/sendfriend</model>
+                <mapping>
+                    <system>
+                        <log_id/>
+                    </system>
+                    <fill>
+                        <ip>
+                            <model>schumacherfm_anonygento/random_ip</model>
+                            <method>shuffleIpLong</method>
+                        </ip>
+                    </fill>
+                </mapping>
             </sendfriendLog>
 
         </anonymizations>

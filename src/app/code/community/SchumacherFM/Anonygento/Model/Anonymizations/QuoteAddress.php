@@ -22,7 +22,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
 
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
 
-        $this->_copyObjectData($randomCustomer, $quoteAddress, $this->_getMappings('QuoteAddress'));
+        $this->_copyObjectData($randomCustomer, $quoteAddress, $this->_getMappings('quoteAddress'));
 
 //        $quoteAddress->getResource()->save($quoteAddress);
         $quoteAddress->save();
@@ -43,7 +43,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
         /* @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
 
         foreach ($quoteAddressCollection as $quoteAddress) {
-            $this->_copyObjectData($customer, $quoteAddress, $this->_getMappings('QuoteAddress'));
+            $this->_copyObjectData($customer, $quoteAddress, $this->_getMappings('quoteAddress'));
 //            $quoteAddress->getResource()->save($quoteAddress);
             $quoteAddress->save();
             $quoteAddress = null;
@@ -57,6 +57,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/quote_address', 'QuoteAddress');
+        return parent::_getCollection('sales/quote_address', 'quoteAddress');
     }
 }

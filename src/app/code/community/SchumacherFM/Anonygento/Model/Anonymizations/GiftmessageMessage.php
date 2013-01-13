@@ -11,16 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
 
     public function run()
     {
-        $messageCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($messageCollection as $message) {
-            $this->_anonymizeGiftMessage($message);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $messageCollection = null;
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeGiftMessage');
     }
 
     /**
@@ -31,7 +22,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
 
         $customer = $this->_getRandomCustomer()->getCustomer();
 
-        $this->_copyObjectData($customer, $message, $this->_getMappings('GiftMessage'));
+        $this->_copyObjectData($customer, $message, $this->_getMappings('giftMessage'));
 
         $message->setMessage(Mage::getSingleton('schumacherfm_anonygento/random_loremIpsum')->getLoremIpsum(mt_rand(20, 40), 'txt'));
         $message->setRecipient($this->_getRandomCustomer()->getEmailWeird());
@@ -45,7 +36,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('giftmessage/message', 'GiftMessage');
+        return parent::_getCollection('giftmessage/message', 'giftMessage');
     }
 
 }

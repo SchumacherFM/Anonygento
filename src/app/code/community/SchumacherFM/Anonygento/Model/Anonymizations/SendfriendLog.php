@@ -11,16 +11,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
 
     public function run()
     {
-        $collection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($collection as $log) {
-            $this->_anonymizeLog($log);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $collection = null;
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeLog');
     }
 
     /**
@@ -30,7 +21,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
     {
 
         $emptyObject = new Varien_Object(array('anonymized' => 1));
-        $this->_copyObjectData($emptyObject, $model, $this->_getMappings('SendfriendLog'));
+        $this->_copyObjectData($emptyObject, $model, $this->_getMappings('sendfriendLog'));
         $model->getResource()->save($model);
     }
 
@@ -39,7 +30,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sendfriend/sendfriend', 'SendfriendLog');
+        return parent::_getCollection('sendfriend/sendfriend', 'sendfriendLog');
     }
 
 }

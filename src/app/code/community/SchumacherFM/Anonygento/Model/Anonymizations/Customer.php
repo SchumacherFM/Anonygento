@@ -25,7 +25,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer($customer);
 
-        $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings('Customer'));
+        $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings('customer'));
 
         $this->_anonymizeCustomerAddresses($randomCustomer);
         $this->_anonymizeCustomerNewsletter($randomCustomer);
@@ -37,6 +37,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         // anonymized .. just in case the user aborts the script
         $customer->save();
 //        $customer->getResource()->save($customer);
+        $customer = null;
     }
 
     /**
@@ -76,6 +77,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('customer/customer', 'Customer');
+        return parent::_getCollection('customer/customer', 'customer');
     }
 }

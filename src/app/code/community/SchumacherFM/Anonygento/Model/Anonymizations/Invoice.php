@@ -11,8 +11,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Invoice extends SchumacherFM_
     protected function _construct()
     {
         parent::_construct();
-        $this->setModelName('Invoice');
-        $this->setCollectionName('Invoice');
+        $this->setModelName('invoice');
+        $this->setCollectionName('invoice');
     }
 
     public function run()

@@ -41,14 +41,9 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         // do not run as getSingleton
         $mapping = Mage::getModel('schumacherfm_anonygento/random_mappings');
         /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
-        $mapped = $mapping->{'set' . $type}();
+        $mapped = $mapping->getMapping($type);
 
         $mapped->{'set' . self::COLUMN_ANONYMIZED}(self::COLUMN_ANONYMIZED);
-
-        Mage::dispatchEvent('anonygento_anonymizations_get_mapping_after', array(
-            'type'   => $type,
-            'mapped' => $mapped,
-        ));
 
         return $mapped;
     }
@@ -180,6 +175,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _getCollection($modelName, $mappingName = NULL)
     {
+
         $collection = stristr($modelName, '_collection') !== FALSE
             ? Mage::getResourceModel($modelName)
             : Mage::getModel($modelName)->getCollection();

@@ -19,7 +19,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
     public function getAllOptions()
     {
         // @see config.xml
-        $anonymizations = Mage::helper('schumacherfm_anonygento')->getConfigNode()->anonymizations->children();
+        $anonymizations = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig();
 
         $return = array();
         foreach ($anonymizations as $node) {
