@@ -87,8 +87,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
             'header'         => $this->__('Status'),
             'align'          => 'left',
             'index'          => 'status',
-            'type'           => 'options',
-            'options'        => array(0 => $this->__('Sensitive Data!'), 1 => $this->__('Anonymized!')),
             'frame_callback' => array($this, 'decorateStatus')
         ));
 
@@ -124,10 +122,11 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
      */
     public function decorateStatus($value, $row, $column, $isExport)
     {
-        if ( $row->getStatus() != 0) {
-            $cell = '<span class="grid-severity-notice"><span>' . $value . '</span></span>';
+
+        if ( $row->getUnanonymized() == 0) {
+            $cell = '<span class="grid-severity-notice"><span>' . $this->__('Anonymized!') . '</span></span>';
         } else {
-            $cell = '<span class="grid-severity-critical"><span>' . $value . '</span></span>';
+            $cell = '<span class="grid-severity-critical"><span>' . $this->__('Sensitive Data!') . '</span></span>';
         }
         return $cell;
     }
@@ -135,7 +134,9 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     /**
      * Get row edit url
      *
-     * @return string
+     * @param $row
+     *
+     * @return bool|string
      */
     public function getRowUrl($row)
     {
@@ -143,30 +144,4 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
         //return $this->getUrl('*/*/edit', array('type'=>$row->getId()));
     }
 
-    /**
-     * Add mass-actions to grid
-     */
-    protected function _XXXprepareMassaction()
-    {
-        $this->setMassactionIdField('value');
-        $this->getMassactionBlock()->setFormFieldName('types');
-
-        $modeOptions = Mage::getModel('index/process')->getModesOptions();
-
-        $this->getMassactionBlock()->addItem('enable', array(
-            'label' => Mage::helper('index')->__('Enable'),
-            'url'   => $this->getUrl('*/*/massEnable'),
-        ));
-        $this->getMassactionBlock()->addItem('disable', array(
-            'label' => Mage::helper('index')->__('Disable'),
-            'url'   => $this->getUrl('*/*/massDisable'),
-        ));
-        $this->getMassactionBlock()->addItem('refresh', array(
-            'label'    => Mage::helper('index')->__('Refresh'),
-            'url'      => $this->getUrl('*/*/massRefresh'),
-            'selected' => TRUE,
-        ));
-
-        return $this;
-    }
 }
