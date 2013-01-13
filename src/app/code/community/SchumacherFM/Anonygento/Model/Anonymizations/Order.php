@@ -44,7 +44,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _anonymizeOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
-
         if ($order->getCustomerId() && !$customer) {
             $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
             if (!$customer) {

@@ -18,11 +18,14 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
     {
         $data = $this->getData();
 
-        if (isset($data['fill'])) {
-            foreach ($data['fill'] as $attributeName => $options) {
-                $data[] = $attributeName;
+        //getting the keys from these two xml config elements to
+        //add the keys to the collection()->add[Attribute|Field]ToSelect method
+        foreach (array('fill', 'system') as $element) {
+            if (isset($data[$element])) {
+                $systemKeys = array_keys($data[$element]);
+                unset($data[$element]);
+                $data = array_merge($data, $systemKeys);
             }
-            unset($data['fill']);
         }
 
         return array_unique(array_values($data));
