@@ -81,7 +81,10 @@ Compatibility
 - Magento >= 1.4
 - php >= 5.3.5
 
-Tested with php 5.3.19 and 5.4
+I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
+
+On a Ubuntu virtual machine with standard LAMP system (php 5.3.[10|20] Suhosin) the script fails.
+Even with memory limit -1 the script will not run. Maybe someone can test this without Suhosin ...
 
 
 Installation Instructions
@@ -318,16 +321,13 @@ Performance
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
 and ~9000 quotes lasts for ~15 minutes. With 256MB of memory limit I have to restart the process
-several times. I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
+several times.
 
 If you get errors like this one:
 
 `Fatal error: Allowed memory size of xxx bytes exhausted (tried to allocate x bytes) in abc.php on line x`
 
 Just rerun the script.
-
-On a Ubuntu virtual machine with standard LAMP system (php 5.3.10 Suhosin) the script fails.
-Even with memory limit -1 the script will not run.
 
 
 Support / Contribution
