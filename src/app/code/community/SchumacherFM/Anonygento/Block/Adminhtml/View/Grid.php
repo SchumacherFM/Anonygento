@@ -10,16 +10,18 @@
 class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
-    protected $attributeColumns = array();
+    protected $_attributeColumns = array();
 
-    protected $gridView;
+    protected $_gridView = null;
+
+    protected $_modelName = null;
 
     /**
      * Class constructor
      */
     public function __construct()
     {
-        $this->gridView = $this->getRequest()->getParam('gridView');
+        $this->_gridView = $this->getRequest()->getParam('gridView');
 
         parent::__construct();
         $this->setId('anonygento_grid');
@@ -29,14 +31,18 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
 
     protected function _getModelName()
     {
+        if ($this->_modelName !== null) {
+            return $this->_modelName;
+        }
 
         $anonymizations = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig();
 
-        if (!isset($anonymizations->{$this->gridView})) {
-            throw new Mage_Adminhtml_Exception('Cannot find config value for: ' . $this->gridView);
+        if (!isset($anonymizations->{$this->_gridView})) {
+            throw new Mage_Adminhtml_Exception('Cannot find config value for: ' . $this->_gridView);
         }
 
-        return $anonymizations->{$this->gridView}->model;
+        $this->_modelName = $anonymizations->{$this->_gridView}->model;
+        return $this->_modelName;
     }
 
     /**
@@ -65,13 +71,16 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
 
     protected function _getAttributeColumns()
     {
-        if (count($this->attributeColumns) > 0) {
-            return $this->attributeColumns;
+        if (count($this->_attributeColumns) > 0) {
+            return $this->_attributeColumns;
         }
         $mapping = Mage::getModel('schumacherfm_anonygento/random_mappings');
         /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
-        $this->attributeColumns = $mapping->getMapping($this->gridView)->getEntityAttributes();
-        return $this->attributeColumns;
+        $this->_attributeColumns = $mapping->getMapping($this->_gridView)->getEntityAttributes();
+
+        // @todo remove columns which ends with _id
+
+        return $this->_attributeColumns;
 
     }
 
@@ -91,10 +100,32 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
                 'index'    => $attribute,
                 'sortable' => TRUE,
             ));
-
         }
 
+        $this->addColumn('action',
+            array(
+                'header'    => $this->__('View'),
+                'type'      => 'action',
+                'getter'    => 'getId',
+                'actions'   => array(
+                    array(
+                        'caption' => $this->__('View'),
+                        'url'     => array('base' => $this->_getAdminUrl()),
+                        'field'   => 'id'
+                    ),
+                ),
+                'filter'    => FALSE,
+                'sortable'  => FALSE,
+                'is_system' => TRUE,
+            ));
         return parent::_prepareColumns();
+    }
+
+    protected function _getAdminUrl()
+    {
+        /* @todo remove this bug. because we need a method which can properly find the admin edit url for any entity */
+        $modelName = explode('/',$this->_getModelName());
+        return '*/' . $modelName[0] . '/edit';
     }
 
     /**
