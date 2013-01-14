@@ -51,7 +51,24 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
         $this->addData($config->$type->mapping->asArray());
 
+        if ($this->getUpdate()) {
+            $update = $this->getUpdate();
+            $this->unsUpdate();
+            return $this->getMapping($update);
+
+        }
+
         return $this;
+    }
+
+    /**
+     * updates the current from another config name
+     *
+     * @param string $fromConfigName
+     */
+    protected function _update($fromConfigName)
+    {
+
     }
 
 }

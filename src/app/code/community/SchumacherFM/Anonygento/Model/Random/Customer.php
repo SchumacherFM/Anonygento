@@ -59,6 +59,8 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
 
         $this->_currentCustomer->addData($data);
 
+//        @todo name is missing to get the full first and lastname
+
         $this->_getRandEmail();
 
         return $this->_currentCustomer;
