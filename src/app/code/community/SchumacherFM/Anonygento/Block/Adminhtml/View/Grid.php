@@ -47,6 +47,9 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
 
     /**
      * Prepare grid collection
+     *
+     * an awesome feature would be that all these columns will be hided
+     * which are empty in the current grid view.
      */
     protected function _prepareCollection()
     {
