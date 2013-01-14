@@ -14,7 +14,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
 
     protected $_gridView = null;
 
-    protected $_modelName = null;
+    protected $_configValue = array();
 
     /**
      * Class constructor
@@ -29,10 +29,10 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
         $this->_pagerVisibility  = TRUE;
     }
 
-    protected function _getModelName()
+    protected function _getConfigValue($name)
     {
-        if ($this->_modelName !== null) {
-            return $this->_modelName;
+        if (isset($this->_configValue[$name])) {
+            return $this->_configValue[$name];
         }
 
         $anonymizations = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig();
@@ -41,8 +41,8 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
             throw new Mage_Adminhtml_Exception('Cannot find config value for: ' . $this->_gridView);
         }
 
-        $this->_modelName = $anonymizations->{$this->_gridView}->model;
-        return $this->_modelName;
+        $this->_configValue[$name] = $anonymizations->{$this->_gridView}->{$name};
+        return $this->_configValue[$name];
     }
 
     /**
@@ -50,7 +50,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
      */
     protected function _prepareCollection()
     {
-        $modelName = $this->_getModelName();
+        $modelName = $this->_getConfigValue('model');
 
         if (stristr($modelName, '_collection')) {
             $collection = Mage::getResourceModel($modelName);
@@ -77,9 +77,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
         $mapping = Mage::getModel('schumacherfm_anonygento/random_mappings');
         /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
         $this->_attributeColumns = $mapping->getMapping($this->_gridView)->getEntityAttributes();
-
-        // @todo remove columns which ends with _id
-
         return $this->_attributeColumns;
 
     }
@@ -89,10 +86,15 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
      */
     protected function _prepareColumns()
     {
-
         $attributeColumns = $this->_getAttributeColumns();
 
         foreach ($attributeColumns as $attribute) {
+
+            if (strrpos($attribute, '_id') === (strlen($attribute) - 3) ||
+                $attribute === 'additional_information'
+            ) {
+                continue;
+            }
 
             $this->addColumn($attribute, array(
                 'header'   => $this->__($attribute),
@@ -102,6 +104,7 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
             ));
         }
 
+        $adminRoute = $this->_getAdminUrl();
         $this->addColumn('action',
             array(
                 'header'    => $this->__('View'),
@@ -110,22 +113,26 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
                 'actions'   => array(
                     array(
                         'caption' => $this->__('View'),
-                        'url'     => array('base' => $this->_getAdminUrl()),
-                        'field'   => 'id'
+                        'url'     => array('base' => $adminRoute[0]),
+                        'field'   => $adminRoute[1],
                     ),
                 ),
                 'filter'    => FALSE,
                 'sortable'  => FALSE,
                 'is_system' => TRUE,
             ));
+
         return parent::_prepareColumns();
     }
 
     protected function _getAdminUrl()
     {
-        /* @todo remove this bug. because we need a method which can properly find the admin edit url for any entity */
-        $modelName = explode('/',$this->_getModelName());
-        return '*/' . $modelName[0] . '/edit';
+        $adminRoute = (string)$this->_getConfigValue('adminRoute');
+        if (empty($adminRoute)) {
+            return array('*/*/*', 'id');
+        }
+        $parts = explode('?', $adminRoute);
+        return array('*/' . $parts[0], $parts[1]);
     }
 
     /**
@@ -137,7 +144,13 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
      */
     public function getRowUrl($row)
     {
-        return FALSE;
+        $adminRoute = (string)$this->_getConfigValue('adminRoute');
+        if (empty($adminRoute)) {
+            return FALSE;
+        }
+        $parts = explode('?', $adminRoute);
+        return $this->getUrl('*/' . $parts[0], array($parts[1] => $row->getId()));
+
     }
 
 }

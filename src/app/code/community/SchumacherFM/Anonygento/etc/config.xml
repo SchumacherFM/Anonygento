@@ -85,6 +85,7 @@
             <customer>
                 <active>1</active>
                 <model>customer/customer</model>
+                <adminRoute>customer/edit?id</adminRoute>
                 <mapping>
                     <!--RandomCustomer => customer-->
                     <prefix>prefix</prefix>
@@ -135,6 +136,7 @@
             <order>
                 <active>1</active>
                 <model>sales/order</model>
+                <adminRoute>sales_order/view?order_id</adminRoute>
                 <mapping>
                     <email>customer_email</email>
                     <firstname>customer_firstname</firstname>
