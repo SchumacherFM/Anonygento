@@ -11,7 +11,6 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
 
     protected $_street = array();
 
-
     /**
      * @var Varien_Object
      */
@@ -59,7 +58,12 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
 
         $this->_currentCustomer->addData($data);
 
-//        @todo name is missing to get the full first and lastname
+        $this->_currentCustomer->setName(
+            $this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getLastname()
+        );
+        $this->_currentCustomer->setName2(
+            $this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getMiddlename() . ' ' . $this->_currentCustomer->getLastname()
+        );
 
         $this->_getRandEmail();
 

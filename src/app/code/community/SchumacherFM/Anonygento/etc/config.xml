@@ -586,7 +586,6 @@
                 <active>1</active>
                 <model>sales/order_creditmemo_collection</model>
                 <mapping>
-                    <!--@todo bug billing_name and shipping_name are missing-->
                     <system>
                         <entity_id/>
                         <order_id/>
@@ -622,6 +621,7 @@
                 <adminRoute>sales_invoice/view?invoice_id</adminRoute>
                 <mapping>
                     <update>creditmemo</update>
+                    <!--you can add here additional attributes/columns-->
                 </mapping>
             </invoice>
             <invoiceComment>
@@ -629,6 +629,7 @@
                 <model>sales/order_invoice_comment_collection</model>
                 <mapping>
                     <update>creditmemoComment</update>
+                    <!--you can add here additional attributes/columns-->
                 </mapping>
             </invoiceComment>
 
@@ -638,6 +639,7 @@
                 <adminRoute>sales_shipment/view?shipment_id</adminRoute>
                 <mapping>
                     <update>creditmemo</update>
+                    <!--you can add here additional attributes/columns-->
                 </mapping>
             </shipment>
             <shipmentComment>
@@ -645,6 +647,7 @@
                 <model>sales/order_shipment_comment</model>
                 <mapping>
                     <update>creditmemoComment</update>
+                    <!--you can add here additional attributes/columns-->
                 </mapping>
             </shipmentComment>
 

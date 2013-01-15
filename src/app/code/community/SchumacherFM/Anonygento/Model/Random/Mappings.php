@@ -61,14 +61,4 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         return $this;
     }
 
-    /**
-     * updates the current from another config name
-     *
-     * @param string $fromConfigName
-     */
-    protected function _update($fromConfigName)
-    {
-
-    }
-
 }
