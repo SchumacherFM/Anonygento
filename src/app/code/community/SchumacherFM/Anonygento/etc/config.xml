@@ -88,9 +88,9 @@
                 <adminRoute>customer/edit?id</adminRoute>
                 <options>
                     <!--methods which should be executed within the main method: _anonymizeCustomer-->
-                    <!--useful if the script fails everytime due to memory limit-->
-                    <anonymizeOrder>1</anonymizeOrder>
-                    <anonymizeQuote>1</anonymizeQuote>
+                    <!--useful if the script fails every time due to memory limit-->
+                    <anonymizeOrder>0</anonymizeOrder>
+                    <anonymizeQuote>0</anonymizeQuote>
                 </options>
                 <mapping>
                     <!--RandomCustomer => customer-->
