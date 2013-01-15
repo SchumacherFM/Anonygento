@@ -61,7 +61,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         foreach ($quoteCollection as $quote) {
             $this->_anonymizeQuote($quote, $customer);
         }
-        $quoteCollection = null;
+        $customer = $quoteCollection = null;
     }
 
     /**

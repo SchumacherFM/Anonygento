@@ -23,6 +23,20 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected $_instances = array();
 
+    protected $_options = array();
+
+    protected function _construct()
+    {
+        parent::_construct();
+        /** getConfigName() is initialized in SchumacherFM_Anonygento_Model_Console_Console::getModel */
+        $this->_options = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig($this->getConfigName())->options->asArray();
+    }
+
+    protected function _optionsTrue($value)
+    {
+        return isset($this->_options[$value]) && (int)$this->_options[$value] === 1;
+    }
+
     /**
      * @return SchumacherFM_Anonygento_Model_Random_Customer
      */

@@ -30,8 +30,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         $this->_anonymizeCustomerAddresses($randomCustomer);
         $this->_anonymizeCustomerNewsletter($randomCustomer);
 
-        $this->_anonymizeOrder($randomCustomer);
-        $this->_anonymizeQuote($randomCustomer);
+        if( $this->_optionsTrue('anonymizeOrder') ){
+            $this->_anonymizeOrder($randomCustomer);
+        }
+        if( $this->_optionsTrue('anonymizeQuote') ){
+            $this->_anonymizeQuote($randomCustomer);
+        }
 
         // save the customer at the end to ensure that all other entities have been
         // anonymized .. just in case the user aborts the script

@@ -30,9 +30,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         if ($orderCollectionSize > 0) {
             foreach ($orderCollection as $order) {
                 $this->_anonymizeOrder($order, $customer);
+                $order = null;
             }
         }
-        $orderCollection = null;
+        $customer = $orderCollection = null;
 
     }
 

@@ -169,7 +169,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
         $_execCollection = $this->_stat();
 
         foreach ($_execCollection as $anonExec) {
-            $anonModel = $this->_console->getModel($anonExec->getValue());
+            $anonModel = $this->_console->getModel($anonExec);
 
             $reCalc = $this->_console->reCalcUnAnonymized($anonExec->getModel());
 
@@ -189,7 +189,7 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
                         $this->_options->setCurrentRun($i);
 
                         if ($anonModel === null) {
-                            $anonModel = $this->_console->getModel($anonExec->getValue());
+                            $anonModel = $this->_console->getModel($anonExec);
                         }
 
                         $this->_consoleInstance->writeLine(

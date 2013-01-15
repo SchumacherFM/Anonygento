@@ -41,21 +41,21 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
     }
 
     /**
-     * @param string $modelName
+     * @param Varien_Object $anonExec
      *
      * @return false|Mage_Core_Model_Abstract
      */
-    public function getModel($modelName)
+    public function getModel(Varien_Object $anonExec)
     {
         /**
          * custom anonymization models can be load here
          * event is fired in: SchumacherFM_Anonygento_Model_Options_Anonymizations::getCollection
          */
-        $model = Mage::getModel('schumacherfm_anonygento/anonymizations_' . $modelName);
-        if ($model) {
-            return $model;
+        $model = Mage::getModel('schumacherfm_anonygento/anonymizations_' . $anonExec->getValue(), $anonExec->getData());
+        if (!$model) {
+            $model = Mage::getModel($anonExec->getValue(), $anonExec->getData());
         }
-        return Mage::getModel($modelName);
+        return $model;
     }
 
     /**
