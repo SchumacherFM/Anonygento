@@ -25,6 +25,10 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     protected $_options = array();
 
+    /**
+     * loads among other things the xml config: options
+     * <global><anonygento><anonymizations><[element]><options>
+     */
     protected function _construct()
     {
         parent::_construct();
@@ -32,9 +36,27 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         $this->_options = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig($this->getConfigName())->options->asArray();
     }
 
-    protected function _optionsTrue($value)
+    /**
+     * to configure an option please use the xml config:
+     * <global><anonygento><anonymizations><[element]><options>
+     *
+     * @param string $value
+     * @param string $type
+     *
+     * @return mixed
+     */
+    protected function _getOption($value, $type = 'bool')
     {
-        return isset($this->_options[$value]) && (int)$this->_options[$value] === 1;
+        switch ($type) {
+            case 'bool':
+                return (isset($this->_options[$value]) && (int)$this->_options[$value] === 1);
+            case 'int':
+                return isset($this->_options[$value]) ? (int)$this->_options[$value] : NULL;
+            case 'str':
+                return isset($this->_options[$value]) ? (string)$this->_options[$value] : NULL;
+            default:
+                return FALSE;
+        }
     }
 
     /**
