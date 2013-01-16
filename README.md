@@ -3,11 +3,18 @@ Anonygento
 
 Anonymizes all customer related data in a Magento shop!
 
-Anonygento is a Magento module which anonymizes all data especially customer, orders, quotes, newsletters, etc.
-This anonymization is useful when you want to hire external developers or for your internal developers who really
-not need any kind of live data.
+Install (via modman) and run:
+```
+$ cd shell
+$ php -f anonygento.php
+```
 
-Anonygento can be easily extended by custom events / observers.
+Anonygento is a Magento module which anonymizes all data especially customer, orders, quotes, newsletters, etc.
+
+This anonymization is useful when you want to hire external developers or for your internal developers who really
+not need any kind of sensitive data.
+
+Anonygento can be easily extended by custom configuration and observers.
 
 Do not run this script in the production environment.
 
@@ -61,7 +68,6 @@ to System -> Configuration -> Advanced -> Developer -> Anonygento Settings
 
 Magento Backend hints
 ---------------------
-
 The red label 'sensitive data' will switch to green for each entity when the anonymization
 process ran successful.
 
@@ -83,9 +89,6 @@ Compatibility
 
 I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
 
-On a Ubuntu virtual machine with standard LAMP system (php 5.3.[10|20] Suhosin) the script fails.
-Even with memory limit -1 the script will not run. Maybe someone can test this without Suhosin ...
-
 
 Installation Instructions
 -------------------------
@@ -106,6 +109,7 @@ Clear the cache, logout from the admin panel and then login again.
 
 Call the extension from System -> Tools -> Anonygento (just to get a summery).
 
+In this grid view you can view the data from all entities by clicking on the "View" link.
 
 #### Shell
 
@@ -209,12 +213,17 @@ Please see Demo2 module.
 <config>
     <anonygento>
         <anonymizations>
-            <catalogProduct>
+            <myAnonymizationKey>
                 <active>1</active>
                 <label>Some label</label>
                 <model>namespace2_moduleX/aModel</model>
+                <adminRoute>yourAdminRoute/[edit|view|etc]?id</adminRoute><!-- if available -->
+                <options>
+                    <optionKey1>1</optionKey1>
+                    <!-- your options -->
+                </options>
                 <anonymizationModel>namespace_module/myAnonymizationProcess</anonymizationModel>
-            </catalogProduct>
+            </myAnonymizationKey>
         </anonymizations>
     </anonygento>
 </config>
@@ -256,23 +265,24 @@ class Namespace_Module_Model_MyAnonymizationProcess extends SchumacherFM_Anonyge
 
     public function run()
     {
-        $collection = Mage::getModel('namespace_module/name')->getCollection();
-
-        $i = 0;
-        foreach ($collection as $model)
-        {
-            $this->_anonymizeFooBar($model);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
-        $this->getProgressBar()->finish();
+        parent::run($this->_getCollection(), '_anonymizeFooBar');
     }
 
     protected function _anonymizeFooBar($model)
     {
+        // to access options: (see above in the config)
+        $opt1 = $this->_getOption('optionKey1','[int|bool|str]');
+
         // please see Demo2 module
         $this->_copyObjectData( ... );
         $model->save();
+    }
+    /**
+     * @return Namespace_Module_Model_Resource_Name_Collection
+     */
+    protected function _getCollection()
+    {
+        return parent::_getCollection('namespace_module/name', 'myAnonymizationKey');
     }
 
 }
@@ -316,8 +326,8 @@ class SchumacherFM_Demo1_Model_Observer {
 ```
 
 
-Performance
------------
+Performance / Errors
+--------------------
 
 On my MacBook Air Mid 2012 the whole anonymization process for ~8000 Customers, ~4000 orders
 and ~9000 quotes lasts for ~15 minutes. With 256MB of memory limit I have to restart the process
@@ -328,6 +338,15 @@ If you get errors like this one:
 `Fatal error: Allowed memory size of xxx bytes exhausted (tried to allocate x bytes) in abc.php on line x`
 
 Just rerun the script.
+
+On a Ubuntu virtual machine with standard LAMP system (php 5.3.[10|20] Suhosin) the script fails.
+Even with memory limit -1 the script will not run. Maybe someone can test this without Suhosin ...
+
+If the script still fails set this config.xml option to 0 (zero):
+
+`global->anonygento->anonymizations->customer->options->anonymizeOrder = 0`
+
+`global->anonygento->anonymizations->customer->options->anonymizeQuote = 0`
 
 
 Support / Contribution
