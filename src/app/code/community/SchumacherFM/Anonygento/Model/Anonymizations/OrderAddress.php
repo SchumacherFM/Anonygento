@@ -40,9 +40,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
         foreach ($orderAddressCollection as $orderAddress) {
-
             $this->_copyObjectData($customer, $orderAddress, $this->_getMappings('orderAddress'));
-
 //            $orderAddress->getResource()->save($orderAddress);
             $orderAddress->save();
         }
