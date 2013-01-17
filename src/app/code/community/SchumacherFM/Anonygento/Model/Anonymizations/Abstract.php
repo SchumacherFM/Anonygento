@@ -146,7 +146,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         foreach ($mapped as $key => $newKey) {
 
             // throw an error if there is no key in fromObject
-            if (!array_key_exists($key, $getDataFromObject)) {
+            if (!array_key_exists($key, $getDataFromObject)) { // oh php ... why are the args switched?
                 $msg = 'Check your config.xml!' . PHP_EOL . $key . ' not Found in fromObj: ' . get_class($fromObject) . ' copied toObj: ' . get_class($toObject);
                 throw new Exception($msg);
             }

@@ -32,30 +32,25 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
         if ($customer === null) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
+            $address = $this->_getRandomCustomer()->getCustomer();
         }else{
-            $customer = $customer->getAddressesCollection()->getFirstItem();
-//            Zend_Debug::dump( $customer->getData());
-//            exit;
+            $address = $customer->getAddressesCollection()->getFirstItem();
+            // we need both worlds
+//            $address->addData($customer->getData());
+            Zend_Debug::dump($customer->getData() );
+            exit;
         }
+// fax is missing
+Zend_Debug::dump($address->getData());
+exit;
         $orderAddressCollection = $order->getAddressesCollection();
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
         foreach ($orderAddressCollection as $orderAddress) {
-//if ($customer->getId()) {
-//                Zend_Debug::dump($customer->getData());
-//                Zend_Debug::dump($orderAddress->getData());
-//exit;
-//            }
-
-            $this->_copyObjectData($customer, $orderAddress, $this->_getMappings('orderAddress'));
+            $this->_copyObjectData($address, $orderAddress, $this->_getMappings('orderAddress'));
             $orderAddress->getResource()->save($orderAddress);
-//            if ($customer->getId()) {
-//                Zend_Debug::dump($orderAddress->getData());
-//                exit;
-//            }
-//            $orderAddress->save();
         }
+        $address = null;
         $orderAddressCollection = null;
 
     }
