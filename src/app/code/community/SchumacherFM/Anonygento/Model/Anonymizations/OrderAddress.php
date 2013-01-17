@@ -35,6 +35,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
             $address = $this->_getRandomCustomer()->getCustomer();
         }else{
             $address = $customer->getAddressesCollection()->getFirstItem();
+            // it is possible that customers do not have a default address
             // we need both worlds
 //            $address->addData($customer->getData());
             Zend_Debug::dump($customer->getData() );
