@@ -91,7 +91,7 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     {
 
         $name = $this->_currentCustomer->getFirstname() . '.' .
-            $this->_currentCustomer->getLastname() . '-' . $this->_currentCustomer->getEntityId();
+            $this->_currentCustomer->getLastname() . '-' . mt_rand();
 
         $email = Mage::helper('catalog/product_url')->format($name) . '@' . $this->_email[mt_rand() % count($this->_email)];
         $email = strtolower($email);

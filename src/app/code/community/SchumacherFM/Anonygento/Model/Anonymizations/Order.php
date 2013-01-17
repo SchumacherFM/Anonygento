@@ -56,6 +56,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
         $this->_copyObjectData($customer, $order, $this->_getMappings('order'));
 
+        // this could be buggy because we need from the customer the billing and/or shipping address
         $this->_anonymizeOrderAddresses($order, $customer);
         $this->_anonymizeOrderPayment($order, $customer);
         $this->_anonymizeOrderCreditmemo($order);

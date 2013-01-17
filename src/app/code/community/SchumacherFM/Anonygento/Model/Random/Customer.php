@@ -36,17 +36,17 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
 
         if ($customer === null) {
             $this->_currentCustomer = new Varien_Object();
-            $this->_currentCustomer->setEntityId(mt_rand());
+//            $this->_currentCustomer->setEntityId(mt_rand());
         } else {
             $this->_currentCustomer = $customer;
         }
 
         $data = array(
             'prefix'     => $this->_getCustomerPrefixString(),
+            'suffix'     => '',
             'firstname'  => $this->_getCustomerFirstName(),
             'middlename' => $this->_getCustomerFirstName(),
             'lastname'   => $this->_getCustomerLastName(),
-            'suffix'     => '',
             'company'    => '',
             'taxvat'     => '',
             'dob'        => $this->_getCustomerDob(),

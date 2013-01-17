@@ -89,8 +89,8 @@
                 <options>
                     <!--methods which should be executed within the main method: _anonymizeCustomer-->
                     <!--useful if the script fails every time due to memory limit-->
-                    <anonymizeOrder>1</anonymizeOrder>
-                    <anonymizeQuote>1</anonymizeQuote>
+                    <anonymizeOrder>0</anonymizeOrder>
+                    <anonymizeQuote>0</anonymizeQuote>
                 </options>
                 <mapping>
                     <!--RandomCustomer => customer-->
@@ -147,7 +147,7 @@
                     <email>customer_email</email>
                     <firstname>customer_firstname</firstname>
                     <lastname>customer_lastname</lastname>
-                    <middle>customer_middlename</middle>
+                    <middlename>customer_middlename</middlename>
                     <suffix>customer_suffix</suffix>
                     <prefix>customer_prefix</prefix>
                     <taxvat>customer_taxvat</taxvat>
@@ -421,7 +421,7 @@
                     <email>customer_email</email>
                     <firstname>customer_firstname</firstname>
                     <lastname>customer_lastname</lastname>
-                    <middle>customer_middlename</middle>
+                    <middlename>customer_middlename</middlename>
                     <suffix>customer_suffix</suffix>
                     <prefix>customer_prefix</prefix>
                     <taxvat>customer_taxvat</taxvat>

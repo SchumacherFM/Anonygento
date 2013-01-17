@@ -131,6 +131,9 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected function _copyObjectData($fromObject, $toObject, Varien_Object $mappings)
     {
 
+        $fill = $mappings->getFill();
+        $mappings->unsFill();
+        $mappings->unsSystem();
         $mapped = $mappings->getData();
 
         if (count($mapped) === 0) {
@@ -138,16 +141,23 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         }
 
         $fromObject->{'set' . self::COLUMN_ANONYMIZED}(1);
+        $getDataFromObject = $fromObject->getData();
 
         foreach ($mapped as $key => $newKey) {
+
+            // throw an error if there is no key in fromObject
+            if (!array_key_exists($key, $getDataFromObject)) {
+                $msg = 'Check your config.xml!' . PHP_EOL . $key . ' not Found in fromObj: ' . get_class($fromObject) . ' copied toObj: ' . get_class($toObject);
+                throw new Exception($msg);
+            }
+
             $data = $fromObject->getData($key);
             if ($data !== null) {
                 $toObject->setData($newKey, $data);
             }
         }
 
-        $fill = $mappings->getFill();
-        if (is_array($fill)) {
+        if ($fill && is_array($fill)) {
             $fillModel = Mage::getSingleton('schumacherfm_anonygento/random_fill');
             $fillModel->setToObj($toObject);
             $fillModel->setMappings($mappings);

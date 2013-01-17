@@ -19,7 +19,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
      */
     protected function _anonymizeOrderAddress(Mage_Sales_Model_Order_Address $orderAddress)
     {
-
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
         $this->_copyObjectData($randomCustomer, $orderAddress, $this->_getMappings('orderAddress'));
         $orderAddress->getResource()->save($orderAddress);
@@ -34,15 +33,28 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     {
         if ($customer === null) {
             $customer = $this->_getRandomCustomer()->getCustomer();
+        }else{
+            $customer = $customer->getAddressesCollection()->getFirstItem();
+//            Zend_Debug::dump( $customer->getData());
+//            exit;
         }
-
         $orderAddressCollection = $order->getAddressesCollection();
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
         foreach ($orderAddressCollection as $orderAddress) {
+//if ($customer->getId()) {
+//                Zend_Debug::dump($customer->getData());
+//                Zend_Debug::dump($orderAddress->getData());
+//exit;
+//            }
+
             $this->_copyObjectData($customer, $orderAddress, $this->_getMappings('orderAddress'));
-//            $orderAddress->getResource()->save($orderAddress);
-            $orderAddress->save();
+            $orderAddress->getResource()->save($orderAddress);
+//            if ($customer->getId()) {
+//                Zend_Debug::dump($orderAddress->getData());
+//                exit;
+//            }
+//            $orderAddress->save();
         }
         $orderAddressCollection = null;
 
