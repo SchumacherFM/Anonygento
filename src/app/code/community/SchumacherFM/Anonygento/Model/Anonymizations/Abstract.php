@@ -130,6 +130,10 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected function _copyObjectData($fromObject, $toObject, Varien_Object $mappings)
     {
+        // @todo refactor $mappings, just use a string instead of passing an object
+//        if(!is_string($mappings)){
+//            throw new Exception('$mappings must be a string!');
+//        }
 
         $fill = $mappings->getFill();
         $mappings->unsFill();
@@ -147,8 +151,17 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
             // throw an error if there is no key in fromObject
             if (!array_key_exists($key, $getDataFromObject)) { // oh php ... why are the args switched?
-                $msg = 'Check your config.xml!' . PHP_EOL . $key . ' not Found in fromObj: ' . get_class($fromObject) . ' copied toObj: ' . get_class($toObject);
-                throw new Exception($msg);
+
+                Zend_Debug::dump($fromObject->getData());
+                echo PHP_EOL;
+                Zend_Debug::dump($toObject->getData());
+
+                $msg = 'Check your config.xml!' . PHP_EOL . $key . ' not Found in fromObj: ' . get_class($fromObject) . ' copied toObj: ' .
+                    get_class($toObject) . PHP_EOL;
+
+                $e = new Exception($msg);
+                Mage::logException($e);
+                throw $e;
             }
 
             $data = $fromObject->getData($key);
@@ -168,6 +181,38 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             'to_object' => $toObject,
         ));
 
+    }
+
+    /**
+     * merge an additional object into the toObject
+     *
+     * @param Varien_Object $fromObject
+     * @param Varien_Object $toObject
+     * @param string        $mappings
+     *
+     * @return bool
+     * @throws Exception
+     */
+    protected function _mergeMissingAttributes(Varien_Object $fromObject, Varien_Object $toObject, $mappings)
+    {
+        if (!is_string($mappings)) {
+            throw new Exception('$mappings must be a string!');
+        }
+        $mappings = $this->_getMappings($mappings);
+        $mappings->unsFill();
+        $mappings->unsSystem();
+        $mapped = $mappings->getData();
+
+        if (count($mapped) === 0) {
+            return FALSE;
+        }
+        foreach ($mapped as $key => $value) {
+            $data = $fromObject->getData($key);
+            if (!$toObject->hasData($key)) {
+                $toObject->setData($key, $data);
+            }
+        }
+        return TRUE;
     }
 
     /**

@@ -31,19 +31,22 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
      */
     public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
     {
-        if ($customer === null) {
-            $address = $this->_getRandomCustomer()->getCustomer();
-        }else{
-            $address = $customer->getAddressesCollection()->getFirstItem();
-            // it is possible that customers do not have a default address
-            // we need both worlds
-//            $address->addData($customer->getData());
-            Zend_Debug::dump($customer->getData() );
-            exit;
+        $address = $this->_getRandomCustomer()->getCustomer();
+        if ($customer !== null) {
+
+            $addressCollection = $customer->getAddressesCollection();
+
+            if ($addressCollection) {
+                $address = $addressCollection->getFirstItem();
+            } else {
+                $address = $customer;
+            }
+            $addressCollection = null;
+
+            $this->_mergeMissingAttributes($customer, $address, 'orderAddress');
+
         }
-// fax is missing
-Zend_Debug::dump($address->getData());
-exit;
+
         $orderAddressCollection = $order->getAddressesCollection();
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
@@ -51,7 +54,7 @@ exit;
             $this->_copyObjectData($address, $orderAddress, $this->_getMappings('orderAddress'));
             $orderAddress->getResource()->save($orderAddress);
         }
-        $address = null;
+        $address                = null;
         $orderAddressCollection = null;
 
     }

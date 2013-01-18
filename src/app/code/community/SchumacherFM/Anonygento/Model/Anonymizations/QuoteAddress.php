@@ -19,13 +19,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
      */
     protected function _anonymizeQuoteAddress(Mage_Sales_Model_Quote_Address $quoteAddress)
     {
-
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-
         $this->_copyObjectData($randomCustomer, $quoteAddress, $this->_getMappings('quoteAddress'));
-
-//        $quoteAddress->getResource()->save($quoteAddress);
-        $quoteAddress->save();
+        $quoteAddress->getResource()->save($quoteAddress);
+//        $quoteAddress->save();
         $quoteAddress = null;
     }
 
@@ -35,17 +32,29 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
      */
     public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
-        if ($customer === null) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
+        $address = $this->_getRandomCustomer()->getCustomer();
+        if ($customer !== null) {
+
+            $addressCollection = $customer->getAddressesCollection();
+
+            if ($addressCollection) {
+                $address = $addressCollection->getFirstItem();
+            } else {
+                $address = $customer;
+            }
+            $addressCollection = null;
+
+            $this->_mergeMissingAttributes($customer, $address, 'quoteAddress');
+
         }
 
         $quoteAddressCollection = $quote->getAddressesCollection();
         /* @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
 
         foreach ($quoteAddressCollection as $quoteAddress) {
-            $this->_copyObjectData($customer, $quoteAddress, $this->_getMappings('quoteAddress'));
-//            $quoteAddress->getResource()->save($quoteAddress);
-            $quoteAddress->save();
+            $this->_copyObjectData($address, $quoteAddress, $this->_getMappings('quoteAddress'));
+            $quoteAddress->getResource()->save($quoteAddress);
+//            $quoteAddress->save();
             $quoteAddress = null;
         }
         $quoteAddressCollection = null;

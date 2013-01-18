@@ -35,26 +35,18 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
         $this->_collectionAddStaticAnonymized($addressCollection);
 
         $size           = (int)$addressCollection->getSize();
-        $addressMapping = $this->_getMappings('customerAddress');
 
         if ($size === 1) {
             $address = $addressCollection->getFirstItem();
-            $this->_copyObjectData($customer, $address, $addressMapping);
-            $address->save();
+            $this->_anonymizeByAddress($address);
+            $address = null;
         } elseif ($size > 1) {
-
-            $i = 0;
             foreach ($addressCollection as $address) {
-
-                $randomCustomer = $i === 0
-                    ? $customer
-                    : $this->_getRandomCustomer();
-
-                $this->_copyObjectData($randomCustomer, $address, $addressMapping);
-                $address->getResource()->save($address);
-                $i++;
+                $this->_anonymizeByAddress($address);
+                $address = null;
             }
         }
+        $addressCollection = null;
 
     }
 
