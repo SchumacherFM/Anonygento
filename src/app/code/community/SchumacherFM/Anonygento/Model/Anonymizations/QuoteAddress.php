@@ -44,7 +44,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
             }
             $addressCollection = null;
 
-            $this->_mergeMissingAttributes($customer, $address, 'quoteAddress');
+            $this->_mergeMissingAttributes($customer, $address, $this->_getMappings('quoteAddress'));
 
         }
 
