@@ -89,6 +89,8 @@
                 <options>
                     <!--methods which should be executed within the main method: _anonymizeCustomer-->
                     <!--useful if the script fails every time due to memory limit-->
+                    <!--we should refactor this, remove it and implement it properly into quote and order-->
+                    <!--there should be fetched the customer addresses-->
                     <anonymizeOrder>0</anonymizeOrder>
                     <anonymizeQuote>0</anonymizeQuote>
                 </options>
