@@ -179,9 +179,10 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
 
 //                    $this->_options->setTotalRows($reCalc);
 
-                    $pgReCalc  = $this->_options->getCollectionLimit()
+                    $pgReCalc  = (int)($this->_options->getCollectionLimit()
                         ? $this->_options->getCollectionLimit()
-                        : $reCalc;
+                        : $reCalc);
+                    $pgReCalc = $pgReCalc === 0 ? 1 : $pgReCalc;
                     $modelRuns = ceil($reCalc / $pgReCalc);
 
                     for ($i = 0; $i < $modelRuns; $i++) {
