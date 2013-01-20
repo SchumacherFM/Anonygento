@@ -48,10 +48,9 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
     }
 
     /**
-     * @param obj $model
-     * @param int $anonymized
+     * @param integer $anonymized
      *
-     * @return int
+     * @return integer
      */
     protected function  _sqlWhereAndExec($anonymized = 0)
     {
@@ -66,10 +65,9 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
     }
 
     /**
-     * @param obj $model
-     * @param int $anonymized
+     * @param integer $anonymized
      *
-     * @return int
+     * @return integer
      */
     protected function  _addStatic($anonymized = 0)
     {
@@ -86,6 +84,11 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
 
     }
 
+    /**
+     * @param integer $anonymized
+     *
+     * @return integer
+     */
     protected function _chooseMethod($anonymized = 0)
     {
 
