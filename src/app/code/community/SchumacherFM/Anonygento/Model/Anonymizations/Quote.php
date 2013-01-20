@@ -28,7 +28,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             if ($customerId > 0) {
                 $customer = $quote->getCustomer();
                 /* getCustomer does not always return a customer model */
-                $customerId = (int)$customer->getCustomerId();
+                $customerId = (int)$customer->getId();
             }
 
             if ($customerId === 0) {
@@ -40,7 +40,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
         $quote->getResource()->save($quote);
-        $quote = null;
+        $customer = $quote = null;
     }
 
     /**

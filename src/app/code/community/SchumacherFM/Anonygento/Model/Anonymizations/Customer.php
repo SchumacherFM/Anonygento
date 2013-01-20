@@ -30,12 +30,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         $this->_anonymizeCustomerAddresses($randomCustomer);
         $this->_anonymizeCustomerNewsletter($randomCustomer);
 
-        if ($this->_getOption('anonymizeOrder', 'bool')) {
-            $this->_anonymizeOrder($randomCustomer);
-        }
-        if ($this->_getOption('anonymizeQuote', 'bool')) {
-            $this->_anonymizeQuote($randomCustomer);
-        }
+//        if ($this->_getOption('anonymizeOrder', 'bool')) {
+//            $this->_anonymizeOrder($randomCustomer);
+//        }
+//        if ($this->_getOption('anonymizeQuote', 'bool')) {
+//            $this->_anonymizeQuote($randomCustomer);
+//        }
 
         // save the customer at the end to ensure that all other entities have been
         // anonymized .. just in case the user aborts the script
@@ -54,26 +54,26 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-    protected function _anonymizeQuote(Mage_Customer_Model_Customer $customer)
-    {
-        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByCustomer($customer);
-    }
-
-    /**
-     * @param Mage_Customer_Model_Customer $customer
-     */
-    protected function _anonymizeOrder(Mage_Customer_Model_Customer $customer)
-    {
-        Mage::getSingleton('schumacherfm_anonygento/anonymizations_order')->anonymizeByCustomer($customer);
-    }
-
-    /**
-     * @param Mage_Customer_Model_Customer $customer
-     */
     protected function _anonymizeCustomerAddresses(Mage_Customer_Model_Customer $customer)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_customerAddress')->anonymizeByCustomer($customer);
     }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+//    protected function _anonymizeQuote(Mage_Customer_Model_Customer $customer)
+//    {
+//        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByCustomer($customer);
+//    }
+
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     */
+//    protected function _anonymizeOrder(Mage_Customer_Model_Customer $customer)
+//    {
+//        Mage::getSingleton('schumacherfm_anonygento/anonymizations_order')->anonymizeByCustomer($customer);
+//    }
 
     /**
      * @return Mage_Customer_Model_Resource_Customer_Collection

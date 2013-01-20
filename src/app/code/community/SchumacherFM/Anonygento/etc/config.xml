@@ -128,14 +128,14 @@
                 </mapping>
             </customerAddress>
             <newsletterSubscriber>
-                <active>0</active>
+                <active>1</active>
                 <model>newsletter/subscriber</model>
                 <mapping>
                     <email>subscriber_email</email>
                 </mapping>
             </newsletterSubscriber>
             <giftmessageMessage>
-                <active>0</active>
+                <active>1</active>
                 <model>giftmessage/message</model>
                 <mapping>
                     <email>sender</email>
@@ -452,6 +452,7 @@
                     <system>
                         <customer_id/>
                         <entity_id/>
+                        <store_id/>
                     </system>
                 </mapping>
             </quote>
@@ -591,7 +592,7 @@
 
             <!--all comments collections are only for FYI-->
             <creditmemo>
-                <active>0</active>
+                <active>1</active>
                 <model>sales/order_creditmemo_collection</model>
                 <mapping>
                     <system>
@@ -603,7 +604,7 @@
                 </mapping>
             </creditmemo>
             <creditmemoComment>
-                <active>0</active>
+                <active>1</active>
                 <model>sales/order_creditmemo_comment_collection</model>
                 <adminRoute>sales_creditmemo/view?creditmemo_id</adminRoute>
                 <mapping>
@@ -624,7 +625,7 @@
             </creditmemoComment>
 
             <invoice>
-                <active>0</active>
+                <active>1</active>
                 <model>sales/order_invoice_collection</model>
                 <adminRoute>sales_invoice/view?invoice_id</adminRoute>
                 <mapping>
@@ -633,7 +634,7 @@
                 </mapping>
             </invoice>
             <invoiceComment>
-                <active>0</active>
+                <active>1</active>
                 <model>sales/order_invoice_comment_collection</model>
                 <mapping>
                     <update>creditmemoComment</update>
@@ -642,7 +643,7 @@
             </invoiceComment>
 
             <shipment>
-                <active>0</active>
+                <active>1</active>
                 <model>sales/order_shipment</model>
                 <adminRoute>sales_shipment/view?shipment_id</adminRoute>
                 <mapping>
@@ -651,7 +652,7 @@
                 </mapping>
             </shipment>
             <shipmentComment>
-                <active>0</active>
+                <active>1</active>
                 <model>sales/order_shipment_comment</model>
                 <mapping>
                     <update>creditmemoComment</update>
@@ -660,7 +661,7 @@
             </shipmentComment>
 
             <review>
-                <active>0</active>
+                <active>1</active>
                 <model>review/review</model>
                 <mapping>
                     <system>
@@ -688,7 +689,7 @@
                 </mapping>
             </review>
             <ratingOptionVote>
-                <active>0</active>
+                <active>1</active>
                 <model>rating/rating_option_vote</model>
                 <mapping>
                     <system>
@@ -708,7 +709,7 @@
                 </mapping>
             </ratingOptionVote>
             <sendfriendLog>
-                <active>0</active>
+                <active>1</active>
                 <model>sendfriend/sendfriend</model>
                 <mapping>
                     <system>
