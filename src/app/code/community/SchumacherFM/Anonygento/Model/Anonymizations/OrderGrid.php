@@ -42,7 +42,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderGrid extends SchumacherF
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/order_grid_collection', 'orderGrid');
+        return parent::_getCollection('sales/order_grid_collection');
     }
 
 }

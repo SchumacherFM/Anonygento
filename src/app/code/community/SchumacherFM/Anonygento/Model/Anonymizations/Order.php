@@ -8,7 +8,6 @@
  */
 class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
-
     public function run()
     {
         parent::run($this->_getCollection(), '_anonymizeOrder');
@@ -54,7 +53,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
             $customer = $this->_getRandomCustomer()->getCustomer();
         }
 
-        $this->_copyObjectData($customer, $order, $this->_getMappings('order'));
+        $this->_copyObjectData($customer, $order, $this->_getMappings());
 
         // this could be buggy because we need from the customer the billing and/or shipping address
         $this->_anonymizeOrderAddresses($order, $customer);
@@ -127,6 +126,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/order', 'order');
+        return parent::_getCollection('sales/order');
     }
 }

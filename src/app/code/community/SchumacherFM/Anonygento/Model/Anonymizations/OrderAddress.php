@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     protected function _anonymizeOrderAddress(Mage_Sales_Model_Order_Address $orderAddress)
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($randomCustomer, $orderAddress, $this->_getMappings('orderAddress'));
+        $this->_copyObjectData($randomCustomer, $orderAddress, $this->_getMappings());
         $orderAddress->getResource()->save($orderAddress);
         $orderAddress = null;
     }
@@ -43,7 +43,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
             }
             $addressCollection = null;
 
-            $this->_mergeMissingAttributes($customer, $address, $this->_getMappings('orderAddress'));
+            $this->_mergeMissingAttributes($customer, $address, $this->_getMappings());
 
         }
 
@@ -51,7 +51,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
         foreach ($orderAddressCollection as $orderAddress) {
-            $this->_copyObjectData($address, $orderAddress, $this->_getMappings('orderAddress'));
+            $this->_copyObjectData($address, $orderAddress, $this->_getMappings());
             $orderAddress->getResource()->save($orderAddress);
         }
         $address                = null;
@@ -64,6 +64,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sales/order_address', 'orderAddress');
+        return parent::_getCollection('sales/order_address');
     }
 }

@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
     protected function _anonymizeReview(Mage_Review_Model_Review $review)
     {
         $customer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($customer, $review, $this->_getMappings('review'));
+        $this->_copyObjectData($customer, $review, $this->_getMappings());
         $review->save();
     }
 
@@ -29,7 +29,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('review/review')->addFieldToSelect(array('entity_id', 'review_id'));
+        return parent::_getCollection('review/review',false)->addFieldToSelect(array('entity_id', 'review_id'));
         ;
     }
 

@@ -21,7 +21,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
     {
 
         $emptyObject = new Varien_Object(array('anonymized' => 1));
-        $this->_copyObjectData($emptyObject, $model, $this->_getMappings('sendfriendLog'));
+        $this->_copyObjectData($emptyObject, $model, $this->_getMappings());
         $model->getResource()->save($model);
     }
 
@@ -30,7 +30,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('sendfriend/sendfriend', 'sendfriendLog');
+        return parent::_getCollection('sendfriend/sendfriend');
     }
 
 }

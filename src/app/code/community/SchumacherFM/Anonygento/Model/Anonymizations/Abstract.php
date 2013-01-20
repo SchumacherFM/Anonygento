@@ -18,12 +18,12 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      */
     protected $_progressBar = null;
 
-    /**
-     * @var array
-     */
-    protected $_instances = array();
-
     protected $_options = array();
+
+    /**
+     * @var SchumacherFM_Anonygento_Model_Random_Mappings
+     */
+    protected $_mappings = null;
 
     /**
      * loads among other things the xml config: options
@@ -32,8 +32,56 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected function _construct()
     {
         parent::_construct();
-        /** getConfigName() is initialized in SchumacherFM_Anonygento_Model_Console_Console::getModel */
-        $this->_options = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig($this->getConfigName())->options->asArray();
+        $this->_options = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig($this->_getConfigNodeName())->options->asArray();
+        $this->_setMappings();
+    }
+
+    /**
+     * gets the real config node name depending on how the class has been instantiated.
+     * the class name is used as identifier to get the current config node if the class is
+     * instantiated via getSingleton in another class
+     *
+     * @return string
+     * @throws Exception
+     */
+    protected function _getConfigNodeName()
+    {
+        /** getConfigName() is initialized in SchumacherFM_Anonygento_Model_Console_Console::getModel as argument
+        this property not set when the model is called via getSingleton within a class
+         */
+        if (!$this->getConfigName() || $this->getConfigName() === '') {
+            // class instantiated via getSingleton
+            $classNameParts = explode('_', get_class($this));
+            $configNodeName = array_pop($classNameParts);
+            // first character to lowercase
+            $configNodeName = strtolower(substr($configNodeName, 0, 1)) . substr($configNodeName, 1);
+        } else {
+            // class instantiated via getModel in the shell class
+            $configNodeName = $this->getConfigName();
+        }
+        return $configNodeName;
+    }
+
+    /**
+     *
+     * @return SchumacherFM_Anonygento_Model_Random_Mappings
+     */
+    protected function _getMappings()
+    {
+        return $this->_mappings;
+    }
+
+    /**
+     * sets the current mapping object
+     *
+     * @return SchumacherFM_Anonygento_Model_Random_Mappings
+     */
+    private function _setMappings()
+    {
+        // do not run as getSingleton ... why?
+        $this->_mappings = Mage::getModel('schumacherfm_anonygento/random_mappings')
+            ->getMapping($this->_getConfigNodeName())
+            ->{'set' . self::COLUMN_ANONYMIZED}(self::COLUMN_ANONYMIZED);
     }
 
     /**
@@ -65,23 +113,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected function _getRandomCustomer()
     {
         return Mage::getSingleton('schumacherfm_anonygento/random_customer');
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return SchumacherFM_Anonygento_Model_Random_Mappings
-     */
-    protected function _getMappings($type)
-    {
-        // do not run as getSingleton
-        $mapping = Mage::getModel('schumacherfm_anonygento/random_mappings');
-        /* @var $mapping SchumacherFM_Anonygento_Model_Random_Mappings */
-        $mapped = $mapping->getMapping($type);
-
-        $mapped->{'set' . self::COLUMN_ANONYMIZED}(self::COLUMN_ANONYMIZED);
-
-        return $mapped;
     }
 
     /**
@@ -208,6 +239,35 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Varien_Data_Collection_Db
+     */
+    protected function _getCollection($modelName, $useMapping = TRUE)
+    {
+
+        $collection = stristr($modelName, '_collection') !== FALSE
+            ? Mage::getResourceModel($modelName)
+            : Mage::getModel($modelName)->getCollection();
+
+        if ($useMapping === TRUE) {
+            $entityAttributes = $this->_getMappings()->getEntityAttributes();
+            $this->_collectionAddAttributeToSelect($collection, $entityAttributes);
+        }
+
+        /* getOptions() please see shell class */
+        if ($this->getOptions() && $this->getOptions()->getCollectionLimit()) {
+            $offset = $this->getOptions()->getCollectionLimit() * $this->getOptions()->getCurrentRun();
+            $collection->getSelect()->limit($this->getOptions()->getCollectionLimit(), $offset);
+        }
+
+        $this->_collectionAddStaticAnonymized($collection, 0);
+
+        return $collection;
+    }
+
+    /**
      * @param object  $collection
      * @param integer $isAnonymized
      */
@@ -248,36 +308,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $collection->$attributeOrField($field);
         }
 
-    }
-
-    /**
-     * @param string $modelName
-     * @param string $mappingName
-     *
-     * @return Varien_Data_Collection_Db
-     */
-    protected function _getCollection($modelName, $mappingName = NULL)
-    {
-
-        $collection = stristr($modelName, '_collection') !== FALSE
-            ? Mage::getResourceModel($modelName)
-            : Mage::getModel($modelName)->getCollection();
-
-        if ($mappingName !== NULL) {
-            $this->_collectionAddAttributeToSelect($collection,
-                $this->_getMappings($mappingName)->getEntityAttributes()
-            );
-        }
-
-        /* getOptions() please see shell class */
-        if ($this->getOptions() && $this->getOptions()->getCollectionLimit()) {
-            $offset = $this->getOptions()->getCollectionLimit() * $this->getOptions()->getCurrentRun();
-            $collection->getSelect()->limit($this->getOptions()->getCollectionLimit(), $offset);
-        }
-
-        $this->_collectionAddStaticAnonymized($collection, 0);
-
-        return $collection;
     }
 
 }

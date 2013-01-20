@@ -25,15 +25,15 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer($customer);
 
-        $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings('customer'));
+        $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings());
 
         $this->_anonymizeCustomerAddresses($randomCustomer);
         $this->_anonymizeCustomerNewsletter($randomCustomer);
 
-        if( $this->_getOption('anonymizeOrder','bool') ){
+        if ($this->_getOption('anonymizeOrder', 'bool')) {
             $this->_anonymizeOrder($randomCustomer);
         }
-        if( $this->_getOption('anonymizeQuote','bool') ){
+        if ($this->_getOption('anonymizeQuote', 'bool')) {
             $this->_anonymizeQuote($randomCustomer);
         }
 
@@ -81,6 +81,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('customer/customer', 'customer');
+        return parent::_getCollection('customer/customer');
     }
 }

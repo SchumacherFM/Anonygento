@@ -22,7 +22,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
 
         $customer = $this->_getRandomCustomer()->getCustomer();
 
-        $this->_copyObjectData($customer, $subscriber, $this->_getMappings('newsletterSubscriber'));
+        $this->_copyObjectData($customer, $subscriber, $this->_getMappings());
 
         $subscriber->save();
 
@@ -38,7 +38,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
         $subscriber->loadByCustomer($customer);
 
         if ($subscriber->getId()) {
-            $this->_copyObjectData($customer, $subscriber, $this->_getMappings('newsletterSubscriber'));
+            $this->_copyObjectData($customer, $subscriber, $this->_getMappings());
             $subscriber->save();
         }
         $subscriber = null;
@@ -49,7 +49,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('newsletter/subscriber', 'newsletterSubscriber');
+        return parent::_getCollection('newsletter/subscriber');
     }
 
 }

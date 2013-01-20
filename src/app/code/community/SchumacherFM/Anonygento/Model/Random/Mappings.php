@@ -39,6 +39,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
      */
     public function getMapping($type)
     {
+        $this->reset();
         $config = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig();
 
         if (!isset($config->$type)) {
@@ -59,6 +60,15 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         }
 
         return $this;
+    }
+
+    /**
+     * resets the mapping object
+     * @return void
+     */
+    public function reset()
+    {
+        $this->setData(array());
     }
 
 }

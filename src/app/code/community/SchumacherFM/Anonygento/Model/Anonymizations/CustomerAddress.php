@@ -19,9 +19,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     protected function _anonymizeByAddress(Mage_Customer_Model_Address $address)
     {
-        $customer       = $this->_getRandomCustomer()->getCustomer();
-        $addressMapping = $this->_getMappings('customerAddress');
-        $this->_copyObjectData($customer, $address, $addressMapping);
+        $customer = $this->_getRandomCustomer()->getCustomer();
+        $this->_copyObjectData($customer, $address, $this->_getMappings());
         $address->getResource()->save($address);
     }
 
@@ -34,7 +33,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
         /* @var $addressCollection Mage_Customer_Model_Resource_Address_Collection */
         $this->_collectionAddStaticAnonymized($addressCollection);
 
-        $size           = (int)$addressCollection->getSize();
+        $size = (int)$addressCollection->getSize();
 
         if ($size === 1) {
             $address = $addressCollection->getFirstItem();
@@ -55,6 +54,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     protected function _getCollection()
     {
-        return parent::_getCollection('customer/address', 'customerAddress');
+        return parent::_getCollection('customer/address');
     }
 }

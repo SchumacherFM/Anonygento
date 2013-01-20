@@ -35,6 +35,22 @@
                 <label>Catalog Product</label>
                 <model>catalog/product</model>
                 <anonymizationModel>schumacherfm_demo2/catalogProduct</anonymizationModel>
+                <mapping>
+                    <system>
+                        <sku/>
+                    </system>
+                    <rand_name>name</rand_name>
+                    <fill>
+                        <password_hash>
+                            <!--<model></model>-->
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>14</a0>
+                            </args>
+                        </password_hash>
+                    </fill>
+                </mapping>
             </catalogProduct>
         </anonymizations>
     </anonygento>
