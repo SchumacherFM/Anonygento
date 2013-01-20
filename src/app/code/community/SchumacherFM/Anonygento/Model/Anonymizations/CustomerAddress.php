@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
     protected function _anonymizeByAddress(Mage_Customer_Model_Address $address)
     {
         $customer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($customer, $address, $this->_getMappings());
+        $this->_copyObjectData($customer, $address);
         $address->getResource()->save($address);
     }
 
