@@ -39,8 +39,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 
         // save the customer at the end to ensure that all other entities have been
         // anonymized .. just in case the user aborts the script
-        $customer->save();
-//        $customer->getResource()->save($customer);
+        $customer->getResource()->save($customer);
         $customer = null;
     }
 

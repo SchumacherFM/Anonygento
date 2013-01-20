@@ -1,0 +1,9 @@
+{
+    "name": "SchumacherFM/Anonygento",
+    "description": "Anonymizes all customer related data in a Magento shop!",
+    "license": ["OSL-3.0"],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "minimum-stability": "dev"
+}

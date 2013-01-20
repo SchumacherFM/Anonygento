@@ -21,7 +21,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
     {
 
-        if (!$customer) {
+        if ($customer === null) {
 
             $customerId = (int)$quote->getCustomerId();
 
@@ -39,8 +39,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         $this->_copyObjectData($customer, $quote, $this->_getMappings());
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
-//        $quote->getResource()->save($quote);
-        $quote->save();
+        $quote->getResource()->save($quote);
         $quote = null;
     }
 

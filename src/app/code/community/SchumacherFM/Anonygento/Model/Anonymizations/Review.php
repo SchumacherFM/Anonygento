@@ -21,7 +21,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
     {
         $customer = $this->_getRandomCustomer()->getCustomer();
         $this->_copyObjectData($customer, $review, $this->_getMappings());
-        $review->save();
+        $review->getResource()->save($review);
     }
 
     /**

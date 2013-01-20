@@ -19,13 +19,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
      */
     protected function _anonymizeNewsletter(Mage_Newsletter_Model_Subscriber $subscriber)
     {
-
         $customer = $this->_getRandomCustomer()->getCustomer();
-
         $this->_copyObjectData($customer, $subscriber, $this->_getMappings());
-
-        $subscriber->save();
-
+        $subscriber->getResource()->save($subscriber);
     }
 
     /**

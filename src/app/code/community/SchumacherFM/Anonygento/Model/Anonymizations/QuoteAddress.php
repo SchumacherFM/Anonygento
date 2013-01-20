@@ -22,7 +22,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
         $this->_copyObjectData($randomCustomer, $quoteAddress, $this->_getMappings());
         $quoteAddress->getResource()->save($quoteAddress);
-//        $quoteAddress->save();
         $quoteAddress = null;
     }
 
