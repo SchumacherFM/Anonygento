@@ -153,16 +153,16 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     /**
      * copies the data from obj to another using a mapping array
      *
-     * @param object                  $fromObject
-     * @param object                  $toObject
-     * @param Varien_Object           $mappings
+     * @param Varien_Object $fromObject
+     * @param Varien_Object $toObject
      *
      * @return bool
      */
-    protected function _copyObjectData($fromObject, $toObject, Varien_Object $mappings)
+    protected function _copyObjectData($fromObject, $toObject)
     {
 
-        $fill = $mappings->getFill();
+        $mappings = $this->_getMappings();
+        $fill     = $mappings->getFill();
         $mappings->unsFill();
         $mappings->unsSystem();
         $mapped = $mappings->getData();
@@ -177,7 +177,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         foreach ($mapped as $key => $newKey) {
 
             // throw an error if there is no key in fromObject
-            if (!array_key_exists($key, $getDataFromObject)) { // oh php ... why are the args switched?
+            if (!array_key_exists($key, $getDataFromObject)) {
 
                 Zend_Debug::dump($fromObject->getData());
                 echo PHP_EOL;
