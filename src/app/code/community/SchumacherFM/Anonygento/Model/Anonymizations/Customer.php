@@ -25,7 +25,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer($customer);
 
-        $this->_copyObjectData($randomCustomer, $customer, $this->_getMappings());
+        $this->_copyObjectData($randomCustomer, $customer);
 
         $this->_anonymizeCustomerAddresses($randomCustomer);
         $this->_anonymizeCustomerNewsletter($randomCustomer);
