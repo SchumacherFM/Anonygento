@@ -8,7 +8,11 @@
  */
 class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
-    public function run()
+    /**
+     * @param null $collection
+     * @param null $anonymizationMethod
+     */
+    public function run($collection = null, $anonymizationMethod = null)
     {
         parent::run($this->_getCollection(), '_anonymizeGiftMessage');
     }
@@ -24,9 +28,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
     }
 
     /**
-     * @return Mage_GiftMessage_Model_Resource_Message_Collection
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Varien_Data_Collection_Db
      */
-    protected function _getCollection()
+    protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('giftmessage/message');
     }

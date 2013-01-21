@@ -10,10 +10,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 {
 
     /**
-     * anonymizes customer and related customer addresses
+     * @param null $collection
+     * @param null $anonymizationMethod
      */
-
-    public function run()
+    public function run($collection = null, $anonymizationMethod = null)
     {
         parent::run($this->_getCollection(), '_anonymizeCustomer');
     }
@@ -76,9 +76,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
 //    }
 
     /**
-     * @return Mage_Customer_Model_Resource_Customer_Collection
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Varien_Data_Collection_Db
      */
-    protected function _getCollection()
+    protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('customer/customer');
     }

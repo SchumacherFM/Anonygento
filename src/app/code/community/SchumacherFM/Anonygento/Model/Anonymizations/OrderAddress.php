@@ -64,9 +64,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     }
 
     /**
-     * @return Mage_Sales_Model_Resource_Order_Address_Collection
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Varien_Data_Collection_Db
      */
-    protected function _getCollection()
+    protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('sales/order_address');
     }

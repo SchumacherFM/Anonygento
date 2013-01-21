@@ -29,9 +29,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
     }
 
     /**
-     * @return Mage_Rating_Model_Resource_Rating_Option_Vote_Collection
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Varien_Data_Collection_Db
      */
-    protected function _getCollection()
+    protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('rating/rating_option_vote');
     }

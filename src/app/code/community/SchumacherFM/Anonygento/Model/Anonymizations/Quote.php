@@ -101,9 +101,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     }
 
     /**
-     * @return Mage_Sales_Model_Resource_Quote_Collection
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Varien_Data_Collection_Db
      */
-    protected function _getCollection()
+    protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('sales/quote');
     }

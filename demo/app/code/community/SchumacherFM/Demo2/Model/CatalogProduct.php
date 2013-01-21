@@ -13,7 +13,11 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
         ));
     }
 
-    public function run()
+    /**
+     * @param null $collection
+     * @param null $anonymizationMethod
+     */
+    public function run($collection = null, $anonymizationMethod = null)
     {
         parent::run($this->_getCollection(), '_anonymizeProduct');
     }
@@ -36,9 +40,12 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
     }
 
     /**
-     * @return Mage_Sales_Model_Resource_Order_Collection
+     * @param string  $modelName
+     * @param boolean $useMapping
+     *
+     * @return Mage_Newsletter_Model_Resource_Subscriber_Collection
      */
-    protected function _getCollection()
+    protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('catalog/product');
     }
