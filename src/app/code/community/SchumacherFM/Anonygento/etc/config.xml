@@ -139,6 +139,23 @@
                 <model>giftmessage/message</model>
                 <mapping>
                     <email>sender</email>
+                    <system>
+                        <gift_message_id/>
+                    </system>
+                    <fill>
+                        <message>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
+                            <args>
+                                <a0>13</a0>
+                                <a1>txt</a1>
+                            </args>
+                        </message>
+                        <recipient>
+                            <model>schumacherfm_anonygento/random_customer</model>
+                            <method>getEmailWeird</method>
+                        </recipient>
+                    </fill>
                 </mapping>
             </giftmessageMessage>
             <order>

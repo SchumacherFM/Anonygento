@@ -14,14 +14,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
     }
 
     /**
-     * @param Mage_GiftMessage_Model_Message $subscriber
+     * @param Mage_GiftMessage_Model_Message $message
      */
     protected function _anonymizeGiftMessage(Mage_GiftMessage_Model_Message $message)
     {
         $customer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($customer, $message, $this->_getMappings());
-        $message->setMessage(Mage::getSingleton('schumacherfm_anonygento/random_loremIpsum')->getLoremIpsum(mt_rand(20, 40), 'txt'));
-        $message->setRecipient($this->_getRandomCustomer()->getEmailWeird());
+        $this->_copyObjectData($customer, $message);
         $message->getResource()->save($message);
     }
 
