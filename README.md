@@ -31,6 +31,7 @@ About
 What it does?
 -------------
 This extension anonymizes all customer related data from the following data objects:
+
 - Customers
 - Customers Addresses
 - Orders

@@ -437,6 +437,10 @@
                 <active>1</active>
                 <model>sales/quote</model>
                 <mapping>
+                    <system>
+                        <customer_id/>
+                        <entity_id/>
+                    </system>
                     <email>customer_email</email>
                     <firstname>customer_firstname</firstname>
                     <lastname>customer_lastname</lastname>
@@ -466,11 +470,6 @@
                             <method>shuffleIp</method>
                         </remote_ip>
                     </fill>
-                    <system>
-                        <customer_id/>
-                        <entity_id/>
-                        <store_id/>
-                    </system>
                 </mapping>
             </quote>
             <quoteAddress>

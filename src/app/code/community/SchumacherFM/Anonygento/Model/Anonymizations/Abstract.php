@@ -195,9 +195,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
                 $msg = 'Check your config.xml!' . PHP_EOL . $key . ' not Found in fromObj: ' . get_class($fromObject) . ' copied toObj: ' .
                     get_class($toObject) . PHP_EOL;
 
-                $e = new Exception($msg);
-                Mage::logException($e);
-                throw $e;
+                throw new Exception($msg);
             }
 
             $data = $fromObject->getData($key);
@@ -261,8 +259,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             : Mage::getModel($modelName)->getCollection();
 
         if ($useMapping === TRUE) {
-            $entityAttributes = $this->_getMappings()->getEntityAttributes();
-            $this->_collectionAddAttributeToSelect($collection, $entityAttributes);
+            $this->_collectionAddAttributeToSelect($collection);
         }
 
         /* getOptions() please see shell class */
@@ -284,6 +281,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     {
         $isAnonymized = (int)$isAnonymized;
 
+        // @todo check here if column has already been added
+
         if ($collection instanceof Mage_Eav_Model_Entity_Collection_Abstract) {
             $collection->addStaticField(self::COLUMN_ANONYMIZED);
             $collection->addAttributeToFilter(self::COLUMN_ANONYMIZED, $isAnonymized);
@@ -296,27 +295,17 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
-     * @param object                                               $collection
-     * @param array|SchumacherFM_Anonygento_Model_Random_Mappings  $fields from the mapping table the values
+     * @param Varien_Data_Collection_Db $collection
      */
-    protected function _collectionAddAttributeToSelect($collection, $fields)
+    protected function _collectionAddAttributeToSelect(Varien_Data_Collection_Db $collection)
     {
-        if ($fields instanceof SchumacherFM_Anonygento_Model_Random_Mappings) {
-            $fields = $fields->getData();
-        }
+        $fields = $this->_getMappings()->getEntityAttributes();
 
-        foreach ($fields as $key => $field) {
+        $attributeOrField = ($collection instanceof Mage_Eav_Model_Entity_Collection_Abstract)
+            ? 'addAttributeToSelect'
+            : 'addFieldToSelect';
 
-            if ($key === 'fill' || is_array($field)) {
-                continue;
-            }
-
-            $attributeOrField = ($collection instanceof Mage_Eav_Model_Entity_Collection_Abstract)
-                ? 'addAttributeToSelect'
-                : 'addFieldToSelect';
-            $collection->$attributeOrField($field);
-        }
-
+        $collection->$attributeOrField($fields);
     }
 
 }

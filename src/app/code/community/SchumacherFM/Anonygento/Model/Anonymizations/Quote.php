@@ -25,8 +25,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
     {
 
-        if ($customer === null) {
+        if ((int)$quote->getId() === 0) {
+            throw new Exception('Missing the entity_id in $quote Model ...');
+        }
 
+        if ($customer === null) {
             $customerId = (int)$quote->getCustomerId();
 
             if ($customerId > 0) {
@@ -39,10 +42,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
                 $customer = $this->_getRandomCustomer()->getCustomer();
             }
         }
-
         $this->_copyObjectData($customer, $quote);
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
+
         $quote->getResource()->save($quote);
         $customer = $quote = null;
     }
@@ -61,9 +64,18 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
         $quoteCollection = $this->_getCollection()
             ->addFieldToFilter('entity_id', array('eq' => (int)$order->getQuoteId()));
+        /** @var $quoteCollection Mage_Sales_Model_Resource_Quote_Collection */
 
         foreach ($quoteCollection as $quote) {
+            /** @var $quote Mage_Sales_Model_Quote */
+//            if ((int)$quote->getId() === 0) {
+//                Zend_Debug::dump($quoteCollection->getSelect());
+//                Zend_Debug::dump($quoteCollection->getSelect()->__toString());
+//                Zend_Debug::dump($quote);
+//                throw new Exception('Collection: Missing the entity_id in sales/quote. This means that getIdFieldname returns null ...');
+//            }
             $this->_anonymizeQuote($quote, $customer);
+
         }
         $customer = $quoteCollection = null;
     }
