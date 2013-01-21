@@ -15,7 +15,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Shipment extends SchumacherFM
         $this->setCollectionName('shipments');
     }
 
-    public function run()
+    /**
+     * @param null $collection
+     * @param null $anonymizationMethod
+     */
+    public function run($collection = null, $anonymizationMethod = null)
     {
         $this->_run();
     }
