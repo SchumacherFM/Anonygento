@@ -32,7 +32,16 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected function _construct()
     {
         parent::_construct();
-        $this->_options = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig($this->_getConfigNodeName())->options->asArray();
+
+        if (isset(Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig($this->_getConfigNodeName())->options)) {
+            $this->_options = Mage::helper('schumacherfm_anonygento')
+                ->getAnonymizationsConfig($this->_getConfigNodeName())
+                ->options
+                ->asArray();
+        } else {
+            $this->_options = array();
+        }
+
         $this->_setMappings();
     }
 
@@ -215,13 +224,13 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      *
      * @param Varien_Object $fromObject
      * @param Varien_Object $toObject
-     * @param Varien_Object $mappings
      *
      * @return bool
      * @throws Exception
      */
-    protected function _mergeMissingAttributes(Varien_Object $fromObject, Varien_Object $toObject, Varien_Object $mappings)
+    protected function _mergeMissingAttributes(Varien_Object $fromObject, Varien_Object $toObject)
     {
+        $mappings = $this->_getMappings();
         $mappings->unsFill();
         $mappings->unsSystem();
         $mapped = $mappings->getData();
