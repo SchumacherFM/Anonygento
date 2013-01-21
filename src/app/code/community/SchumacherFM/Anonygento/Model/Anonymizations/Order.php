@@ -18,11 +18,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object $customer
      *
      * @return boolean
      */
-    public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
+    public function anonymizeByCustomer(Varien_Object $customer)
     {
 
         $orderCollection = $this->_getCollection()
@@ -42,11 +42,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      *
      * @throws Exception
      */
-    protected function _anonymizeOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    protected function _anonymizeOrder(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
     {
         if ($order->getCustomerId() && !$customer) {
             $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
@@ -76,18 +76,18 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      */
-    protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order, $customer);
     }
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      */
-    protected function _anonymizeOrderPayment(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    protected function _anonymizeOrderPayment(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderPayment')->anonymizeByOrder($order, $customer);
     }
@@ -118,9 +118,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      */
-    protected function _anonymizeQuote(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer)
+    protected function _anonymizeQuote(Mage_Sales_Model_Order $order, Varien_Object $customer)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order, $customer);
     }

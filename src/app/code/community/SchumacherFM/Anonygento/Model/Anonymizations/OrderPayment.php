@@ -20,9 +20,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order_Payment $orderPayment
-     * @param Mage_Customer_Model_Customer   $customer
+     * @param Varien_Object                  $customer
      */
-    protected function _anonymizeOrderPayment(Mage_Sales_Model_Order_Payment $orderPayment, Mage_Customer_Model_Customer $customer = null)
+    protected function _anonymizeOrderPayment(Mage_Sales_Model_Order_Payment $orderPayment, Varien_Object $customer = null)
     {
         $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
         $this->_copyObjectData($randomPayment, $orderPayment);
@@ -32,9 +32,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      */
-    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
     {
         $paymentCollection = $order->getPaymentsCollection();
 

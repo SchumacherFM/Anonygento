@@ -31,9 +31,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object $customer
      */
-    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Mage_Customer_Model_Customer $customer = null)
+    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
     {
         $address = $this->_getRandomCustomer()->getCustomer();
         if ($customer !== null) {

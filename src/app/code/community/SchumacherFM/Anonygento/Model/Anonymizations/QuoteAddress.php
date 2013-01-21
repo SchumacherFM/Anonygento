@@ -31,9 +31,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
 
     /**
      * @param Mage_Sales_Model_Quote       $quote
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      */
-    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
+    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
     {
         $address = $this->_getRandomCustomer()->getCustomer();
         if ($customer !== null) {

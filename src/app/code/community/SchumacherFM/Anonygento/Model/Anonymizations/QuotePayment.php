@@ -20,9 +20,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
 
     /**
      * @param Mage_Sales_Model_Quote_Payment $quotePayment
-     * @param Mage_Customer_Model_Customer   $customer
+     * @param Varien_Object                  $customer
      */
-    protected function _anonymizeQuotePayment(Mage_Sales_Model_Quote_Payment $quotePayment, Mage_Customer_Model_Customer $customer = null)
+    protected function _anonymizeQuotePayment(Mage_Sales_Model_Quote_Payment $quotePayment, Varien_Object $customer = null)
     {
         $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
         $this->_copyObjectData($randomPayment, $quotePayment);
@@ -32,9 +32,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
 
     /**
      * @param Mage_Sales_Model_Quote       $quote
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object                $customer
      */
-    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Mage_Customer_Model_Customer $customer = null)
+    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
     {
         $paymentCollection = $quote->getPaymentsCollection();
         foreach ($paymentCollection as $payment) {
