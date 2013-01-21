@@ -10,11 +10,11 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
 {
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object $customer
      *
-     * @return Mage_Customer_Model_Customer|Varien_Object
+     * @return Varien_Object
      */
-    public function getPayment(Mage_Customer_Model_Customer $customer = null)
+    public function getPayment(Varien_Object $customer = null)
     {
         $this->_initCurrentCustomer($customer);
 
@@ -28,9 +28,9 @@ class SchumacherFM_Anonygento_Model_Random_Payment extends SchumacherFM_Anonygen
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object $customer
      */
-    protected function _initCurrentCustomer(Mage_Customer_Model_Customer $customer)
+    protected function _initCurrentCustomer(Varien_Object $customer)
     {
         $paymentData = array(
             'month'  => mt_rand(1, 12),

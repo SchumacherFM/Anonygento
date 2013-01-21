@@ -25,11 +25,11 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
     }
 
     /**
-     * @param Mage_Customer_Model_Customer $customer
+     * @param Varien_Object $customer
      *
-     * @return Mage_Customer_Model_Customer|Varien_Object
+     * @return Varien_Object
      */
-    public function getCustomer(Mage_Customer_Model_Customer $customer = null)
+    public function getCustomer(Varien_Object $customer = null)
     {
 
         $this->setCustomerPrefix(mt_rand() % 2);
