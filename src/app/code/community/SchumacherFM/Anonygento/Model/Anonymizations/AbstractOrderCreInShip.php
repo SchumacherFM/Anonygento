@@ -40,7 +40,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
 
         $commentsCollection = $model->getCommentsCollection();
         foreach ($commentsCollection as $comment) {
-            $this->_copyObjectData($emptyCopy, $comment, $this->_getMappings(/*$this->getModelName() . 'Comment' */));
+            $this->_copyObjectData($emptyCopy, $comment);
             $comment->getResource()->save($comment);
         }
         $commentsCollection = null;

@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
     protected function _anonymizeRatingVote(Mage_Rating_Model_Rating_Option_Vote $vote)
     {
         $emptyObject = new Varien_Object(array('anonymized' => 1));
-        $this->_copyObjectData($emptyObject, $vote, $this->_getMappings());
+        $this->_copyObjectData($emptyObject, $vote);
         $vote->getResource()->save($vote);
     }
 

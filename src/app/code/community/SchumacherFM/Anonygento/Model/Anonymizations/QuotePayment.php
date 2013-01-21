@@ -21,7 +21,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
     protected function _anonymizeQuotePayment(Mage_Sales_Model_Quote_Payment $quotePayment, Mage_Customer_Model_Customer $customer = null)
     {
         $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
-        $this->_copyObjectData($randomPayment, $quotePayment, $this->_getMappings());
+        $this->_copyObjectData($randomPayment, $quotePayment);
         $quotePayment->getResource()->save($quotePayment);
         $quotePayment = null;
     }

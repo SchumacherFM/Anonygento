@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends Schumac
     protected function _anonymizeLog(Mage_Sendfriend_Model_Sendfriend $model)
     {
         $emptyObject = new Varien_Object(array('anonymized' => 1));
-        $this->_copyObjectData($emptyObject, $model, $this->_getMappings());
+        $this->_copyObjectData($emptyObject, $model);
         $model->getResource()->save($model);
     }
 

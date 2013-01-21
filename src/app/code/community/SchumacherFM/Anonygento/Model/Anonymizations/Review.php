@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Review extends SchumacherFM_A
     protected function _anonymizeReview(Mage_Review_Model_Review $review)
     {
         $customer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($customer, $review, $this->_getMappings());
+        $this->_copyObjectData($customer, $review);
         $review->getResource()->save($review);
     }
 

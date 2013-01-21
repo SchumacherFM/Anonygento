@@ -36,7 +36,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
             }
         }
 
-        $this->_copyObjectData($customer, $quote, $this->_getMappings());
+        $this->_copyObjectData($customer, $quote);
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
         $quote->getResource()->save($quote);

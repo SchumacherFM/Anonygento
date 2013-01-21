@@ -20,7 +20,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
     protected function _anonymizeQuoteAddress(Mage_Sales_Model_Quote_Address $quoteAddress)
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($randomCustomer, $quoteAddress, $this->_getMappings());
+        $this->_copyObjectData($randomCustomer, $quoteAddress);
         $quoteAddress->getResource()->save($quoteAddress);
         $quoteAddress = null;
     }
