@@ -47,7 +47,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
             }
             $addressCollection = null;
 
-            $this->_mergeMissingAttributes($customer, $address, $this->_getMappings());
+            $this->_mergeMissingAttributes($customer, $address);
 
         }
 

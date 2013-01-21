@@ -47,7 +47,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
             }
             $addressCollection = null;
 
-            $this->_mergeMissingAttributes($customer, $address, $this->_getMappings());
+            $this->_mergeMissingAttributes($customer, $address);
 
         }
 
@@ -55,7 +55,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
         /* @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
 
         foreach ($quoteAddressCollection as $quoteAddress) {
-            $this->_copyObjectData($address, $quoteAddress, $this->_getMappings());
+            $this->_copyObjectData($address, $quoteAddress);
             $quoteAddress->getResource()->save($quoteAddress);
 //            $quoteAddress->save();
             $quoteAddress = null;
