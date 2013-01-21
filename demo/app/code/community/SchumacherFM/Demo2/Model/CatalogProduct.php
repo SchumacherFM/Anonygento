@@ -27,7 +27,11 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
     {
 
         $this->_randomProductData->setRandName('RandName ' . mt_rand());
-        $this->_copyObjectData($this->_randomProductData, $product, $this->_getMappings());
+        $this->_copyObjectData($this->_randomProductData, $product);
+
+        /**
+         * do not use $product->save() as it will fire events
+         */
         $product->getResource()->save($product);
     }
 
