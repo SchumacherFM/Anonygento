@@ -8,20 +8,13 @@
  */
 class SchumacherFM_Anonygento_Model_Anonymizations_OrderGrid extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
-
     /**
-     * normally this won't run
+     * this wont run, just FYI in stat view
+     * @param null $collection
+     * @param null $anonymizationMethod
      */
-    public function run()
+    public function run($collection = null, $anonymizationMethod = null)
     {
-        $gridCollection = $this->_getCollection();
-
-        $i = 0;
-        foreach ($gridCollection as $gridOrder) {
-//            $this->_anonymizeOrderGrid($gridOrder);
-            $this->getProgressBar()->update($i);
-            $i++;
-        }
         $this->getProgressBar()->finish();
     }
 

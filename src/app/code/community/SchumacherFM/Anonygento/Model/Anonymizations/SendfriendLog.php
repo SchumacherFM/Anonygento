@@ -8,8 +8,11 @@
  */
 class SchumacherFM_Anonygento_Model_Anonymizations_SendfriendLog extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
-
-    public function run()
+    /**
+     * @param null $collection
+     * @param null $anonymizationMethod
+     */
+    public function run($collection = null, $anonymizationMethod = null)
     {
         parent::run($this->_getCollection(), '_anonymizeLog');
     }

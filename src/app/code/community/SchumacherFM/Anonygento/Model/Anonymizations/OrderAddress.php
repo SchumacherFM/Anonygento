@@ -9,7 +9,11 @@
 class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends SchumacherFM_Anonygento_Model_Anonymizations_Abstract
 {
 
-    public function run()
+    /**
+     * @param null $collection
+     * @param null $anonymizationMethod
+     */
+    public function run($collection = null, $anonymizationMethod = null)
     {
         parent::run($this->_getCollection(), '_anonymizeOrderAddress');
     }
