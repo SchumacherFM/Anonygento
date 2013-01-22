@@ -38,7 +38,7 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
             $this->_currentCustomer = new Varien_Object();
 //            $this->_currentCustomer->setEntityId(mt_rand());
         } else {
-            $this->_currentCustomer = $customer;
+            $this->_currentCustomer = clone $customer;
         }
 
         $data = array(

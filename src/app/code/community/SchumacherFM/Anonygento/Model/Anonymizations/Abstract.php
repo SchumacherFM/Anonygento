@@ -164,17 +164,22 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
      *
      * @param Varien_Object $fromObject
      * @param Varien_Object $toObject
+     * @param boolean       $useStrict
      *
      * @return bool
      */
-    protected function _copyObjectData($fromObject, $toObject)
+    protected function _copyObjectData($fromObject, $toObject, $useStrict = TRUE)
     {
 
         $mappings = $this->_getMappings();
         $fill     = $mappings->getFill();
-        $mappings->unsFill();
-        $mappings->unsSystem();
-        $mapped = $mappings->getData();
+        $mapped   = $mappings->getData();
+        if ($mapped['fill']) {
+            unset($mapped['fill']);
+        }
+        if ($mapped['system']) {
+            unset($mapped['system']);
+        }
 
         if (count($mapped) === 0) {
             return FALSE;
@@ -186,7 +191,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         foreach ($mapped as $key => $newKey) {
 
             // throw an error if there is no key in fromObject
-            if (!array_key_exists($key, $getDataFromObject)) {
+            if ($useStrict && !array_key_exists($key, $getDataFromObject)) {
 
                 Zend_Debug::dump($fromObject->getData());
                 echo PHP_EOL;

@@ -24,12 +24,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     protected function _anonymizeCustomer(Mage_Customer_Model_Customer $customer)
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer($customer);
-
         $this->_copyObjectData($randomCustomer, $customer);
 
-        $this->_anonymizeCustomerAddresses($randomCustomer);
-        $this->_anonymizeCustomerNewsletter($randomCustomer);
+        $this->_anonymizeCustomerAddresses($customer);
+        $this->_anonymizeCustomerNewsletter($customer);
 
+// @todo before removing this check if all address have the same data
 //        if ($this->_getOption('anonymizeOrder', 'bool')) {
 //            $this->_anonymizeOrder($randomCustomer);
 //        }
