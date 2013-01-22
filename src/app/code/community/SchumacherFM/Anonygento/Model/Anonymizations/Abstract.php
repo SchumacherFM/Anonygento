@@ -174,10 +174,10 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         $mappings = $this->_getMappings();
         $fill     = $mappings->getFill();
         $mapped   = $mappings->getData();
-        if ($mapped['fill']) {
+        if (isset($mapped['fill'])) {
             unset($mapped['fill']);
         }
-        if ($mapped['system']) {
+        if (isset($mapped['system'])) {
             unset($mapped['system']);
         }
 

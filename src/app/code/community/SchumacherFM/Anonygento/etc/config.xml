@@ -99,7 +99,7 @@
                     <prefix>prefix</prefix>
                     <email>email</email>
                     <firstname>firstname</firstname>
-                    <lastname>lastname</lastname>
+                    <!--<lastname>lastname</lastname>-->
                     <suffix>suffix</suffix>
                     <fill>
                         <password_hash>
@@ -110,7 +110,13 @@
                                 <a0>14</a0>
                             </args>
                         </password_hash>
+                        <lastname>
+                            <method>uniqid</method>
+                        </lastname>
                     </fill>
+                    <system>
+                        <lastname/>
+                    </system>
                 </mapping>
             </customer>
             <customerAddress>

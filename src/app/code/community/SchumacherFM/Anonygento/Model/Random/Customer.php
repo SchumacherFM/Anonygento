@@ -19,28 +19,23 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
     public function _construct()
     {
         parent::_construct();
-
         $this->_street = $this->_loadFile('Street');
+        $this->_init();
+    }
 
+    protected function  _init()
+    {
+        mt_srand(microtime(TRUE) * 0xFFFF);
+        $this->setCustomerPrefix(mt_rand() % 2);
+        $this->_currentCustomer = new Varien_Object();
     }
 
     /**
-     * @param Varien_Object $customer
-     *
      * @return Varien_Object
      */
-    public function getCustomer(Varien_Object $customer = null)
+    public function getCustomer()
     {
-
-        $this->setCustomerPrefix(mt_rand() % 2);
-
-        if ($customer === null) {
-            $this->_currentCustomer = new Varien_Object();
-//            $this->_currentCustomer->setEntityId(mt_rand());
-        } else {
-            $this->_currentCustomer = clone $customer;
-        }
-
+        $this->_init();
         $data = array(
             'prefix'     => $this->_getCustomerPrefixString(),
             'suffix'     => '',

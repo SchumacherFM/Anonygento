@@ -91,7 +91,7 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     {
 
         $name = $this->_currentCustomer->getFirstname() . '.' .
-            $this->_currentCustomer->getLastname() . '-' . mt_rand();
+            $this->_currentCustomer->getLastname() . '-' . uniqid();
 
         $email = Mage::helper('catalog/product_url')->format($name) . '@' . $this->_email[mt_rand() % count($this->_email)];
         $email = strtolower($email);
@@ -102,7 +102,7 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     public function getEmailWeird()
     {
 
-        $name = $this->_getRandomString() . '.' . $this->_getRandomString(8) . '-' . mt_rand();
+        $name = $this->_getRandomString() . '.' . $this->_getRandomString(8) . '-' . uniqid();
 
         // @todo abstract access to random mail host
         $email = $name . '@' . $this->_email[mt_rand() % count($this->_email)];

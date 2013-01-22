@@ -15,27 +15,29 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     public function run($collection = null, $anonymizationMethod = null)
     {
-        parent::run($this->_getCollection(), '_anonymizeByAddress');
     }
 
     /**
-     * @param Mage_Customer_Model_Address $address
+     * @param Mage_Customer_Model_Address  $address
+     * @param Mage_Customer_Model_Customer $customer null
      */
     protected function _anonymizeByAddress(Mage_Customer_Model_Address $address, Mage_Customer_Model_Customer $customer = null)
     {
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-        $this->_copyObjectData($randomCustomer, $address);
 
         // if we only have one address use the customer name from the account
         if ($customer !== null) {
-            $this->_copyObjectData($customer, $address, FALSE);
+            $this->_copyObjectData($customer, $randomCustomer, FALSE);
         }
+        $this->_copyObjectData($randomCustomer, $address);
 
         $address->getResource()->save($address);
     }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
+     *
+     * @return bool
      */
     public function anonymizeByCustomer(Mage_Customer_Model_Customer $customer)
     {
@@ -44,6 +46,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
         $this->_collectionAddStaticAnonymized($addressCollection);
 
         $size = (int)$addressCollection->getSize();
+
+        if ($size < 1) {
+            return FALSE;
+        }
 
         if ($size === 1) {
             $address = $addressCollection->getFirstItem();
@@ -57,14 +63,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
                 $i++;
             }
         }
-
-        if ( $customer->getId() >= 258) {
-            $addressCollection->load();
-            Zend_Debug::dump($addressCollection);
-            Zend_Debug::dump($customer->getData());
-            exit;
-        }
-
         $addressCollection = null;
     }
 
@@ -72,10 +70,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      * @param string  $modelName
      * @param boolean $useMapping
      *
-     * @return Varien_Data_Collection_Db
+     * @return void
      */
     protected function _getCollection($modelName = null, $useMapping = null)
     {
-        return parent::_getCollection('customer/address');
     }
 }
