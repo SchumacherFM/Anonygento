@@ -50,6 +50,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     {
 
         if ($order->getCustomerId() && !$customer) {
+            /** @var $customer Mage_Customer_Model_Customer */
             $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
             if (!$customer) {
                 throw new Exception('Cant find the customer, please contact the developer!');

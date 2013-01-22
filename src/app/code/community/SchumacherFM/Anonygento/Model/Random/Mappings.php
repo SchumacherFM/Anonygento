@@ -52,11 +52,16 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
         $this->addData($config->$type->mapping->asArray());
 
+        /** @var $config Mage_Eav_Model_Config */
+        // if eav check is visible other wise not
+//        $config = Mage::getSingleton('eav/config');
+//        $config->getAttribute('customer', 'middlename')->getIsVisible()
+
+
         if ($this->getUpdate()) {
             $update = $this->getUpdate();
             $this->unsUpdate();
             return $this->getMapping($update);
-
         }
 
         return $this;
