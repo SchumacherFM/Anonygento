@@ -39,7 +39,6 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
      */
     public function getMapping($type)
     {
-        $this->reset();
         $config = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig();
 
         if (!isset($config->$type)) {
@@ -50,13 +49,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             throw new Exception('Cannot find mapping node for ' . $type);
         }
 
-        $this->addData($config->$type->mapping->asArray());
-
-        /** @var $config Mage_Eav_Model_Config */
-        // if eav check is visible other wise not
-//        $config = Mage::getSingleton('eav/config');
-//        $config->getAttribute('customer', 'middlename')->getIsVisible()
-
+        $this->setData($config->$type->mapping->asArray());
 
         if ($this->getUpdate()) {
             $update = $this->getUpdate();
@@ -66,14 +59,4 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 
         return $this;
     }
-
-    /**
-     * resets the mapping object
-     * @return void
-     */
-    public function reset()
-    {
-        $this->setData(array());
-    }
-
 }

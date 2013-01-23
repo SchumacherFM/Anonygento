@@ -51,12 +51,30 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
         if ($order->getCustomerId() && !$customer) {
             /** @var $customer Mage_Customer_Model_Customer */
-            $customer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
-            if (!$customer) {
+            $customerCustomer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
+            if (!$customerCustomer) {
                 throw new Exception('Cant find the customer, please contact the developer!');
             }
+            /** @var $customer Mage_Customer_Model_Address */
+            $customer      = $customerCustomer->getPrimaryBillingAddress();
+
+            if (!($customer instanceof Mage_Customer_Model_Address)) {
+                $randomCustomer = $this->_getRandomCustomer()->getCustomer();
+                $this->_copyObjectData($customerCustomer, $randomCustomer, FALSE);
+                $customer = $randomCustomer;
+                // sometimes the $customer contains two mail address entries
+            }else{
+                $customer->addData( $customerCustomer->getData() );
+
+//                // add attributes, starting with customer_ hmm .. not sure
+//                Zend_Debug::dump(get_class($customer));
+//                Zend_Debug::dump($customer->getData());
+//                Zend_Debug::dump($customerCustomer->getData());
+//                exit;
+            }
+
         } elseif (!$customer) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
+            $customer      = $this->_getRandomCustomer()->getCustomer();
         }
 
         $this->_copyObjectData($customer, $order);
