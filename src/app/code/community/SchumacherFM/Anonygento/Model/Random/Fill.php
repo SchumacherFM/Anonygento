@@ -24,11 +24,13 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
 
         foreach ($fill as $attribute => $method) {
             $origData = $toObj->getData($attribute);
-            $newData  = $this->_handleMappingMethod($method, $origData);
+
+            $newData = $this->_handleMappingMethod($method, $origData);
 
             if (!empty($origData)) {
                 $toObj->setData($attribute, $newData);
             }
+
         }
         $this->setToObj(null);
         return TRUE;

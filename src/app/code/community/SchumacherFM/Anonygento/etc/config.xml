@@ -111,7 +111,11 @@
                             </args>
                         </password_hash>
                         <lastname>
-                            <method>uniqid</method>
+                            <helper>core</helper>
+                            <method>getRandomString</method>
+                            <args>
+                                <a0>11</a0>
+                            </args>
                         </lastname>
                     </fill>
                     <system>

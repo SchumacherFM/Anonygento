@@ -190,8 +190,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
         foreach ($mapped as $key => $newKey) {
 
-            // throw an error if there is no key in fromObject
-            if ($useStrict && !array_key_exists($key, $getDataFromObject)) {
+            // throw an error if there is no key in fromObject and the toObject has a value
+            if ($useStrict && !array_key_exists($key, $getDataFromObject) && (string)$toObject->getData($newKey) !== '' ) {
 
                 Zend_Debug::dump($fromObject->getData());
                 echo PHP_EOL;

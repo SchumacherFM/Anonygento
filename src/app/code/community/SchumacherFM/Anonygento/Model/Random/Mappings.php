@@ -12,6 +12,32 @@
 class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
 {
     /**
+     * @var array
+     */
+    protected $_isEntityTypesData = array();
+
+    /**
+     * @var Mage_Eav_Model_Config
+     */
+    protected $_eavConfig;
+
+    protected function _construct()
+    {
+        parent::_construct();
+
+        $entityTypesData          = Mage::getModel('eav/entity_type')->getCollection()->getData();
+        $this->_isEntityTypesData = array();
+        foreach ($entityTypesData as $type) {
+            if (isset($type['attribute_model'])) { // only real EAV models ;-)
+                $this->_isEntityTypesData[$type['entity_model']] = $type['entity_type_code'];
+            }
+
+        }
+        $entityTypesData  = null;
+        $this->_eavConfig = Mage::getSingleton('eav/config');
+    }
+
+    /**
      * @return array
      */
     public function getEntityAttributes()
@@ -48,6 +74,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         if (!isset($config->$type->mapping)) {
             throw new Exception('Cannot find mapping node for ' . $type);
         }
+        $model = isset($config->$type->model) ? (string)$config->$type->model : '';
 
         $this->setData($config->$type->mapping->asArray());
 
@@ -55,6 +82,24 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
             $update = $this->getUpdate();
             $this->unsUpdate();
             return $this->getMapping($update);
+        }
+
+        /**
+         * check if the have an EAV model then
+         * remove all columns from an EAV model which are invisible
+         */
+        if (isset($this->_isEntityTypesData[$model]) && !empty($this->_isEntityTypesData[$model])) {
+            $thisData = $this->getData();
+            foreach ($thisData as $randomKey => $attribute) {
+                if (
+                    is_string($attribute) &&
+                    $attribute !== 'update' &&
+                    !$this->_eavConfig->getAttribute($this->_isEntityTypesData[$model], $attribute)->getIsVisible()
+                ) {
+                    unset($thisData[$randomKey]);
+                }
+            }
+            $this->setData($thisData);
         }
 
         return $this;
