@@ -32,8 +32,11 @@ class SchumacherFM_Anonygento_Model_Random_Ip extends Varien_Object
      *
      * @return string
      */
-    public function shuffleIp($origDataIp)
+    public function shuffleIp($origDataIp = null)
     {
+        if ($origDataIp === null) {
+            return null;
+        }
         $long = $this->_calculate(ip2long($origDataIp));
         return long2ip($long);
 

@@ -28,7 +28,7 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
      * you can use the e.b. en_US-internal folder
      * data files are: firstnames, lastnames, streets, mail addresses ...
      */
-    const DATA_INTERNAL = '-internal';
+    const DATA_INTERNAL = '-internalXXX';
 
     /**
      * @var string
@@ -128,6 +128,42 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     }
 
     /**
+     * @param int $length
+     *
+     * @return string
+     */
+    public function getMnemonicName($length = 8)
+    {
+
+        $conso    = array('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z');
+        $consoC   = count($conso) - 1;
+        $vocal    = array('a', 'e', 'i', 'o', 'u');
+        $vocalC   = count($vocal) - 1;
+        $password = '';
+        srand((double)microtime() * 1000000);
+        for ($f = 1; $f <= $length; $f++) {
+            $password .= $conso[rand(0, $consoC)];
+            $password .= $vocal[rand(0, $vocalC)];
+        }
+        return ucfirst($password);
+
+    }
+
+    /**
+     * @param int $size
+     *
+     * @return array
+     */
+    public function getRandomArray($size = 10)
+    {
+        $return = array();
+        for ($i = 0; $i < $size; ++$i) {
+            $return[] = $this->getMnemonicName(mt_rand(2, 6));
+        }
+        return $return;
+    }
+
+    /**
      * loads a csv file and checks if the internal dir exists if so loads the data
      * from that directory
      *
@@ -151,15 +187,17 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
         if (!file_exists($csvFile)) {
             $csvFileComponents[2] = $this->_locale;
             $csvFile              = implode(DS, $csvFileComponents);
-
         }
 
         if (!is_file($csvFile)) {
-            // @todo if not found then use random data string
-            die('csv file for data (' . $name . ') not found!' . PHP_EOL . $csvFile . PHP_EOL);
+            Mage::throwException('csv file for data (' . $name . ') not found!' . PHP_EOL . $csvFile . PHP_EOL);
         }
 
-        return array_map('trim', file($csvFile));
+        $file = file($csvFile);
+        if (count($file) > 3) {
+            return array_map('trim', $file);
+        } else {
+            return $this->getRandomArray(mt_rand(333, 888));
+        }
     }
-
 }

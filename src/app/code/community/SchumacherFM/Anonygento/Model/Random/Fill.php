@@ -55,9 +55,14 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
         $method = isset($methodOptions['method']) ? $methodOptions['method'] : '';
         $args   = isset($methodOptions['args']) ? $methodOptions['args'] : array();
 
-        if ($origData) {
+        if ($origData && !empty($model)) {
             array_push($args, $origData);
         }
+
+//        if ($method === 'mt_rand' && count($args) > 2 ) {
+//            Zend_Debug::dump($args);
+//            exit;
+//        }
 
         if (is_object($model) && method_exists($model, $method)) {
             return call_user_func_array(array($model, $method), $args);

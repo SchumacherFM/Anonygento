@@ -78,46 +78,24 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
 
     protected function _getCustomerStreet()
     {
-        return $this->_street[mt_rand() % count($this->_street)] . ' ' . mt_rand(1, 100);
+        return $this->_street[mt_rand() % count($this->_street)] . ' ' . mt_rand(1, 200);
     }
 
     protected function _getCustomerTelephone()
     {
-        return mt_rand(100000000, 999999999);
+        return '0' . mt_rand(1000, 9999) . '-' . mt_rand(100000, 999999);
     }
 
     protected function _getCustomerDob()
     {
         // @todo maybe use Zend_Date
         $date = array(
-            mt_rand(1950, date('Y') - 21),
+            mt_rand(1940, date('Y') - 21),
             str_pad(mt_rand(1, 12), 2, '0', STR_PAD_LEFT),
             str_pad(mt_rand(1, 30), 2, '0', STR_PAD_LEFT),
         );
 
         return implode('-', $date);
-    }
-
-    /**
-     * @param int $length
-     *
-     * @return string
-     */
-    public function getMnemonicName($length = 8)
-    {
-
-        $conso    = array('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z');
-        $consoC   = count($conso) - 1;
-        $vocal    = array('a', 'e', 'i', 'o', 'u');
-        $vocalC   = count($vocal) - 1;
-        $password = '';
-        srand((double)microtime() * 1000000);
-        for ($f = 1; $f <= $length; $f++) {
-            $password .= $conso[rand(0, $consoC)];
-            $password .= $vocal[rand(0, $vocalC)];
-        }
-        return ucfirst($password);
-
     }
 
 }

@@ -86,7 +86,7 @@ Todo / Next Versions
 Compatibility
 -------------
 - Magento >= 1.4
-- php >= 5.3.5
+- php >= 5.3.0
 
 I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
 
@@ -295,6 +295,8 @@ Events / Observers
 ------------------
 
 ### Event `anonygento_anonymizations_copy_after`
+
+Maybe deprecated ...
 
 This event will be fired after data has been copied from the random object to the target object.
 

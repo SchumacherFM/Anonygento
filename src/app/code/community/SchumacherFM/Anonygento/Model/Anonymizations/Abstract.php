@@ -161,6 +161,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
     /**
      * copies the data from one object to another using a mapping array
+     *
      * @param      $fromObject
      * @param      $toObject
      * @param bool $useStrict
@@ -191,7 +192,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         foreach ($mapped as $key => $newKey) {
 
             // throw an error if there is no key in fromObject and the toObject has a value
-            if ($useStrict && !array_key_exists($key, $getDataFromObject) && (string)$toObject->getData($newKey) !== '' ) {
+            if ($useStrict && !array_key_exists($key, $getDataFromObject) && (string)$toObject->getData($newKey) !== '') {
 
                 Zend_Debug::dump($fromObject->getData());
                 echo PHP_EOL;
@@ -199,8 +200,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
                 $msg = 'Check your config.xml!' . PHP_EOL . $key . ' not Found in fromObj: ' . get_class($fromObject) . ' copied toObj: ' .
                     get_class($toObject) . PHP_EOL;
-
-                throw new Exception($msg);
+                Mage::throwException($msg);
             }
 
             $data = $fromObject->getData($key);
