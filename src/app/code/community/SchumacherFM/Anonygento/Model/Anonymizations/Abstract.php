@@ -160,13 +160,13 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
-     * copies the data from obj to another using a mapping array
-     *
-     * @param Varien_Object $fromObject
-     * @param Varien_Object $toObject
-     * @param boolean       $useStrict
+     * copies the data from one object to another using a mapping array
+     * @param      $fromObject
+     * @param      $toObject
+     * @param bool $useStrict
      *
      * @return bool
+     * @throws Exception
      */
     protected function _copyObjectData($fromObject, $toObject, $useStrict = TRUE)
     {

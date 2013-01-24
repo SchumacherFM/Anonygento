@@ -111,10 +111,11 @@
                             </args>
                         </password_hash>
                         <lastname>
-                            <helper>core</helper>
-                            <method>getRandomString</method>
+                            <model>schumacherfm_anonygento/random_customer</model>
+                            <!--<helper></helper>-->
+                            <method>getMnemonicName</method>
                             <args>
-                                <a0>11</a0>
+                                <a0>8</a0>
                             </args>
                         </lastname>
                     </fill>

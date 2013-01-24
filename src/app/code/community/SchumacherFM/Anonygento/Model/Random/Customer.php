@@ -98,4 +98,26 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
         return implode('-', $date);
     }
 
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    public function getMnemonicName($length = 8)
+    {
+
+        $conso    = array('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z');
+        $consoC   = count($conso) - 1;
+        $vocal    = array('a', 'e', 'i', 'o', 'u');
+        $vocalC   = count($vocal) - 1;
+        $password = '';
+        srand((double)microtime() * 1000000);
+        for ($f = 1; $f <= $length; $f++) {
+            $password .= $conso[rand(0, $consoC)];
+            $password .= $vocal[rand(0, $vocalC)];
+        }
+        return ucfirst($password);
+
+    }
+
 }
