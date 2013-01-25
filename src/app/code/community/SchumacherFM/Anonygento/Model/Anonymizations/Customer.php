@@ -29,14 +29,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
         $this->_anonymizeCustomerAddresses($customer);
         $this->_anonymizeCustomerNewsletter($customer);
 
-// @todo before removing this check if all address have the same data
-//        if ($this->_getOption('anonymizeOrder', 'bool')) {
-//            $this->_anonymizeOrder($randomCustomer);
-//        }
-//        if ($this->_getOption('anonymizeQuote', 'bool')) {
-//            $this->_anonymizeQuote($randomCustomer);
-//        }
-
         // save the customer at the end to ensure that all other entities have been
         // anonymized .. just in case the user aborts the script
         $customer->getResource()->save($customer);
