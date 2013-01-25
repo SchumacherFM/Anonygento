@@ -61,16 +61,16 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
         // @todo possible bug that the company field will not be anonymized
         foreach ($orderAddressCollection as $orderAddress) {
 
-            if ($orderAddress->getid() == 3124) {
-                Zend_Debug::dump($orderAddress->getData());
-            }
+//            if ($orderAddress->getid() == 3124) {
+//                Zend_Debug::dump($orderAddress->getData());
+//            }
 
             $this->_copyObjectData($address, $orderAddress);
 
-            if ($orderAddress->getid() == 3124) {
-                Zend_Debug::dump($orderAddress->getData());
-                exit;
-            }
+//            if ($orderAddress->getid() == 3124) {
+//                Zend_Debug::dump($orderAddress->getData());
+//                exit;
+//            }
             $orderAddress->getResource()->save($orderAddress);
         }
         $address                = null;
