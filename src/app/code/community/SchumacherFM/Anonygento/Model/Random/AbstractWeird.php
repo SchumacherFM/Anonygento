@@ -24,11 +24,12 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     const DATA_FILE_EXTENSION = 'csv';
 
     /**
-     * due to not being able to provide data files to the public
-     * you can use the e.b. en_US-internal folder
+     * due to not being able to provide data files to the public (lol)
+     * you can use the e.g. en_US folder
      * data files are: firstnames, lastnames, streets, mail addresses ...
+     * if these files are empty .. then random strings will be generated
      */
-    const DATA_INTERNAL = '-internalXXX';
+    const DATA_INTERNAL = '-internal';
 
     /**
      * @var string
