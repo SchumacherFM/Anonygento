@@ -19,8 +19,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     }
 
     /**
-     * @param Mage_Sales_Model_Quote       $quote
-     * @param Varien_Object                $customer
+     * @param Mage_Sales_Model_Quote $quote
+     * @param Varien_Object          $customer
+     *
+     * @throws Exception
      */
     protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
     {
@@ -69,7 +71,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         foreach ($quoteCollection as $quote) {
             /** @var $quote Mage_Sales_Model_Quote */
             $this->_anonymizeQuote($quote, $customer);
-
         }
         $customer = $quoteCollection = null;
     }
