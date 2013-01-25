@@ -68,12 +68,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
         foreach ($quoteCollection as $quote) {
             /** @var $quote Mage_Sales_Model_Quote */
-//            if ((int)$quote->getId() === 0) {
-//                Zend_Debug::dump($quoteCollection->getSelect());
-//                Zend_Debug::dump($quoteCollection->getSelect()->__toString());
-//                Zend_Debug::dump($quote);
-//                throw new Exception('Collection: Missing the entity_id in sales/quote. This means that getIdFieldname returns null ...');
-//            }
             $this->_anonymizeQuote($quote, $customer);
 
         }
