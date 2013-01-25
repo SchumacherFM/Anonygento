@@ -24,6 +24,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      */
     public function anonymizeByCustomer(Varien_Object $customer)
     {
+        Mage::throwException('Method disabled');
 
         $orderCollection = $this->_getCollection()
             ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));

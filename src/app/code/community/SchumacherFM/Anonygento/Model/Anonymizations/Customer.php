@@ -54,18 +54,20 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-//    protected function _anonymizeQuote(Mage_Customer_Model_Customer $customer)
-//    {
+    protected function _anonymizeQuote(Mage_Customer_Model_Customer $customer)
+    {
+        Mage::throwException('Method disabled');
 //        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByCustomer($customer);
-//    }
+    }
 
     /**
      * @param Mage_Customer_Model_Customer $customer
      */
-//    protected function _anonymizeOrder(Mage_Customer_Model_Customer $customer)
-//    {
+    protected function _anonymizeOrder(Mage_Customer_Model_Customer $customer)
+    {
+        Mage::throwException('Method disabled');
 //        Mage::getSingleton('schumacherfm_anonygento/anonymizations_order')->anonymizeByCustomer($customer);
-//    }
+    }
 
     /**
      * @param string  $modelName
@@ -75,6 +77,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Customer extends SchumacherFM
      */
     protected function _getCollection($modelName = null, $useMapping = null)
     {
-        return parent::_getCollection('customer/customer')->setOrder('entity_id','asc');
+        return parent::_getCollection('customer/customer')->setOrder('entity_id', 'asc');
     }
 }

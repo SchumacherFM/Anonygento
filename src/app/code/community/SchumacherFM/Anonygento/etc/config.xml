@@ -101,8 +101,8 @@
                     <!--useful if the script fails every time due to memory limit-->
                     <!--we should refactor this, remove it and implement it properly into quote and order-->
                     <!--there should be fetched the customer addresses-->
-                    <anonymizeOrder>1</anonymizeOrder>
-                    <anonymizeQuote>1</anonymizeQuote>
+                    <!--<anonymizeOrder>1</anonymizeOrder>-->
+                    <!--<anonymizeQuote>1</anonymizeQuote>-->
                 </options>
                 <mapping>
                     <!--RandomCustomer => customer-->

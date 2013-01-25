@@ -85,6 +85,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      */
     public function anonymizeByCustomer(Varien_Object $customer)
     {
+        Mage::throwException('Method disabled');
+
         $quoteCollection = $this->_getCollection()
             ->addFieldToFilter('customer_id', array('eq' => (int)$customer->getId()));
 
