@@ -228,6 +228,7 @@
                     <taxvat>vat_id</taxvat>
                     <system>
                         <entity_id/>
+                        <parent_id/>
                     </system>
                 </mapping>
             </orderAddress>

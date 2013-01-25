@@ -31,7 +31,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Varien_Object $customer
+     * @param Varien_Object                $customer
      */
     public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
     {
@@ -54,8 +54,23 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
         $orderAddressCollection = $order->getAddressesCollection();
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
+//        if ($order->getId() == 1562) {
+//            Zend_Debug::dump($orderAddressCollection->load());
+//            exit;
+//        }
+        // @todo possible bug that the company field will not be anonymized
         foreach ($orderAddressCollection as $orderAddress) {
+
+            if ($orderAddress->getid() == 3124) {
+                Zend_Debug::dump($orderAddress->getData());
+            }
+
             $this->_copyObjectData($address, $orderAddress);
+
+            if ($orderAddress->getid() == 3124) {
+                Zend_Debug::dump($orderAddress->getData());
+                exit;
+            }
             $orderAddress->getResource()->save($orderAddress);
         }
         $address                = null;
