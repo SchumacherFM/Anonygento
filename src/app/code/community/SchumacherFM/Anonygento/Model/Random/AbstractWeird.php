@@ -32,6 +32,11 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     const DATA_INTERNAL = '-internal';
 
     /**
+     * @var null
+     */
+    protected $_randomConfig = null;
+
+    /**
      * @var string
      */
     protected $_locale = '';
@@ -52,7 +57,8 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     {
         parent::_construct();
 
-        $this->_locale = Mage::helper('schumacherfm_anonygento')->getLocaleForData();
+        $this->_randomConfig = Mage::helper('schumacherfm_anonygento')->getRandomConfig();
+        $this->_locale       = Mage::helper('schumacherfm_anonygento')->getLocaleForData();
 
         $this->setCustomerPrefix(mt_rand() % 2);
 
@@ -159,7 +165,12 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     {
         $return = array();
         for ($i = 0; $i < $size; ++$i) {
-            $return[] = $this->getMnemonicName(mt_rand(2, 6));
+            $return[] = $this->getMnemonicName(
+                mt_rand(
+                    (int)$this->_randomConfig->customer->emptyCsv->mnemonicNameMin,
+                    (int)$this->_randomConfig->customer->emptyCsv->mnemonicNameMax
+                )
+            );
         }
         return $return;
     }
@@ -198,7 +209,12 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
         if (count($file) > 3) {
             return array_map('trim', $file);
         } else {
-            return $this->getRandomArray(mt_rand(333, 888));
+            return $this->getRandomArray(
+                mt_rand(
+                    (int)$this->_randomConfig->customer->emptyCsv->stringMin,
+                    (int)$this->_randomConfig->customer->emptyCsv->stringMax
+                )
+            );
         }
     }
 }

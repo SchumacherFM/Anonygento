@@ -26,6 +26,8 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * @param string $element
+     *
      * @return Mage_Core_Model_Config_Element
      */
     public function getAnonymizationsConfig($element = '')
@@ -36,6 +38,14 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
             return Mage::getConfig()->getNode('anonygento')->anonymizations->children();
         }
 
+    }
+
+    /**
+     * @return Mage_Core_Model_Config_Element
+     */
+    public function getRandomConfig()
+    {
+        return Mage::getConfig()->getNode('anonygento')->random->children();
     }
 
 }

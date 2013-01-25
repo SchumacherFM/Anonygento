@@ -81,6 +81,16 @@
     <!--main config for the order of the work load for the anonymization process-->
     <!--extend also here with your own anonymization process-->
     <anonygento>
+        <random>
+            <customer>
+                <emptyCsv>
+                    <stringMin>600</stringMin>
+                    <stringMax>1100</stringMax>
+                    <mnemonicNameMin>2</mnemonicNameMin>
+                    <mnemonicNameMax>5</mnemonicNameMax>
+                </emptyCsv>
+            </customer>
+        </random>
         <anonymizations>
             <customer>
                 <active>1</active>
