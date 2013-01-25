@@ -20,10 +20,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
 
     /**
      * @param Mage_Newsletter_Model_Subscriber $subscriber
+     * @param Mage_Customer_Model_Customer     $customer null
      */
-    protected function _anonymizeNewsletter(Mage_Newsletter_Model_Subscriber $subscriber)
+    protected function _anonymizeNewsletter(Mage_Newsletter_Model_Subscriber $subscriber, Mage_Customer_Model_Customer $customer = null)
     {
-        $customer = $this->_getRandomCustomer()->getCustomer();
+        if ($customer === null) {
+            $customer = $this->_getRandomCustomer()->getCustomer();
+        }
+
         $this->_copyObjectData($customer, $subscriber);
         $subscriber->getResource()->save($subscriber);
     }
@@ -38,10 +42,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_NewsletterSubscriber extends 
         $subscriber->loadByCustomer($customer);
 
         if ($subscriber->getId()) {
-            $this->_copyObjectData($customer, $subscriber);
-            $subscriber->save();
+            $this->_anonymizeNewsletter($subscriber, $customer);
         }
-        $subscriber = null;
+        $subscriber = $customer = null;
     }
 
     /**
