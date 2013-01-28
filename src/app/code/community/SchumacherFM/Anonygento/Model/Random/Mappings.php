@@ -68,11 +68,11 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         $config = Mage::helper('schumacherfm_anonygento')->getAnonymizationsConfig();
 
         if (!isset($config->$type)) {
-            throw new Exception('Cannot find config node: ' . $type);
+            Mage::throwException('Cannot find config node: ' . $type);
         }
 
         if (!isset($config->$type->mapping)) {
-            throw new Exception('Cannot find mapping node for ' . $type);
+            Mage::throwException('Cannot find mapping node for ' . $type);
         }
         $model = isset($config->$type->model) ? (string)$config->$type->model : '';
 

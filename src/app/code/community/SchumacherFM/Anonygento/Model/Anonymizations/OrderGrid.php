@@ -26,9 +26,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderGrid extends SchumacherF
      */
     protected function _anonymizeOrderGrid(Mage_Sales_Model_Order $gridOrder)
     {
-
-        throw new Exception('Anonymization of order grid not implemented because implemented in Order');
-
+        Mage::throwException('Anonymization of order grid not implemented because implemented in Order');
     }
 
     /**

@@ -83,7 +83,7 @@ class SchumacherFM_Anonygento_Model_Options_Anonymizations extends Varien_Object
         foreach ($this->_collection as $option) {
 
             if (!$option->getValue() || !$option->getModel()) {
-                throw new Exception('Missing value or model in the anonymization collection');
+                Mage::throwException('Missing value or model in the anonymization collection');
             }
 
             $option

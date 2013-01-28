@@ -28,7 +28,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     {
 
         if ((int)$quote->getId() === 0) {
-            throw new Exception('Missing the entity_id in $quote Model ...');
+            Mage::throwException('Missing the entity_id in $quote Model ...');
         }
 
         if ($customer === null) {
