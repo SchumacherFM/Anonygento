@@ -19,15 +19,6 @@ Anonygento can be easily extended by custom configuration and observers.
 Do not run this script in the production environment.
 
 
-About
------
-- version: 0.0.1
-- extension key: SchumacherFM_Anonygento
-- [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
-- [direct download link](https://github.com/SchumacherFM/Anonygento/tarball/master)
-- Integrates parts of the Zend Framework 2
-
-
 What it does?
 -------------
 This extension anonymizes all customer related data from the following data objects:
@@ -55,9 +46,9 @@ This module is optimized to handle a large amount of data.
 
 Random Data
 -----------
-All data is read from self defined csv files which are stored in the module data folder and there in a locale subfolder.
+All data is read from self defined csv files which are stored in the module data folder and in this location in a locale subfolder.
 
-You provide the random data for the module. There are several files for the english language already available.
+You provide the random data for the module. There are several files for the en_US locale already available.
 
 Zipcode, City, State and Country aren't anonymized so that shipping and tax calculations still work correctly.
 
@@ -66,22 +57,28 @@ IP addresses in all tables are also anonymized.
 You can configure in the backend section which locale to use. Just navigate
 to System -> Configuration -> Advanced -> Developer -> Anonygento Settings
 
+If the csv files are empty in the locale folder then the Anonygento generates real random mnenomic strings.
+
 
 Magento Backend hints
 ---------------------
-The red label 'sensitive data' will switch to green for each entity when the anonymization
-process ran successful.
+The red label 'sensitive data' will switch to green for each entity when the anonymization process ran successful.
 
 
 Todo / Next Versions
 --------------------
 - Assign a store view to a locale to get e.g. country specific random names.
-- Use backend config to anonymize custom entities instead of creating own modules with observer.
-- If the csv files are not found in the locale folder then generate real random strings.
 - Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid, sales shipment grid
 - Run via backend instead of shell. Use a nice ajax updater.
 - Anonymize all prices
 
+About
+-----
+- version: 0.0.1
+- extension key: SchumacherFM_Anonygento
+- [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
+- [direct download link](https://github.com/SchumacherFM/Anonygento/tarball/master)
+- Integrates parts of the Zend Framework 2
 
 Compatibility
 -------------
@@ -97,7 +94,7 @@ Installation Instructions
 2. Switch to Magento root folder
 3. `modman init`
 4. `modman clone git://github.com/SchumacherFM/Anonygento.git`
-5. Create yourself some random names or use the English data folder
+5. Create yourself some random names or use the English data folder or just let Anonygento create the random data
 
 Demo modules installation
 
@@ -162,6 +159,7 @@ Extending the anonymization process
 To anonymize custom attributes in the e.g. customer eav model you can add the following
 xml to the config.xml. No PHP programming is necessary except if you need custom random strings.
 
+##### Example config:
 ```xml
 <config>
     <anonygento>
@@ -208,7 +206,7 @@ or other payment solutions.
 
 Please see Demo2 module.
 
-#### Example config:
+##### Example config:
 
 ```xml
 <config>
@@ -232,8 +230,7 @@ Please see Demo2 module.
 
 Your model `namespace2_moduleX/aModel` must have a resource collection.
 
-Extend your entity with the SQL column: `anonymized TINYINT(1) UNSIGNED NOT NULL DEFAULT 0`. Use the following
-setup structure:
+Extend your entity with the SQL column: `anonymized TINYINT(1) UNSIGNED NOT NULL DEFAULT 0`. Use the following setup structure:
 
 #### Setup class in Model/Resource/Setup.php
 
