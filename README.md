@@ -67,8 +67,9 @@ The red label 'sensitive data' will switch to green for each entity when the ano
 
 Todo / Next Versions
 --------------------
-- Assign a store view to a locale to get e.g. country specific random names.
 - Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid, sales shipment grid
+- Ask for a different database before running the anonymization process
+- Assign a store view to a locale to get e.g. country specific random names.
 - Run via backend instead of shell. Use a nice ajax updater.
 - Anonymize all prices
 
