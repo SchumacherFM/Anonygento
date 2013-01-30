@@ -285,9 +285,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     protected function _collectionAddStaticAnonymized($collection, $isAnonymized = 0)
     {
         $isAnonymized = (int)$isAnonymized;
-
-        // @todo check here if column has already been added
-
         if ($collection instanceof Mage_Eav_Model_Entity_Collection_Abstract) {
             $collection->addStaticField(self::COLUMN_ANONYMIZED);
             $collection->addAttributeToFilter(self::COLUMN_ANONYMIZED, $isAnonymized);
@@ -296,7 +293,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $select = $collection->getSelect();
             $select->where(self::COLUMN_ANONYMIZED . '=' . $isAnonymized);
         }
-
     }
 
     /**
