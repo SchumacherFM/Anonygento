@@ -10,10 +10,19 @@
 class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
+    /**
+     * @var array
+     */
     protected $_attributeColumns = array();
 
+    /**
+     * @var string
+     */
     protected $_gridView = null;
 
+    /**
+     * @var array
+     */
     protected $_configValue = array();
 
     /**
@@ -29,6 +38,12 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
         $this->_pagerVisibility  = TRUE;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return string
+     * @throws Mage_Adminhtml_Exception
+     */
     protected function _getConfigValue($name)
     {
         if (isset($this->_configValue[$name])) {
@@ -72,6 +87,9 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
         return parent::_prepareCollection();
     }
 
+    /**
+     * @return array
+     */
     protected function _getAttributeColumns()
     {
         if (count($this->_attributeColumns) > 0) {
@@ -128,6 +146,9 @@ class SchumacherFM_Anonygento_Block_Adminhtml_View_Grid extends Mage_Adminhtml_B
         return parent::_prepareColumns();
     }
 
+    /**
+     * @return array
+     */
     protected function _getAdminUrl()
     {
         $adminRoute = (string)$this->_getConfigValue('adminRoute');

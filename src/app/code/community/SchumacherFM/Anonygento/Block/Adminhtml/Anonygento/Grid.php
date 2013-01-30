@@ -33,16 +33,6 @@ class SchumacherFM_Anonygento_Block_Adminhtml_Anonygento_Grid extends Mage_Admin
     }
 
     /**
-     * Add name and description to collection elements
-     */
-//    protected function _afterLoadCollection()
-//    {
-//        foreach ($this->_collection as $item) {
-//        }
-//        return $this;
-//    }
-
-    /**
      * Prepare grid columns
      */
     protected function _prepareColumns()
