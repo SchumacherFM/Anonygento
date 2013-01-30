@@ -508,7 +508,7 @@
                     <middlename>middlename</middlename>
                     <suffix>suffix</suffix>
                     <prefix>prefix</prefix>
-                    <taxvat>taxvat</taxvat>
+                    <taxvat>vat_id</taxvat>
                     <fill>
                         <customer_notes>
                             <model>schumacherfm_anonygento/random_loremIpsum</model>

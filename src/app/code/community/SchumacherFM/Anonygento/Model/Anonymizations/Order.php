@@ -18,30 +18,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     }
 
     /**
-     * @param Varien_Object $customer
-     *
-     * @return boolean
-     */
-    public function anonymizeByCustomer(Varien_Object $customer)
-    {
-        Mage::throwException('Method disabled');
-
-        $orderCollection = $this->_getCollection()
-            ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
-
-        $orderCollectionSize = (int)$orderCollection->getSize();
-
-        if ($orderCollectionSize > 0) {
-            foreach ($orderCollection as $order) {
-                $this->_anonymizeOrder($order, $customer);
-                $order = null;
-            }
-        }
-        $customer = $orderCollection = null;
-
-    }
-
-    /**
      * @param Mage_Sales_Model_Order       $order
      * @param Varien_Object                $customer
      *
@@ -149,5 +125,28 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     protected function _getCollection($modelName = null, $useMapping = null)
     {
         return parent::_getCollection('sales/order');
+    }
+
+    /**
+     * @param Varien_Object $customer
+     *
+     * @return boolean
+     */
+    public function anonymizeByCustomer(Varien_Object $customer)
+    {
+        Mage::throwException('Method disabled');
+
+        $orderCollection = $this->_getCollection()
+            ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
+
+        $orderCollectionSize = (int)$orderCollection->getSize();
+
+        if ($orderCollectionSize > 0) {
+            foreach ($orderCollection as $order) {
+                $this->_anonymizeOrder($order, $customer);
+                $order = null;
+            }
+        }
+        $customer = $orderCollection = null;
     }
 }

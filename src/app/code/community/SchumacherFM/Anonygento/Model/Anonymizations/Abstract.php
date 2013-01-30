@@ -190,7 +190,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         $getDataFromObject = $fromObject->getData();
 
         foreach ($mapped as $key => $newKey) {
-            $toObjectData = (string)$toObject->getData($newKey); // everything is a string :-(
+            $toObjectData   = (string)$toObject->getData($newKey); // everything is a string :-(
+            $fromObjectData = (string)$fromObject->getData($key);
 
             // throw an error if there is no key in fromObject and the toObject has a value
             if ($useStrict && !array_key_exists($key, $getDataFromObject) && $toObjectData !== '') {
@@ -204,9 +205,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
                 Mage::throwException($msg);
             }
 
-            if (!empty($toObjectData)) {
-                $toObject->setData($newKey, $fromObject->getData($key));
-            }
+            $toObject->setData($newKey, $fromObjectData);
+
         }
 
         if ($fill && is_array($fill)) {

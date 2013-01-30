@@ -75,7 +75,7 @@ Todo / Next Versions
 
 About
 -----
-- version: 0.0.1
+- version: 1.0.0
 - extension key: SchumacherFM_Anonygento
 - [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
 - [direct download link](https://github.com/SchumacherFM/Anonygento/tarball/master)
