@@ -9,6 +9,9 @@
 class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonygento_Model_Random_AbstractWeird
 {
 
+    /**
+     * @var array
+     */
     protected $_street = array();
 
     /**
@@ -23,6 +26,9 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
         $this->_init();
     }
 
+    /**
+     * inits the random customer
+     */
     protected function  _init()
     {
         mt_srand(microtime(TRUE) * 0xFFFF);
@@ -65,6 +71,9 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
         return $this->_currentCustomer;
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerIp()
     {
         $ip = array(
@@ -76,25 +85,32 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
         return implode('.', $ip);
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerStreet()
     {
         return $this->_street[mt_rand() % count($this->_street)] . ' ' . mt_rand(1, 200);
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerTelephone()
     {
         return '0' . mt_rand(1000, 9999) . '-' . mt_rand(100000, 999999);
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerDob()
     {
-        // @todo maybe use Zend_Date
         $date = array(
             mt_rand(1940, date('Y') - 21),
             str_pad(mt_rand(1, 12), 2, '0', STR_PAD_LEFT),
             str_pad(mt_rand(1, 30), 2, '0', STR_PAD_LEFT),
         );
-
         return implode('-', $date);
     }
 

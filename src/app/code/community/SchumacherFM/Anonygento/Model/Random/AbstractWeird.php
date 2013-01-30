@@ -71,6 +71,9 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
 
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerPrefixString()
     {
         $p = $this->getCustomerPrefix() === 0
@@ -80,6 +83,9 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
         return $p;
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerFirstName()
     {
         $return = $this->getCustomerPrefix() === 0
@@ -88,12 +94,18 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
         return $return;
     }
 
+    /**
+     * @return string
+     */
     protected function _getCustomerLastName()
     {
         return $this->_lastname[mt_rand() % count($this->_lastname)];
 
     }
 
+    /**
+     * @return void
+     */
     protected function _getRandEmail()
     {
 
@@ -106,6 +118,9 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
         $this->_currentCustomer->setEmail($email);
     }
 
+    /**
+     * @return string
+     */
     public function getEmailWeird()
     {
 

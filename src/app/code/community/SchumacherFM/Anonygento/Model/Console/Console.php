@@ -121,6 +121,7 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
      */
     public function isAdminUser()
     {
+        // this is superflous so we just return true and remove the code later
         return TRUE;
 
         /* disabled, not really necessary */
@@ -130,7 +131,7 @@ class SchumacherFM_Anonygento_Model_Console_Console extends SchumacherFM\Anonyge
         $line->setPromptText('Admin user name: ');
         $username = $line->show();
 
-        // @todo hide the password input
+        // hide the password input
         $line->setPromptText('Admin password: ');
         $password = $line->show();
 

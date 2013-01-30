@@ -9,10 +9,6 @@
 class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
 {
     /**
-     * @todo use group by query to avoid two queries
-     */
-
-    /**
      * current collection holder
      *
      * @var null
@@ -91,10 +87,8 @@ class SchumacherFM_Anonygento_Model_Counter extends Varien_Object
      */
     protected function _chooseMethod($anonymized = 0)
     {
-
         $method = method_exists($this->_currentCollection, 'addStaticField') ? '_addStatic' : '_sqlWhereAndExec';
         return $this->$method($anonymized);
-
     }
 
     /**
