@@ -10,6 +10,9 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
 {
     const XML_PATH_ANONYMIZED = 'schumacherfm/anonygento/';
 
+    /**
+     * @return string
+     */
     public function getLocaleForData()
     {
         /*
@@ -18,7 +21,7 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
            are not applied then check here.
         */
 
-        $locale = Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . 'locale');
+        $locale = (string)Mage::getStoreConfig(self::XML_PATH_ANONYMIZED . 'locale');
         if ($locale || empty($locale)) {
             $locale = (string)Mage::getConfig()->getNode('default')->schumacherfm->anonygento->locale;
         }

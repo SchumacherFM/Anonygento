@@ -8,6 +8,9 @@
  */
 class SchumacherFM_Anonygento_Adminhtml_AnonygentoController extends Mage_Adminhtml_Controller_Action
 {
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $this->_title(Mage::helper('schumacherfm_anonygento')->__('System'))
@@ -22,6 +25,9 @@ class SchumacherFM_Anonygento_Adminhtml_AnonygentoController extends Mage_Adminh
         $this->renderLayout();
     }
 
+    /**
+     * @return void
+     */
     public function viewAction()
     {
         $this->loadLayout();
