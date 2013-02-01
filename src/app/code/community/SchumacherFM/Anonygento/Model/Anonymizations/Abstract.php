@@ -194,6 +194,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             $fromObjectData = (string)$fromObject->getData($key);
 
             // throw an error if there is no key in fromObject and the toObject has a value
+            // this is to detect misconfigured mappings
             if ($useStrict && !array_key_exists($key, $getDataFromObject) && $toObjectData !== '') {
 
                 Zend_Debug::dump($fromObject->getData());

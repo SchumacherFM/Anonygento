@@ -11,6 +11,7 @@ class SchumacherFM_Anonygento_Helper_Data extends Mage_Core_Helper_Abstract
     const XML_PATH_ANONYMIZED = 'schumacherfm/anonygento/';
 
     /**
+     * @todo remove this to do
      * @return string
      */
     public function getLocaleForData()

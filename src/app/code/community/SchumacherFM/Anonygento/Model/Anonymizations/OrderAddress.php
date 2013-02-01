@@ -30,15 +30,58 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     }
 
     /**
-     * @param Mage_Sales_Model_Order       $order
-     * @param Varien_Object                $customer
+     * @param Mage_Sales_Model_Order $order
+     * @param Varien_Object          $customer
      */
-    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
+    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer)
     {
+        $orderAddressCollection = $order->getAddressesCollection();
+        /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
+        $addressCollection = null;
+
+        if ($customer instanceof Mage_Customer_Model_Address) {
+            /** @var $customer Mage_Customer_Model_Address */
+            /** @var $addressCollection Mage_Customer_Model_Resource_Address_Collection */
+            $addressCollection = $customer->getResourceCollection();
+            $addressCollection
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('parent_id', array('eq' => $customer->getId()));
+        } elseif ($customer->getId() !== null) {
+            $addressCollection = $customer->getAddressesCollection();
+            echo '$addressCollection:' . PHP_EOL;
+            Zend_Debug::dump(get_class($addressCollection));
+            exit;
+        }
+
+        if ($addressCollection !== null && $orderAddressCollection->getSize() === $addressCollection->getSize()) {
+
+            $i = 0;
+            foreach ($addressCollection as $address) {
+                // this could lead to the same email address for each order address
+                $this->_mergeMissingAttributes($customer, $address);
+                $j = 0;
+                foreach ($orderAddressCollection as $orderAddress) {
+                    // $address->getDefaultBilling() $orderAddress->getDefaultBilling
+
+//                    Zend_Debug::dump($address->getData());
+//                    Zend_Debug::dump($orderAddress->getData());
+//                    exit;
+
+                    if ($i === $j) { // copy only once!
+                        $this->_copyObjectData($address, $orderAddress);
+                        $orderAddress->getResource()->save($orderAddress);
+                    }
+                    $j++;
+                }
+                $i++;
+            }
+            $customer = $orderAddressCollection = $addressCollection = null;
+            return TRUE;
+        }
+
+        // processing non guest checkouts
         $address = $this->_getRandomCustomer()->getCustomer();
         if ($customer !== null) {
-
-            $addressCollection = $customer->getAddressesCollection();
 
             if ($addressCollection) {
                 $address = $addressCollection->getFirstItem();
@@ -48,9 +91,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
             $addressCollection = null;
             $this->_mergeMissingAttributes($customer, $address);
         }
-
-        $orderAddressCollection = $order->getAddressesCollection();
-        /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
 
         foreach ($orderAddressCollection as $orderAddress) {
             $this->_copyObjectData($address, $orderAddress);

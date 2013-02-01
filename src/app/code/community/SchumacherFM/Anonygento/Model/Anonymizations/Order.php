@@ -69,7 +69,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      * @param Mage_Sales_Model_Order       $order
      * @param Varien_Object                $customer
      */
-    protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
+    protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Varien_Object $customer)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order, $customer);
     }
