@@ -20,30 +20,24 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
 
     /**
      * @param Mage_Sales_Model_Quote $quote
-     * @param Varien_Object          $customer
      *
      * @throws Exception
      */
-    protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
+    protected function _anonymizeQuote(Mage_Sales_Model_Quote $quote)
     {
 
-        if ((int)$quote->getId() === 0) {
-            Mage::throwException('Missing the entity_id in $quote Model ...');
+        $customerId = (int)$quote->getCustomerId();
+
+        if ($customerId > 0) {
+            $customer = $quote->getCustomer();
+            /* getCustomer does not always return a customer model */
+            $customerId = $customer !== null ? (int)$customer->getId() : 0;
         }
 
-        if ($customer === null) {
-            $customerId = (int)$quote->getCustomerId();
-
-            if ($customerId > 0) {
-                $customer = $quote->getCustomer();
-                /* getCustomer does not always return a customer model */
-                $customerId = (int)$customer->getId();
-            }
-
-            if ($customerId === 0) {
-                $customer = $this->_getRandomCustomer()->getCustomer();
-            }
+        if ($customerId === 0) {
+            $customer = $this->_getRandomCustomer()->getCustomer();
         }
+
         $this->_copyObjectData($customer, $quote);
         $this->_anonymizeQuoteAddresses($quote, $customer);
         $this->_anonymizeQuotePayment($quote, $customer);
@@ -58,44 +52,28 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      *
      * @return boolean
      */
-    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer)
-    {
-        if (!$order->getQuoteId()) {
-            return FALSE;
-        }
-
-        $quoteCollection = $this->_getCollection()
-            ->addFieldToFilter('entity_id', array('eq' => (int)$order->getQuoteId()));
-        /** @var $quoteCollection Mage_Sales_Model_Resource_Quote_Collection */
-
-        foreach ($quoteCollection as $quote) {
-            /** @var $quote Mage_Sales_Model_Quote */
-            $this->_anonymizeQuote($quote, $customer);
-        }
-        $customer = $quoteCollection = null;
-    }
-
-    /**
-     * @param Varien_Object $customer
-     */
-    public function anonymizeByCustomer(Varien_Object $customer)
-    {
-        Mage::throwException('Method disabled');
-
-        $quoteCollection = $this->_getCollection()
-            ->addFieldToFilter('customer_id', array('eq' => (int)$customer->getId()));
-
-        foreach ($quoteCollection as $quote) {
-            $this->_anonymizeQuote($quote, $customer);
-        }
-        $quoteCollection = null;
-    }
+//    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer)
+//    {
+//        if (!$order->getQuoteId()) {
+//            Mage::throwException('Missing QuoteId in Order Model!');
+//        }
+//
+//        $quoteCollection = $this->_getCollection()
+//            ->addFieldToFilter('entity_id', array('eq' => (int)$order->getQuoteId()));
+//        /** @var $quoteCollection Mage_Sales_Model_Resource_Quote_Collection */
+//
+//        foreach ($quoteCollection as $quote) {
+//            /** @var $quote Mage_Sales_Model_Quote */
+//            $this->_anonymizeQuote($quote, $customer);
+//        }
+//        $customer = $quoteCollection = null;
+//    }
 
     /**
-     * @param Mage_Sales_Model_Quote       $quote
-     * @param Varien_Object                $customer
+     * @param Mage_Sales_Model_Quote $quote
+     * @param Varien_Object          $customer
      */
-    protected function _anonymizeQuoteAddresses(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
+    protected function _anonymizeQuoteAddresses(Mage_Sales_Model_Quote $quote, Varien_Object $customer)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_quoteAddress')->anonymizeByQuote($quote, $customer);
     }

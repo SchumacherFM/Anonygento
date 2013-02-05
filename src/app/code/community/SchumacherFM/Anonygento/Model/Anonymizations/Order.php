@@ -51,12 +51,12 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         $this->_copyObjectData($customer, $order);
 
         // this could be buggy because we need from the customer the billing and/or shipping address
-        $this->_anonymizeOrderAddresses($order, $customer);
+        $this->_anonymizeOrderAddresses($order);
         $this->_anonymizeOrderPayment($order, $customer);
         $this->_anonymizeOrderCreditmemo($order);
         $this->_anonymizeOrderInvoice($order);
         $this->_anonymizeOrderShipment($order);
-        $this->_anonymizeQuote($order, $customer);
+//        $this->_anonymizeQuote($order, $customer);
 
         $order->getResource()->save($order);
         // update OrderGrid after order has been saved
@@ -69,9 +69,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      * @param Mage_Sales_Model_Order       $order
      * @param Varien_Object                $customer
      */
-    protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order, Varien_Object $customer)
+    protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order)
     {
-        Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order, $customer);
+        Mage::getSingleton('schumacherfm_anonygento/anonymizations_orderAddress')->anonymizeByOrder($order);
     }
 
     /**
@@ -111,10 +111,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
      * @param Mage_Sales_Model_Order       $order
      * @param Varien_Object                $customer
      */
-    protected function _anonymizeQuote(Mage_Sales_Model_Order $order, Varien_Object $customer)
-    {
-        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order, $customer);
-    }
+//    protected function _anonymizeQuote(Mage_Sales_Model_Order $order, Varien_Object $customer)
+//    {
+//        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order, $customer);
+//    }
 
     /**
      * @param string  $modelName

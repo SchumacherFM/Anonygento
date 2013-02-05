@@ -20,10 +20,11 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order_Address $orderAddress
+     * @param Varien_Object                  $address
      */
-    protected function _anonymizeOrderAddress(Mage_Sales_Model_Order_Address $orderAddress)
+    protected function _anonymizeOrderAddress(Mage_Sales_Model_Order_Address $orderAddress, Varien_Object $address = null)
     {
-        $randomCustomer = $this->_getRandomCustomer()->getCustomer();
+        $randomCustomer = $address === null ? $this->_getRandomCustomer()->getCustomer() : $address;
         $this->_copyObjectData($randomCustomer, $orderAddress);
         $orderAddress->getResource()->save($orderAddress);
         $orderAddress = null;
@@ -31,75 +32,56 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order $order
-     * @param Varien_Object          $customer
      */
-    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer)
+    public function anonymizeByOrder(Mage_Sales_Model_Order $order)
     {
-        $orderAddressCollection = $order->getAddressesCollection();
+        // getaddress data from quote
+
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
-        $addressCollection = null;
+        $orderAddressCollection = $order->getAddressesCollection();
 
-        if ($customer instanceof Mage_Customer_Model_Address) {
-            /** @var $customer Mage_Customer_Model_Address */
-            /** @var $addressCollection Mage_Customer_Model_Resource_Address_Collection */
-            $addressCollection = $customer->getResourceCollection();
-            $addressCollection
-                ->addAttributeToSelect('*')
-                ->addAttributeToFilter('parent_id', array('eq' => $customer->getId()));
-        } elseif ($customer->getId() !== null) {
-            $addressCollection = $customer->getAddressesCollection();
-            echo '$addressCollection:' . PHP_EOL;
-            Zend_Debug::dump(get_class($addressCollection));
-            exit;
-        }
+        /** @var $customer Mage_Customer_Model_Customer */
+        $customer          = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
+        $addressCollection = $customer->getAddressesCollection();
 
-        if ($addressCollection !== null && $orderAddressCollection->getSize() === $addressCollection->getSize()) {
+        // customer is registered
+        if ($customer !== null && $customer instanceof Mage_Customer_Model_Customer && $addressCollection->count() > 0) {
+            // we have here customer adresses .. maybe ...
+            $billingAddress  = $customer->getPrimaryBillingAddress();
+            $shippingAddress = $customer->getPrimaryShippingAddress();
 
-            $i = 0;
-            foreach ($addressCollection as $address) {
-                // this could lead to the same email address for each order address
-                $this->_mergeMissingAttributes($customer, $address);
-                $j = 0;
-                foreach ($orderAddressCollection as $orderAddress) {
-                    // $address->getDefaultBilling() $orderAddress->getDefaultBilling
-
-//                    Zend_Debug::dump($address->getData());
-//                    Zend_Debug::dump($orderAddress->getData());
-//                    exit;
-
-                    if ($i === $j) { // copy only once!
-                        $this->_copyObjectData($address, $orderAddress);
-                        $orderAddress->getResource()->save($orderAddress);
-                    }
-                    $j++;
+            foreach ($orderAddressCollection as $orderAddress) {
+                if ($orderAddress->getAddressType() === Mage_Sales_Model_Order_Address::TYPE_BILLING) {
+                    $this->_mergeMissingAttributes($customer, $billingAddress);
+                    $this->_copyObjectData($billingAddress, $orderAddress);
+                } elseif ($orderAddress->getAddressType() === Mage_Sales_Model_Order_Address::TYPE_SHIPPING) {
+                    $this->_mergeMissingAttributes($customer, $shippingAddress);
+                    $this->_copyObjectData($shippingAddress, $orderAddress);
+                } else {
+                    Mage::throwException('Missing orderAddress AddressType!: ' . var_export($orderAddress->getData(), 1));
                 }
-                $i++;
+                $orderAddress->getResource()->save($orderAddress);
             }
-            $customer = $orderAddressCollection = $addressCollection = null;
+            $orderAddress = $shippingAddress = $billingAddress = $orderAddressCollection = null;
             return TRUE;
         }
+
+        // guest checkouts
+
+//        Zend_Debug::dump(get_class($order));
+//        Zend_Debug::dump($order->getData());
+//        exit;
 
         // processing non guest checkouts
         $address = $this->_getRandomCustomer()->getCustomer();
         if ($customer !== null) {
-
-            if ($addressCollection) {
-                $address = $addressCollection->getFirstItem();
-            } else {
-                $address = $customer;
-            }
-            $addressCollection = null;
             $this->_mergeMissingAttributes($customer, $address);
         }
 
         foreach ($orderAddressCollection as $orderAddress) {
-            $this->_copyObjectData($address, $orderAddress);
-            $orderAddress->getResource()->save($orderAddress);
+            $this->_anonymizeOrderAddress($orderAddress, $address);
         }
-        $orderAddress           = null;
-        $address                = null;
-        $orderAddressCollection = null;
-
+        $orderAddress = $address = $orderAddressCollection = null;
     }
 
     /**
