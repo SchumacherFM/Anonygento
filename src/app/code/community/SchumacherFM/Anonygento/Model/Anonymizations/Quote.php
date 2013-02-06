@@ -47,29 +47,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
     }
 
     /**
-     * @param Mage_Sales_Model_Order       $order
-     * @param Varien_Object                $customer
-     *
-     * @return boolean
-     */
-//    public function anonymizeByOrder(Mage_Sales_Model_Order $order, Varien_Object $customer)
-//    {
-//        if (!$order->getQuoteId()) {
-//            Mage::throwException('Missing QuoteId in Order Model!');
-//        }
-//
-//        $quoteCollection = $this->_getCollection()
-//            ->addFieldToFilter('entity_id', array('eq' => (int)$order->getQuoteId()));
-//        /** @var $quoteCollection Mage_Sales_Model_Resource_Quote_Collection */
-//
-//        foreach ($quoteCollection as $quote) {
-//            /** @var $quote Mage_Sales_Model_Quote */
-//            $this->_anonymizeQuote($quote, $customer);
-//        }
-//        $customer = $quoteCollection = null;
-//    }
-
-    /**
      * @param Mage_Sales_Model_Quote $quote
      * @param Varien_Object          $customer
      */
@@ -82,7 +59,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
      * @param Mage_Sales_Model_Quote       $quote
      * @param Varien_Object                $customer
      */
-    protected function _anonymizeQuotePayment(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
+    protected function _anonymizeQuotePayment(Mage_Sales_Model_Quote $quote, Varien_Object $customer)
     {
         Mage::getSingleton('schumacherfm_anonygento/anonymizations_quotePayment')->anonymizeByQuote($quote, $customer);
     }

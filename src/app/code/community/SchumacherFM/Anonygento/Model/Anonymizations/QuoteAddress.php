@@ -33,8 +33,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
     }
 
     /**
-     * @param Mage_Sales_Model_Quote       $quote
-     * @param Varien_Object                $customer
+     * @param Mage_Sales_Model_Quote $quote
+     * @param Varien_Object          $customer
+     *
+     * @return null
      */
     public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer)
     {
@@ -48,7 +50,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
                 $this->_anonymizeQuoteAddress($quoteAddress);
             }
             $quoteAddress = $quoteAddressCollection = null;
-            return TRUE;
+            return null;
         }
 
         // customer is registered
@@ -57,6 +59,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
             $this->_anonymizeQuoteAddress($quoteAddress, $address);
         }
         $quoteAddress = $address = $quoteAddressCollection = null;
+        return null;
     }
 
     /**

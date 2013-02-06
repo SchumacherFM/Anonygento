@@ -34,7 +34,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuotePayment extends Schumach
      * @param Mage_Sales_Model_Quote       $quote
      * @param Varien_Object                $customer
      */
-    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer = null)
+    public function anonymizeByQuote(Mage_Sales_Model_Quote $quote, Varien_Object $customer)
     {
         $paymentCollection = $quote->getPaymentsCollection();
         foreach ($paymentCollection as $payment) {
