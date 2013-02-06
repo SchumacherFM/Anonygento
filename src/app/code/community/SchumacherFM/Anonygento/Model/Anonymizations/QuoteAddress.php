@@ -26,7 +26,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
      */
     protected function _anonymizeQuoteAddress(Mage_Sales_Model_Quote_Address $quoteAddress, Varien_Object $address = null)
     {
-
         $random = $address !== null ? $address : $this->_getRandomCustomer()->getCustomer();
         $this->_copyObjectData($random, $quoteAddress);
         $quoteAddress->getResource()->save($quoteAddress);
@@ -58,9 +57,14 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
             $this->_anonymizeQuoteAddress($quoteAddress, $address);
         }
         $quoteAddress = $address = $quoteAddressCollection = null;
-
     }
 
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     * @param string                       $type
+     *
+     * @return Mage_Customer_Model_Address|Varien_Object
+     */
     protected function _getAddressByType(Mage_Customer_Model_Customer $customer, $type = 'Billing')
     {
         $addressMethod = 'getPrimary' . ucfirst($type) . 'Address';
