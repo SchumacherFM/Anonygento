@@ -31,7 +31,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         if ($customerId > 0) {
             $customer = $quote->getCustomer();
             /* getCustomer does not always return a customer model */
-            $customerId = $customer !== null ? (int)$customer->getId() : 0;
+            $customerId = $customer instanceof Mage_Customer_Model_Customer ? (int)$customer->getId() : 0;
         }
 
         if ($customerId === 0) {
