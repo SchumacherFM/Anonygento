@@ -33,7 +33,34 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
     {
         mt_srand(microtime(TRUE) * 0xFFFF);
         $this->setCustomerPrefix(mt_rand() % 2);
+        if ($this->_currentCustomer === null) {
+            $this->_currentCustomer = new Varien_Object();
+        }
+
+    }
+
+    /**
+     * if we use the random data from sales/quote or something we have to
+     * remove the prefix customer_ to fullfill the mapping
+     *
+     * @param Varien_Object $initCustomer
+     *
+     * @return SchumacherFM_Anonygento_Model_Random_Customer
+     */
+    public function setCurrentCustomer(Varien_Object $initCustomer = null)
+    {
         $this->_currentCustomer = new Varien_Object();
+        if ($initCustomer === null) {
+            return $this;
+        }
+        $data = $initCustomer->getData();
+        foreach ($data as $k => $v) {
+            if (stristr($k, '_id') === FALSE) {
+                $k = preg_replace('~^customer_~i', '', $k);
+                $this->_currentCustomer->setData($k, $v);
+            }
+        }
+        return $this;
     }
 
     /**
@@ -57,16 +84,24 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
             'remote_ip'  => $this->_getCustomerIp(),
         );
 
-        $this->_currentCustomer->addData($data);
+        foreach ($data as $k => $v) {
+            if (!$this->_currentCustomer->offsetExists($k)) {
+                $this->_currentCustomer->setData($k, $v);
+            }
+        }
 
-        $this->_currentCustomer->setName(
-            $this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getLastname()
-        );
-        $this->_currentCustomer->setName2(
-            $this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getMiddlename() . ' ' . $this->_currentCustomer->getLastname()
-        );
+        if (!$this->_currentCustomer->offsetExists('name')) {
+            $this->_currentCustomer->setName(
+                $this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getLastname()
+            );
+            $this->_currentCustomer->setName2(
+                $this->_currentCustomer->getFirstname() . ' ' . $this->_currentCustomer->getMiddlename() . ' ' . $this->_currentCustomer->getLastname()
+            );
+        }
 
-        $this->_getRandEmail();
+        if (!$this->_currentCustomer->offsetExists('email')) {
+            $this->_getRandEmail();
+        }
 
         return $this->_currentCustomer;
     }

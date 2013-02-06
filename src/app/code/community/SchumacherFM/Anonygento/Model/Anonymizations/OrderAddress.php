@@ -10,6 +10,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 {
 
     /**
+     * usually this wont run
+     *
      * @param null $collection
      * @param null $anonymizationMethod
      */
@@ -36,6 +38,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     public function anonymizeByOrder(Mage_Sales_Model_Order $order)
     {
         // getaddress data from quote
+        $quote   = Mage::getModel('sales/quote_address')->loadByIdWithoutStore((int)$order->getQuoteId());
 
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
         $orderAddressCollection = $order->getAddressesCollection();

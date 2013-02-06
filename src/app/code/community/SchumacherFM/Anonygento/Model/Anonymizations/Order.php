@@ -19,55 +19,40 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Varien_Object                $customer
      *
      * @throws Exception
      */
-    protected function _anonymizeOrder(Mage_Sales_Model_Order $order, Varien_Object $customer = null)
+    protected function _anonymizeOrder(Mage_Sales_Model_Order $order)
     {
-        // same for quote
-        if ($order->getCustomerId() && !$customer) {
-            /** @var $customer Mage_Customer_Model_Customer */
-            $customerCustomer = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
-            if (!$customerCustomer) {
-                Mage::throwException('Cant find the customer, please contact the developer!');
-            }
-            /** @var $customer Mage_Customer_Model_Address */
-            $customer = $customerCustomer->getPrimaryBillingAddress();
+        /** @var $quote Mage_Sales_Model_Quote */
+        $quote   = Mage::getModel('sales/quote')->loadByIdWithoutStore((int)$order->getQuoteId());
+        $quoteId = (int)$quote->getId();
 
-            if (!($customer instanceof Mage_Customer_Model_Address)) {
-                $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-                $this->_copyObjectData($customerCustomer, $randomCustomer, FALSE);
-                $customer = $randomCustomer;
-                // sometimes the $customer contains two mail address entries
-            } else {
-                $customer->addData($customerCustomer->getData());
-            }
-
-        } elseif (!$customer) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
+        if ($quoteId > 0) {
+            $initCustomer = $quote;
+        } else {
+            // it is possible that the quote did not exists, so we load the customer or random if guest
+            $customerId   = (int)$order->getCustomerId();
+            $initCustomer = $customerId > 0 ? Mage::getModel('customer/customer')->load($customerId) : null;
         }
-
+        $customer = $this->_getRandomCustomer()->setCurrentCustomer($initCustomer)->getCustomer();
         $this->_copyObjectData($customer, $order);
 
-        // this could be buggy because we need from the customer the billing and/or shipping address
         $this->_anonymizeOrderAddresses($order);
         $this->_anonymizeOrderPayment($order, $customer);
         $this->_anonymizeOrderCreditmemo($order);
         $this->_anonymizeOrderInvoice($order);
         $this->_anonymizeOrderShipment($order);
-//        $this->_anonymizeQuote($order, $customer);
 
         $order->getResource()->save($order);
         // update OrderGrid after order has been saved
         // @see Mage_Sales_Model_Resource_Order_Abstract
         $order->getResource()->updateGridRecords($order->getId());
-        $order = null;
+        $initCustomer = $quote = $order = null;
     }
 
     /**
      * @param Mage_Sales_Model_Order       $order
-     * @param Varien_Object                $customer
      */
     protected function _anonymizeOrderAddresses(Mage_Sales_Model_Order $order)
     {
@@ -108,15 +93,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
     }
 
     /**
-     * @param Mage_Sales_Model_Order       $order
-     * @param Varien_Object                $customer
-     */
-//    protected function _anonymizeQuote(Mage_Sales_Model_Order $order, Varien_Object $customer)
-//    {
-//        Mage::getSingleton('schumacherfm_anonygento/anonymizations_quote')->anonymizeByOrder($order, $customer);
-//    }
-
-    /**
      * @param string  $modelName
      * @param boolean $useMapping
      *
@@ -127,26 +103,4 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Order extends SchumacherFM_An
         return parent::_getCollection('sales/order');
     }
 
-    /**
-     * @param Varien_Object $customer
-     *
-     * @return boolean
-     */
-    public function anonymizeByCustomer(Varien_Object $customer)
-    {
-        Mage::throwException('Method disabled');
-
-        $orderCollection = $this->_getCollection()
-            ->addAttributeToFilter('customer_id', array('eq' => $customer->getId()));
-
-        $orderCollectionSize = (int)$orderCollection->getSize();
-
-        if ($orderCollectionSize > 0) {
-            foreach ($orderCollection as $order) {
-                $this->_anonymizeOrder($order, $customer);
-                $order = null;
-            }
-        }
-        $customer = $orderCollection = null;
-    }
 }
