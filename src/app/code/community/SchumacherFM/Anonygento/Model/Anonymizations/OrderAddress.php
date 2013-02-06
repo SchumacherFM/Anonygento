@@ -38,14 +38,28 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
     public function anonymizeByOrder(Mage_Sales_Model_Order $order)
     {
         // getaddress data from quote
-        $quote   = Mage::getModel('sales/quote_address')->loadByIdWithoutStore((int)$order->getQuoteId());
+        /** @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
+        $quoteAddressCollection = Mage::getModel('sales/quote_address')->getCollection()->setQuoteFilter((int)$order->getQuoteId());
+
+        if($quoteAddressCollection->count() > 0){
+            Zend_Debug::dump(get_class($quoteAddressCollection));
+            exit;
+        }
 
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
         $orderAddressCollection = $order->getAddressesCollection();
 
+        if($orderAddressCollection->count() > 0){
+            Zend_Debug::dump(get_class($orderAddressCollection));
+            exit;
+        }
+
+
         /** @var $customer Mage_Customer_Model_Customer */
         $customer          = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
         $addressCollection = $customer->getAddressesCollection();
+
+        // now check what if is set
 
         // customer is registered
         if ($customer !== null && $customer instanceof Mage_Customer_Model_Customer && $addressCollection->count() > 0) {
