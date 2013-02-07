@@ -26,7 +26,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
      */
     protected function _anonymizeOrderAddress(Mage_Sales_Model_Order_Address $orderAddress, Varien_Object $address = null)
     {
-        $randomCustomer = $address === null ? $this->_getRandomCustomer()->getCustomer() : $address;
+        $randomCustomer = $this->_getRandomCustomer()->setCurrentCustomer($address)->getCustomer();
         $this->_copyObjectData($randomCustomer, $orderAddress);
         $orderAddress->getResource()->save($orderAddress);
         $orderAddress = null;
@@ -34,6 +34,8 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
 
     /**
      * @param Mage_Sales_Model_Order $order
+     *
+     * @return null
      */
     public function anonymizeByOrder(Mage_Sales_Model_Order $order)
     {
@@ -41,64 +43,44 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
         /** @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
         $quoteAddressCollection = Mage::getModel('sales/quote_address')->getCollection()->setQuoteFilter((int)$order->getQuoteId());
 
-        if($quoteAddressCollection->count() > 0){
-            Zend_Debug::dump(get_class($quoteAddressCollection));
-            exit;
-        }
-
         /* @var $orderAddressCollection Mage_Sales_Model_Resource_Order_Address_Collection */
         $orderAddressCollection = $order->getAddressesCollection();
 
-        if($orderAddressCollection->count() > 0){
-            Zend_Debug::dump(get_class($orderAddressCollection));
-            exit;
+        // if a quote is equal to the order
+        if ((int)$quoteAddressCollection->count() === (int)$orderAddressCollection->count()) {
+            foreach ($quoteAddressCollection as $quoteAddress) {
+                /** @var $quoteAddress Mage_Sales_Model_Quote_Address */
+                foreach ($orderAddressCollection as $orderAddress) {
+                    /** @var $orderAddress Mage_Sales_Model_Order_Address */
+                    if ($quoteAddress->getAddressType() === $orderAddress->getAddressType()) {
+                        $this->_anonymizeOrderAddress($orderAddress, $quoteAddress);
+                    }
+                }
+            }
+            $quoteAddressCollection = $orderAddressCollection = $quoteAddress = $orderAddress = null;
+            return null;
         }
-
 
         /** @var $customer Mage_Customer_Model_Customer */
         $customer          = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
         $addressCollection = $customer->getAddressesCollection();
-
-        // now check what if is set
-
-        // customer is registered
-        if ($customer !== null && $customer instanceof Mage_Customer_Model_Customer && $addressCollection->count() > 0) {
-            // we have here customer adresses .. maybe ...
-            $billingAddress  = $customer->getPrimaryBillingAddress();
-            $shippingAddress = $customer->getPrimaryShippingAddress();
-
+        // quote has been deleted and customer is NOT a guest
+        if ((int)$addressCollection->count() >= (int)$orderAddressCollection->count()) {
             foreach ($orderAddressCollection as $orderAddress) {
-                if ($orderAddress->getAddressType() === Mage_Sales_Model_Order_Address::TYPE_BILLING) {
-                    $this->_mergeMissingAttributes($customer, $billingAddress);
-                    $this->_copyObjectData($billingAddress, $orderAddress);
-                } elseif ($orderAddress->getAddressType() === Mage_Sales_Model_Order_Address::TYPE_SHIPPING) {
-                    $this->_mergeMissingAttributes($customer, $shippingAddress);
-                    $this->_copyObjectData($shippingAddress, $orderAddress);
-                } else {
-                    Mage::throwException('Missing orderAddress AddressType!: ' . var_export($orderAddress->getData(), 1));
-                }
-                $orderAddress->getResource()->save($orderAddress);
+                $address = $this->_getAddressByType($customer, $orderAddress->getAddressType());
+                $this->_anonymizeOrderAddress($orderAddress, $address);
             }
-            $orderAddress = $shippingAddress = $billingAddress = $orderAddressCollection = null;
-            return TRUE;
+            $quoteAddressCollection = $orderAddressCollection = $addressCollection = $customer = $address = $orderAddress = null;
+            return null;
         }
 
-        // guest checkouts
-
-//        Zend_Debug::dump(get_class($order));
-//        Zend_Debug::dump($order->getData());
-//        exit;
-
-        // processing non guest checkouts
-        $address = $this->_getRandomCustomer()->getCustomer();
-        if ($customer !== null) {
-            $this->_mergeMissingAttributes($customer, $address);
-        }
-
+        // guest checkout with deleted quote and also if quoteAddress count is <> than orderAddress
         foreach ($orderAddressCollection as $orderAddress) {
-            $this->_anonymizeOrderAddress($orderAddress, $address);
+            /** @var $orderAddress Mage_Sales_Model_Order_Address */
+            $this->_anonymizeOrderAddress($orderAddress);
         }
-        $orderAddress = $address = $orderAddressCollection = null;
+        $quoteAddressCollection = $orderAddressCollection = $addressCollection = $customer = $orderAddress = null;
+        return null;
     }
 
     /**

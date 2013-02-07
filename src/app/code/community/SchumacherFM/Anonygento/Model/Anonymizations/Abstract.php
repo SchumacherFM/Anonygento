@@ -310,4 +310,20 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         $collection->$attributeOrField($fields);
     }
 
+    /**
+     * @param Mage_Customer_Model_Customer $customer
+     * @param string                       $type
+     *
+     * @return Mage_Customer_Model_Address|Varien_Object
+     */
+    protected function _getAddressByType(Mage_Customer_Model_Customer $customer, $type = 'Billing')
+    {
+        $addressMethod = 'getPrimary' . ucfirst($type) . 'Address';
+        if (!method_exists($customer, $addressMethod)) {
+            Mage::throwException($addressMethod . ' did not exists; Missing quoteAddress AddressType!: ' . var_export($quoteAddress->getData(), 1));
+        }
+        $address = $customer->$addressMethod();
+        return $this->_getRandomCustomer()->setCurrentCustomer($address)->getCustomer();
+    }
+
 }

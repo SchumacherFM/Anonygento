@@ -27,7 +27,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
         $randomPayment = Mage::getSingleton('schumacherfm_anonygento/random_payment')->getPayment($customer);
         $this->_copyObjectData($randomPayment, $orderPayment);
         $orderPayment->getResource()->save($orderPayment);
-        $orderPayment = null;
+        $randomPayment = $orderPayment = null;
     }
 
     /**
@@ -41,7 +41,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderPayment extends Schumach
         foreach ($paymentCollection as $payment) {
             $this->_anonymizeOrderPayment($payment, $customer);
         }
-        $paymentCollection = null;
+        $customer = $payment = $paymentCollection = null;
 
     }
 

@@ -26,7 +26,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
      */
     protected function _anonymizeQuoteAddress(Mage_Sales_Model_Quote_Address $quoteAddress, Varien_Object $address = null)
     {
-        $random = $address !== null ? $address : $this->_getRandomCustomer()->getCustomer();
+        $random = $this->_getRandomCustomer()->setCurrentCustomer($address)->getCustomer();
         $this->_copyObjectData($random, $quoteAddress);
         $quoteAddress->getResource()->save($quoteAddress);
         $quoteAddress = null;
@@ -60,28 +60,6 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
         }
         $quoteAddress = $address = $quoteAddressCollection = null;
         return null;
-    }
-
-    /**
-     * @param Mage_Customer_Model_Customer $customer
-     * @param string                       $type
-     *
-     * @return Mage_Customer_Model_Address|Varien_Object
-     */
-    protected function _getAddressByType(Mage_Customer_Model_Customer $customer, $type = 'Billing')
-    {
-        $addressMethod = 'getPrimary' . ucfirst($type) . 'Address';
-        if (!method_exists($customer, $addressMethod)) {
-            Mage::throwException($addressMethod . ' did not exists; Missing quoteAddress AddressType!: ' . var_export($quoteAddress->getData(), 1));
-        }
-
-        $address = $customer->$addressMethod();
-        if (!($address instanceof Mage_Customer_Model_Address)) {
-            $address = $this->_getRandomCustomer()->getCustomer();
-        } else {
-            $this->_mergeMissingAttributes($customer, $address);
-        }
-        return $address;
     }
 
     /**
