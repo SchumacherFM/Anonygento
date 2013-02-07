@@ -26,6 +26,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_RatingOptionVote extends Schu
         $emptyObject = new Varien_Object(array('anonymized' => 1));
         $this->_copyObjectData($emptyObject, $vote);
         $vote->getResource()->save($vote);
+        $emptyObject = $vote = null;
     }
 
     /**

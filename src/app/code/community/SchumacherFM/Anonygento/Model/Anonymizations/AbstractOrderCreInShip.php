@@ -44,7 +44,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_AbstractOrderCreInSh
             $this->_copyObjectData($emptyCopy, $comment);
             $comment->getResource()->save($comment);
         }
-        $commentsCollection = null;
+        $commentsCollection = $comment = $emptyCopy = null;
     }
 
     /**
