@@ -19,6 +19,11 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
      */
     protected $_currentCustomer = NULL;
 
+    /**
+     * @var bool
+     */
+    private $_currentCustomerHasBeenSet = FALSE;
+
     public function _construct()
     {
         parent::_construct();
@@ -33,10 +38,9 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
     {
         mt_srand(microtime(TRUE) * 0xFFFF);
         $this->setCustomerPrefix(mt_rand() % 2);
-        if ($this->_currentCustomer === null) {
+        if ($this->_currentCustomer === null || $this->_currentCustomerHasBeenSet === FALSE) {
             $this->_currentCustomer = new Varien_Object();
         }
-
     }
 
     /**
@@ -49,8 +53,9 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
      */
     public function setCurrentCustomer(Varien_Object $initCustomer = null)
     {
-        $this->_currentCustomer = new Varien_Object();
-        if ($initCustomer === null) {
+        $this->_currentCustomerHasBeenSet = TRUE;
+        $this->_currentCustomer           = new Varien_Object();
+        if (empty($initCustomer)) {
             return $this;
         }
         $data = $initCustomer->getData();

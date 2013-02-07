@@ -320,10 +320,60 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     {
         $addressMethod = 'getPrimary' . ucfirst($type) . 'Address';
         if (!method_exists($customer, $addressMethod)) {
-            Mage::throwException($addressMethod . ' did not exists; Missing quoteAddress AddressType!: ' . var_export($quoteAddress->getData(), 1));
+            Mage::throwException($addressMethod . ' did not exists; Missing quoteAddress AddressType!: ' . var_export($customer->getData(), 1));
         }
         $address = $customer->$addressMethod();
+        // address can also be false
         return $this->_getRandomCustomer()->setCurrentCustomer($address)->getCustomer();
+    }
+
+    /**
+     * Compares n-objects with each other. prints out a table on the console
+     *
+     * @param Varien_Object $obj1
+     * @param Varien_Object $obj2
+     * @param Varien_Object $objN
+     */
+    protected function _devCompareData()
+    {
+        $args = func_get_args();
+
+        $keys = array();
+        foreach ($args as $arg) {
+            if (!($arg instanceof Varien_Object)) {
+                Mage::throwException('An arg is not an instance of Varien_Object');
+            }
+            $key  = array_flip(array_keys($arg->getData()));
+            $keys = array_merge($keys, $key);
+        }
+        $keys = array_flip($keys);
+
+        $table = new Zend_Text_Table(array(
+            'columnWidths' => array(30, 50, 50),
+            'AutoSeparate' => Zend_Text_Table::AUTO_SEPARATE_HEADER
+        ));
+
+        $header = array('Key');
+        foreach ($args as $k => $arg) {
+            $header[] = ($k + 1) . ': ' . get_class($arg);
+        }
+        $table->appendRow($header);
+
+        foreach ($keys as $key) {
+            $row = new Zend_Text_Table_Row();
+            $row->appendColumn(
+                new Zend_Text_Table_Column($key)
+            );
+            foreach ($args as $arg) {
+                $row->appendColumn(
+                    new Zend_Text_Table_Column($arg->getData($key) . ' ', Zend_Text_Table_Column::ALIGN_RIGHT)
+                );
+            }
+            $table->appendRow($row);
+        }
+
+        echo $table;
+        exit;
     }
 
 }
