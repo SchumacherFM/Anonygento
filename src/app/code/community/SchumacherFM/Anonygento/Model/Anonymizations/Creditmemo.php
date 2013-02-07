@@ -15,14 +15,4 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Creditmemo extends Schumacher
         $this->setModelName('creditmemo');
         $this->setCollectionName('creditmemos');
     }
-
-    /**
-     * @param null $collection
-     * @param null $anonymizationMethod
-     */
-    public function run($collection = null, $anonymizationMethod = null)
-    {
-        $this->_run();
-    }
-
 }
