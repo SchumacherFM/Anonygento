@@ -23,6 +23,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     protected function _anonymizeByAddress(Mage_Customer_Model_Address $address, Mage_Customer_Model_Customer $customer = null)
     {
+        // street gets lost :-(
+        next dev here
+
         $randomCustomer = $this->_getRandomCustomer()->getCustomer();
 
         // if we only have one address use the customer name from the account
