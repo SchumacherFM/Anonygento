@@ -328,6 +328,40 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
     }
 
     /**
+     * compares two objects
+     *
+     * @param Varien_Object $obj1
+     * @param Varien_Object $obj2
+     *
+     * @return bool
+     */
+    protected function  _compareVarienObjects(Varien_Object $obj1 = null, Varien_Object $obj2 = null)
+    {
+        if (!$obj1 || !$obj2) {
+            return FALSE;
+        }
+
+        $this->_removeTooUniqueProperties($obj1);
+        $this->_removeTooUniqueProperties($obj2);
+        return $obj1->serialize() === $obj2->serialize();
+    }
+
+    /**
+     * Removes keys/properties like id,created,updated,amount,price
+     *
+     * @param Varien_Object $obj
+     */
+    protected function _removeTooUniqueProperties(Varien_Object $obj)
+    {
+        $data = $obj->getData();
+        foreach ($data as $k => $v) {
+            if (preg_match('~(_id|created|updated|amount|price)~i', $k)) {
+                $obj->unsetData($k);
+            }
+        }
+    }
+
+    /**
      * Compares n-objects with each other. prints out a table on the console
      *
      * @param Varien_Object $obj1
