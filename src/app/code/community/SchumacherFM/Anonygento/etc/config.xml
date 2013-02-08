@@ -109,7 +109,7 @@
                     <prefix>prefix</prefix>
                     <email>email</email>
                     <firstname>firstname</firstname>
-                    <!--<lastname>lastname</lastname>-->
+                    <lastname>lastname</lastname>
                     <suffix>suffix</suffix>
                     <fill>
                         <password_hash>
@@ -120,14 +120,14 @@
                                 <a0>14</a0>
                             </args>
                         </password_hash>
-                        <lastname>
-                            <model>schumacherfm_anonygento/random_customer</model>
-                            <!--<helper></helper>-->
-                            <method>getMnemonicName</method>
-                            <args>
-                                <a0>8</a0>
-                            </args>
-                        </lastname>
+                        <!--<lastname>-->
+                            <!--<model>schumacherfm_anonygento/random_customer</model>-->
+                            <!--&lt;!&ndash;<helper></helper>&ndash;&gt;-->
+                            <!--<method>getMnemonicName</method>-->
+                            <!--<args>-->
+                                <!--<a0>8</a0>-->
+                            <!--</args>-->
+                        <!--</lastname>-->
                     </fill>
                     <system>
                         <lastname/>
