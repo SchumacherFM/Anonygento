@@ -71,6 +71,7 @@ Todo / Next Versions
 - Ask for a different database before running the anonymization process
 - Assign a store view to a locale to get e.g. country specific random names.
 - Run via backend instead of shell. Use a nice ajax updater.
+- Restore created_at and updated_at columns / attributes
 - Anonymize all prices
 
 About
