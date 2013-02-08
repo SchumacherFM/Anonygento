@@ -341,9 +341,14 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             return FALSE;
         }
 
-        $this->_removeTooUniqueProperties($obj1);
-        $this->_removeTooUniqueProperties($obj2);
-        return $obj1->serialize() === $obj2->serialize();
+        $objA = clone $obj1;
+        $objB = clone $obj2;
+
+        $this->_removeTooUniqueProperties($objA);
+        $this->_removeTooUniqueProperties($objB);
+        $return = $objA->serialize() === $objB->serialize();
+        $objA = $objB = null;
+        return $return;
     }
 
     /**

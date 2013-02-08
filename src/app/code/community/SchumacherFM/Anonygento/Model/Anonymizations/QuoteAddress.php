@@ -56,6 +56,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_QuoteAddress extends Schumach
         // customer is registered
         $previousAddress = null; // check if shipping !== billing
         foreach ($quoteAddressCollection as $quoteAddress) {
+
             $address = $this->_compareVarienObjects($previousAddress,$quoteAddress)
                 ? $previousAddress
                 : $this->_getAddressByType($customer, $quoteAddress->getAddressType());
