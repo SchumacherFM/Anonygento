@@ -22,7 +22,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_GiftmessageMessage extends Sc
      */
     protected function _anonymizeGiftMessage(Mage_GiftMessage_Model_Message $message)
     {
-        $customer = $this->_getRandomCustomer()->getCustomer();
+        $customer = $this->_getRandomCustomer()->reInit()->getCustomer();
         $this->_copyObjectData($customer, $message);
         $message->getResource()->save($message);
     }

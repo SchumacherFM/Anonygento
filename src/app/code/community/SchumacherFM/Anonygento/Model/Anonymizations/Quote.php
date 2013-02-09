@@ -35,7 +35,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_Quote extends SchumacherFM_An
         }
 
         if ($customerId === 0) {
-            $customer = $this->_getRandomCustomer()->getCustomer();
+            $customer = $this->_getRandomCustomer()->reInit()->getCustomer();
         }
 
         $this->_copyObjectData($customer, $quote);

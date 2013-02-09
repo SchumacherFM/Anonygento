@@ -39,6 +39,7 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
      */
     public function anonymizeByOrder(Mage_Sales_Model_Order $order)
     {
+
         // getaddress data from quote
         /** @var $quoteAddressCollection Mage_Sales_Model_Resource_Quote_Address_Collection */
         $quoteAddressCollection = Mage::getModel('sales/quote_address')->getCollection()->setQuoteFilter((int)$order->getQuoteId());
@@ -64,8 +65,9 @@ class SchumacherFM_Anonygento_Model_Anonymizations_OrderAddress extends Schumach
         /** @var $customer Mage_Customer_Model_Customer */
         $customer          = Mage::getModel('customer/customer')->load((int)$order->getCustomerId());
         $addressCollection = $customer->getAddressesCollection();
+
         // quote has been deleted and customer is NOT a guest
-        if ((int)$addressCollection->count() >= (int)$orderAddressCollection->count()) {
+        if ((int)$addressCollection->count() > 0) {
             foreach ($orderAddressCollection as $orderAddress) {
                 $address = $this->_getAddressByType($customer, $orderAddress->getAddressType());
                 $this->_anonymizeOrderAddress($orderAddress, $address);
