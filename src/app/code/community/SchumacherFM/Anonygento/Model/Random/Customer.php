@@ -43,6 +43,12 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
         }
     }
 
+    public function reInit()
+    {
+        $this->_currentCustomerHasBeenSet = FALSE;
+        return $this;
+    }
+
     /**
      * if we use the random data from sales/quote or something we have to
      * remove the prefix customer_ to fullfill the mapping
@@ -130,7 +136,7 @@ class SchumacherFM_Anonygento_Model_Random_Customer extends SchumacherFM_Anonyge
      */
     protected function _getCustomerStreet()
     {
-        return $this->_street[mt_rand() % count($this->_street)] . ' ' . mt_rand(1, 200);
+        return $this->_street[mt_rand() % count($this->_street)] . PHP_EOL . mt_rand(1000, 2000);
     }
 
     /**

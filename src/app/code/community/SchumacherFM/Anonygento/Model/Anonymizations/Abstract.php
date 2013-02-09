@@ -207,7 +207,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             }
 
             $toObject->setData($newKey, $fromObjectData);
-
         }
 
         if ($fill && is_array($fill)) {
@@ -220,7 +219,6 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         Mage::dispatchEvent('anonygento_anonymizations_copy_after', array(
             'to_object' => $toObject,
         ));
-
     }
 
     /**
@@ -347,7 +345,7 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         $this->_removeTooUniqueProperties($objA);
         $this->_removeTooUniqueProperties($objB);
         $return = $objA->serialize() === $objB->serialize();
-        $objA = $objB = null;
+        $objA   = $objB = null;
         return $return;
     }
 

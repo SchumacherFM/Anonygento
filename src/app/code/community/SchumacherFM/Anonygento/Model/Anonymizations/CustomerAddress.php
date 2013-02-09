@@ -23,18 +23,10 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
      */
     protected function _anonymizeByAddress(Mage_Customer_Model_Address $address, Mage_Customer_Model_Customer $customer = null)
     {
-        // street gets lost :-(
-        next dev here
-
-        $randomCustomer = $this->_getRandomCustomer()->getCustomer();
-
-        // if we only have one address use the customer name from the account
-        if ($customer !== null) {
-            $this->_copyObjectData($customer, $randomCustomer, FALSE);
-        }
+        $randomCustomer = $this->_getRandomCustomer()->setCurrentCustomer($customer)->getCustomer();
         $this->_copyObjectData($randomCustomer, $address);
-
         $address->getResource()->save($address);
+        $randomCustomer = $address = null;
     }
 
     /**
@@ -51,22 +43,21 @@ class SchumacherFM_Anonygento_Model_Anonymizations_CustomerAddress extends Schum
         $size = (int)$addressCollection->getSize();
 
         if ($size < 1) {
+            $addressCollection = null;
             return FALSE;
         }
 
         if ($size === 1) {
             $address = $addressCollection->getFirstItem();
             $this->_anonymizeByAddress($address, $customer);
-            $address = null;
         } elseif ($size > 1) {
             $i = 0;
             foreach ($addressCollection as $address) {
                 $this->_anonymizeByAddress($address, ($i === 0 ? $customer : null));
-                $address = null;
                 $i++;
             }
         }
-        $addressCollection = null;
+        $address = $addressCollection = null;
     }
 
     /**
