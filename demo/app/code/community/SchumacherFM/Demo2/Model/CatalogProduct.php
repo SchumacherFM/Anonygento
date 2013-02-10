@@ -29,10 +29,8 @@ class SchumacherFM_Demo2_Model_CatalogProduct extends SchumacherFM_Anonygento_Mo
      */
     protected function _anonymizeProduct(Mage_Catalog_Model_Product $product)
     {
-
         $this->_randomProductData->setRandName('RandName ' . mt_rand());
         $this->_copyObjectData($this->_randomProductData, $product);
-
         /**
          * do not use $product->save() as it will fire events
          */

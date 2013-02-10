@@ -310,6 +310,8 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
             ? 'addAttributeToSelect'
             : 'addFieldToSelect';
 
+        // if some attributes in an EAV model will not be joined, refactor here to add
+        // the joinType 'left' to the method addAttributeToSelect
         $collection->$attributeOrField($fields);
     }
 

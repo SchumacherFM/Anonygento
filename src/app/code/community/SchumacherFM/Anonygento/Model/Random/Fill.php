@@ -27,6 +27,7 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
 
             $newData = $this->_handleMappingMethod($method, $origData);
 
+            // maybe add the possibility to overwrite even empty original data with random values
             if (!empty($origData)) {
                 $toObj->setData($attribute, $newData);
             }
