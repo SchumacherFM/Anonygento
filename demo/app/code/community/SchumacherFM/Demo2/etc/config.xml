@@ -39,16 +39,17 @@
                     <system>
                         <sku/>
                     </system>
+                    <!--Property (rand_name) of my random objects maps to name-->
                     <rand_name>name</rand_name>
                     <fill>
-                        <password_hash>
-                            <!--<model></model>-->
-                            <helper>core</helper>
-                            <method>getRandomString</method>
+                        <short_description>
+                            <model>schumacherfm_anonygento/random_loremIpsum</model>
+                            <method>getLoremIpsum</method>
                             <args>
-                                <a0>14</a0>
+                                <a0>13</a0>
+                                <a1>txt</a1>
                             </args>
-                        </password_hash>
+                        </short_description>
                     </fill>
                 </mapping>
             </catalogProduct>
