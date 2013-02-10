@@ -274,6 +274,11 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
 
         $this->_collectionAddStaticAnonymized($collection, 0);
 
+        // not documented
+        Mage::dispatchEvent('anonygento_anonymizations_get_collection', array(
+            'collection' => $collection,
+        ));
+
         return $collection;
     }
 

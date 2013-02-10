@@ -203,8 +203,7 @@ Please see Demo1 module.
 
 Adding custom entities for anonymization you can simply extend the config.xml.
 
-With this additional config you can extend the console runner to anonymize custom entities. E.g.: store locator, news
-or other payment solutions.
+With this additional config you can extend the console runner to anonymize custom entities. E.g.: store locator, news, enterprise or other payment solutions.
 
 Please see Demo2 module.
 
@@ -229,6 +228,8 @@ Please see Demo2 module.
     </anonygento>
 </config>
 ```
+
+Not neccessary XML elements: `adminRoute` and `options`.
 
 Your model `namespace2_moduleX/aModel` must have a resource collection.
 
@@ -295,7 +296,6 @@ Events / Observers
 
 ### Event `anonygento_anonymizations_copy_after`
 
-Maybe deprecated ...
 
 This event will be fired after data has been copied from the random object to the target object.
 
@@ -326,6 +326,16 @@ class SchumacherFM_Demo1_Model_Observer {
     }
 }
 ```
+
+### Event `anonygento_anonymizations_get_collection`
+
+To access each single collection.
+
+Fired in: `SchumacherFM_Anonygento_Model_Anonymizations_Abstract::_getCollection`
+
+Name:       `anonygento_anonymizations_get_collection`
+
+Event prefix:  `collection`
 
 
 Performance / Errors
