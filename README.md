@@ -354,12 +354,6 @@ Just rerun the script.
 On a Ubuntu virtual machine with standard LAMP system (php 5.3.[10|20] Suhosin) the script fails.
 Even with memory limit -1 the script will not run. Maybe someone can test this without Suhosin ...
 
-If the script still fails set this config.xml option to 0 (zero):
-
-`global->anonygento->anonymizations->customer->options->anonymizeOrder = 0`
-
-`global->anonygento->anonymizations->customer->options->anonymizeQuote = 0`
-
 
 Support / Contribution
 ----------------------

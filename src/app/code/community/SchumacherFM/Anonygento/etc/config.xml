@@ -96,14 +96,7 @@
                 <active>1</active>
                 <model>customer/customer</model>
                 <adminRoute>customer/edit?id</adminRoute>
-                <options>
-                    <!--methods which should be executed within the main method: _anonymizeCustomer-->
-                    <!--useful if the script fails every time due to memory limit-->
-                    <!--we should refactor this, remove it and implement it properly into quote and order-->
-                    <!--there should be fetched the customer addresses-->
-                    <!--<anonymizeOrder>1</anonymizeOrder>-->
-                    <!--<anonymizeQuote>1</anonymizeQuote>-->
-                </options>
+                <options/>
                 <mapping>
                     <!--RandomCustomer => customer-->
                     <prefix>prefix</prefix>
