@@ -198,14 +198,14 @@ xml to the config.xml. No PHP programming is necessary except if you need custom
 
 Please see Demo1 module.
 
+The XML `fill` element will be automatically processed. It executes a defined method or function on an EAV or entity attribute. The above example should be self-explanatory.
+
 
 #### Custom entities
 
-Adding custom entities for anonymization you can simply extend the config.xml.
+To add custom entities to anonymization process you can simply extend the config.xml. Useful when you want to anonymize e.g.: store locator, news, enterprise or other payment solutions.
 
-With this additional config you can extend the console runner to anonymize custom entities. E.g.: store locator, news, enterprise or other payment solutions.
-
-Please see Demo2 module.
+Please see Demo2 module. This module randomizes the product name and the description with a lorem ipsum text.
 
 ##### Example config:
 
@@ -222,6 +222,9 @@ Please see Demo2 module.
                     <optionKey1>1</optionKey1>
                     <!-- your options -->
                 </options>
+                <mapping>
+                	<!-- if you wish to apply a mapping (see Demo2) -->
+                </mapping>
                 <anonymizationModel>namespace_module/myAnonymizationProcess</anonymizationModel>
             </myAnonymizationKey>
         </anonymizations>
