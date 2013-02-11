@@ -65,15 +65,6 @@ Magento Backend hints
 The red label 'sensitive data' will switch to green for each entity when the anonymization process ran successful.
 
 
-Todo / Next Versions
---------------------
-- Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid, sales shipment grid
-- Ask for a different database before running the anonymization process
-- Assign a store view to a locale to get e.g. country specific random names.
-- Run via backend instead of shell. Use a nice ajax updater.
-- Restore created_at and updated_at columns / attributes
-- Anonymize all prices
-
 About
 -----
 - version: 1.0.0
@@ -82,12 +73,25 @@ About
 - [direct download link](https://github.com/SchumacherFM/Anonygento/tarball/master)
 - Integrates parts of the Zend Framework 2
 
+
 Compatibility
 -------------
-- Magento >= 1.4
+- Magento >= 1.5
 - php >= 5.3.0
 
 I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
+
+It could run with Magento < 1.5 but still not tested.
+
+
+Todo / Next Versions
+--------------------
+- Enterprise tables like Logging, RMA, Sales credit memo, sales invoice grid, sales order grid, sales shipment grid
+- Ask for a different database before running the anonymization process
+- Assign a store view to a locale to get e.g. country specific random names.
+- Run via backend instead of shell. Use a nice ajax updater.
+- Restore created_at and updated_at columns / attributes
+- Anonymize all prices
 
 
 Installation Instructions
