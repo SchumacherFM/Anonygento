@@ -78,6 +78,14 @@
         </translate>
     </adminhtml>
 
+    <phpunit>
+        <suite>
+            <modules>
+                <SchumacherFM_Anonygento/>
+            </modules>
+        </suite>
+    </phpunit>
+
     <!--main config for the order of the work load for the anonymization process-->
     <!--extend also here with your own anonymization process-->
     <anonygento>
