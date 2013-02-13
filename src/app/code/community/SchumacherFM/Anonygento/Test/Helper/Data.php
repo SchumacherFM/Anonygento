@@ -8,5 +8,10 @@
  */
 class SchumacherFM_Anonygento_Test_Helper_Data extends EcomDev_PHPUnit_Test_Case
 {
+    public function testMe()
+    {
+        $this->assertTrue(TRUE, 'And its true');
+
+    }
 
 }

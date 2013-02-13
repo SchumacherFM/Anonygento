@@ -10,5 +10,9 @@
 class SchumacherFM_Anonygento_Test_Model_Counter extends EcomDev_PHPUnit_Test_Case
 {
 
+    public function testMe()
+    {
+        $this->assertTrue(FALSE, 'and its false and failed');
+    }
 
 }
