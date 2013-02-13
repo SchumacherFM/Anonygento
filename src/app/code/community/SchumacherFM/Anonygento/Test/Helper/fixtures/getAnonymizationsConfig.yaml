@@ -1,0 +1,3 @@
+config:
+  anonygento/anonymizations/customer/active: 4711
+  anonygento/anonymizations/customerAddress/active: 4712

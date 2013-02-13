@@ -9,10 +9,32 @@
 
 class SchumacherFM_Anonygento_Test_Model_Counter extends EcomDev_PHPUnit_Test_Case
 {
+    protected $_model = null;
 
-    public function testMe()
+    protected function setUp()
     {
-        $this->assertTrue(FALSE, 'and its false and failed');
+        parent::setUp();
+        $this->_model = Mage::getModel('schumacherfm_anonygento/counter');
+    }
+
+    /**
+     * @loadFixture
+     */
+    public function testUnAnonymized()
+    {
+        $expected = 2;
+        $actual   = $this->_model->unAnonymized('customer/customer');
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @loadFixture
+     */
+    public function testAnonymized()
+    {
+        $expected = 3;
+        $actual   = $this->_model->anonymized('customer/customer');
+        $this->assertEquals($expected, $actual);
     }
 
 }
