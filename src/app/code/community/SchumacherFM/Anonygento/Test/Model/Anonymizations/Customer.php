@@ -13,7 +13,7 @@ class SchumacherFM_Anonygento_Test_Model_Anonymizations_Customer extends EcomDev
      * @test
      * @loadFixture
      */
-    public function testRun()
+    public function CustomerRun()
     {
         $this->assertTrue(TRUE);
     }
