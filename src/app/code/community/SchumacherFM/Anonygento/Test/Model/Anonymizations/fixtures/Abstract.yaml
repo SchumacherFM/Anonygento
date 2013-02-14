@@ -1,0 +1,10 @@
+config:
+  anonygento/anonymizations/customer/active: 1
+  anonygento/anonymizations/customer/model: customer/customer
+  anonygento/anonymizations/customer/mapping/prefix: prefix
+  anonygento/anonymizations/customer/mapping/email: email
+  anonygento/anonymizations/customer/mapping/firstname: firstname
+  anonygento/anonymizations/customer/mapping/lastname: lastname
+  anonygento/anonymizations/customer/mapping/fill/password_hash/helper: core
+  anonygento/anonymizations/customer/mapping/fill/password_hash/method: getRandomString
+  anonygento/anonymizations/customer/mapping/fill/password_hash/args/a0: 14
