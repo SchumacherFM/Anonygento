@@ -1,0 +1,11 @@
+config:
+  anonygento/anonymizations/customerTest/active: 1
+  anonygento/anonymizations/customerTest/mapping/fill/password_hash_test/helper: core
+  anonygento/anonymizations/customerTest/mapping/fill/password_hash_test/method: getRandomString
+  anonygento/anonymizations/customerTest/mapping/fill/password_hash_test/args/a0: 41
+  anonygento/anonymizations/customerTest/mapping/fill/text/model: schumacherfm_anonygento/random_loremIpsum
+  anonygento/anonymizations/customerTest/mapping/fill/text/method: getLoremIpsum
+  anonygento/anonymizations/customerTest/mapping/fill/text/args/a0: 13
+  anonygento/anonymizations/customerTest/mapping/fill/text/args/a1: plain
+  anonygento/anonymizations/customerTest/mapping/fill/ip/model: schumacherfm_anonygento/random_ip
+  anonygento/anonymizations/customerTest/mapping/fill/ip/method: shuffleIp

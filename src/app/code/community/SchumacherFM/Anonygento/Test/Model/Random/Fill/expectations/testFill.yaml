@@ -1,0 +1,8 @@
+wrong_name:
+  result:
+    - Name is required
+wrong_email:
+  result:
+    - Email is wrong
+ok:
+  result: true
