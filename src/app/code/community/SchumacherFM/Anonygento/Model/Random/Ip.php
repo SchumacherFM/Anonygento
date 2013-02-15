@@ -63,7 +63,7 @@ class SchumacherFM_Anonygento_Model_Random_Ip extends Varien_Object
             $long = $longIp + $pow;
         }
 
-        if ($long > $this->_maxLongIp || !$this->_isValidPublic(long2ip($long))) {
+        if ($long > $this->_maxLongIp || !$this->isValidPublicIp(long2ip($long))) {
             $this->_initFactor();
             return $this->_calculate($longIp);
         }
@@ -77,11 +77,11 @@ class SchumacherFM_Anonygento_Model_Random_Ip extends Varien_Object
         $ip = array(mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));
         $ip = implode('.', $ip);
 
-        return $this->_isValidPublic($ip) ? $ip : $this->getRandomValidPublicIp();
+        return $this->isValidPublicIp($ip) ? $ip : $this->getRandomValidPublicIp();
 
     }
 
-    protected function _isValidPublic($ip)
+    public function isValidPublicIp($ip)
     {
         return !$this->_ipInRange($ip, '10.0.0.0', '10.255.255.255') &&
             !$this->_ipInRange($ip, '172.16.0.0', '172.31.255.255') &&
