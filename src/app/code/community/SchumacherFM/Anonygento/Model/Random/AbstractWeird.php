@@ -202,10 +202,14 @@ abstract class SchumacherFM_Anonygento_Model_Random_AbstractWeird extends Varien
     {
         $baseDir = Mage::getBaseDir();
 
+        $dataInternal = ($this->getData('useDataInternal') === null || $this->getData('useDataInternal') === TRUE)
+            ? self::DATA_INTERNAL
+            : '';
+
         $csvFileComponents = array(
             $baseDir,
             self::DATA_PATH,
-            $this->_locale . self::DATA_INTERNAL,
+            $this->_locale . $dataInternal,
             $name . '.' . self::DATA_FILE_EXTENSION
         );
 
