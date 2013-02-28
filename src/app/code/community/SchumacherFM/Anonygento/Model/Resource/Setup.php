@@ -15,6 +15,11 @@ class SchumacherFM_Anonygento_Model_Resource_Setup extends Mage_Eav_Model_Entity
     protected $_isEnterpriseEdition = null;
 
     /**
+     * @var array
+     */
+    protected $_backendModelCache = array();
+
+    /**
      * @return bool
      */
     public function isEnterpriseEdition()
@@ -57,13 +62,43 @@ class SchumacherFM_Anonygento_Model_Resource_Setup extends Mage_Eav_Model_Entity
             'default'      => 0,
             'user_defined' => FALSE,
             'input'        => 'boolean',
-            'backend'      => 'customer/attribute_backend_data_boolean',
+            'backend'      => $this->_getBackendModel('boolean'),
             'required'     => FALSE,
             'is_system'    => TRUE,
             'position'     => 200,
             'sort_order'   => 200,
         ));
         return $this;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return mixed
+     */
+    protected function _getBackendModel($type = 'boolean')
+    {
+        if (!isset($this->_backendModelCache[$type])) {
+
+            $typeUc = ucfirst($type);
+
+            $modelPaths = array(
+                'Mage_Customer_Model_Attribute_Backend_Data_' . $typeUc => 'customer/attribute_backend_data_' . $type,
+                'Mage_Customer_Model_Attribute_Data_' . $typeUc         => 'customer/attribute_data_' . $type
+            );
+            foreach ($modelPaths as $class => $model) {
+                if (@class_exists($class)) {
+                    $this->_backendModelCache[$type] = $model;
+                    break;
+                }
+            }
+            if (!isset($this->_backendModelCache[$type])) {
+                Mage::throwException('Cannot find Boolean Backend Model');
+            }
+        }
+
+        return $this->_backendModelCache[$type];
+
     }
 
     /**
