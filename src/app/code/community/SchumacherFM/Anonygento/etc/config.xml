@@ -740,10 +740,10 @@
                             <model>schumacherfm_anonygento/random_ip</model>
                             <method>shuffleIp</method>
                         </remote_ip>
-                        <detail>
-                            <model>schumacherfm_anonygento/random_ip</model>
-                            <method>shuffleIpLong</method>
-                        </detail>
+                        <!--<detail>-->
+                            <!--<model>schumacherfm_anonygento/random_ip</model>-->
+                            <!--<method>shuffleIpLong</method>-->
+                        <!--</detail>-->
                     </fill>
                 </mapping>
             </ratingOptionVote>

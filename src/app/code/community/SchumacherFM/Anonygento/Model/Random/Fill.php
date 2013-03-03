@@ -60,11 +60,6 @@ class SchumacherFM_Anonygento_Model_Random_Fill extends Varien_Object
             array_push($args, $origData);
         }
 
-//        if ($method === 'mt_rand' && count($args) > 2 ) {
-//            Zend_Debug::dump($args);
-//            exit;
-//        }
-
         if (is_object($model) && method_exists($model, $method)) {
             return call_user_func_array(array($model, $method), $args);
         } else {

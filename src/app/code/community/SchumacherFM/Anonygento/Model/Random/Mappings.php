@@ -28,7 +28,7 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         $entityTypesData          = Mage::getModel('eav/entity_type')->getCollection()->getData();
         $this->_isEntityTypesData = array();
         foreach ($entityTypesData as $type) {
-            if (isset($type['attribute_model'])) { // only real EAV models ;-)
+            if (isset($type['attribute_model']) && !empty($type['attribute_model'])) { // only real EAV models ;-)
                 $this->_isEntityTypesData[$type['entity_model']] = $type['entity_type_code'];
             }
 
@@ -85,23 +85,39 @@ class SchumacherFM_Anonygento_Model_Random_Mappings extends Varien_Object
         }
 
         /**
-         * check if the have an EAV model then
+         * check if we have an EAV model then
          * remove all columns from an EAV model which are invisible
          */
         if (isset($this->_isEntityTypesData[$model]) && !empty($this->_isEntityTypesData[$model])) {
             $thisData = $this->getData();
+
             foreach ($thisData as $randomKey => $attribute) {
-                if (
-                    is_string($attribute) &&
-                    $attribute !== 'update' &&
-                    !$this->_eavConfig->getAttribute($this->_isEntityTypesData[$model], $attribute)->getIsVisible()
-                ) {
-                    unset($thisData[$randomKey]);
+                if (is_string($attribute) && !is_array($attribute)) {
+
+                    if (
+                        is_string($attribute) &&
+                        $attribute !== 'update' &&
+                        !$this->_isAttributeVisible($model, $attribute)
+                    ) {
+                        unset($thisData[$randomKey]);
+                    }
                 }
             }
             $this->setData($thisData);
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $model
+     * @param string $attribute
+     *
+     * @return boolean
+     */
+    protected function _isAttributeVisible($model, $attribute)
+    {
+        $attribute = $this->_eavConfig->getAttribute($this->_isEntityTypesData[$model], $attribute);
+        return $attribute->getIsVisible();
     }
 }
