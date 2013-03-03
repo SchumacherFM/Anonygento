@@ -221,7 +221,25 @@ class Mage_Shell_Anonygento extends Mage_Shell_Abstract
      */
     public function usageHelp()
     {
-        return 'Usage:  php -f anonygento.php[ -- [options]]' . PHP_EOL . PHP_EOL;
+        return <<<USAGE
+Usage:  php -f anonygento.php -- [options --runAnonymization]
+
+  --memoryLimit <integer>       Sets memory limit to e.g. 2048 MB
+  --collectionLimit <integer>   Sets the collection size to value X
+  --stat                        Shows the same statistic as in the Magento backend
+  --runAnonymization            Runs the anonymization process
+  help                          This help
+
+  To run with a higher memory limit type:
+  php -f anonygento.php -- --memoryLimit=2048 --runAnonymization
+
+  To run with a limited collection size type:
+  php -f anonygento.php -- --collectionLimit=400 --runAnonymization
+
+  Collection and memory limit options can be combined.
+
+
+USAGE;
     }
 
     /**
