@@ -329,6 +329,9 @@ abstract class SchumacherFM_Anonygento_Model_Anonymizations_Abstract extends Var
         }
         $address = $customer->$addressMethod();
         // address can also be false
+        if (!$address) {
+            $address = null;
+        }
         return $this->_getRandomCustomer()->setCurrentCustomer($address)->getCustomer();
     }
 
