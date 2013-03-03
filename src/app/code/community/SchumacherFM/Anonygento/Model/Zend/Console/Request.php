@@ -3,9 +3,8 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
  */
 
 namespace SchumacherFM\Anonygento\Model\Zend\Console;
@@ -14,10 +13,6 @@ use SchumacherFM\Anonygento\Model\Zend\Stdlib\Message;
 use SchumacherFM\Anonygento\Model\Zend\Stdlib\Parameters;
 use SchumacherFM\Anonygento\Model\Zend\Stdlib\RequestInterface;
 
-/**
- * @category   Zend
- * @package    Zend_Console
- */
 class Request extends Message implements RequestInterface
 {
     /**
@@ -191,5 +186,4 @@ class Request extends Message implements RequestInterface
     {
         return $this->scriptName;
     }
-
 }

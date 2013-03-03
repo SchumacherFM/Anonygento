@@ -3,9 +3,8 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Console
  */
 
 namespace SchumacherFM\Anonygento\Model\Zend\Console\Prompt;
@@ -15,11 +14,6 @@ use SchumacherFM\Anonygento\Model\Zend\Console\Console;
 use SchumacherFM\Anonygento\Model\Zend\Console\Adapter\AdapterInterface as ConsoleAdapter;
 use SchumacherFM\Anonygento\Model\Zend\Console\Exception;
 
-/**
- * @category   Zend
- * @package    Zend_Console
- * @subpackage Prompt
- */
 abstract class AbstractPrompt implements PromptInterface
 {
     /**
@@ -31,13 +25,6 @@ abstract class AbstractPrompt implements PromptInterface
      * @var mixed
      */
     protected $lastResponse;
-
-    /**
-     * Show a prompt
-     *
-     * @return void
-     */
-    abstract public function show();
 
     /**
      * Return last answer to this prompt.
