@@ -67,10 +67,10 @@ The red label 'sensitive data' will switch to green for each entity when the ano
 
 About
 -----
-- version: 1.0.0
+- version: 1.0.2
 - extension key: SchumacherFM_Anonygento
 - [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
-- [direct download link](https://github.com/SchumacherFM/Anonygento/tarball/master)
+- [direct download link](https://github.com/SchumacherFM/Anonygento/archive/1.0.2.tar.gz)
 - Integrates parts of the Zend Framework 2
 
 
@@ -371,7 +371,7 @@ Report a bug or send me a pull request.
 Other modules for Magento
 -------------------------
 
-There is https://github.com/integer-net/Anonymizer but is has several limitations.
+There is https://github.com/integer-net/Anonymizer but it has several limitations.
 
 
 Licence
