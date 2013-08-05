@@ -377,3 +377,12 @@ There is https://github.com/integer-net/Anonymizer but it has several limitation
 Licence
 -------
 [OSL - Open Software Licence 3.0](http://opensource.org/licenses/osl-3.0.php)
+
+Author
+------
+
+[Cyrill Schumacher](https://github.com/SchumacherFM)
+
+[My pgp public key](http://www.schumacher.fm/cyrill.asc)
+
+Made in Zurich, Switzerland :-)
