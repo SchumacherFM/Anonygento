@@ -72,6 +72,7 @@ About
 - [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
 - [direct download link](https://github.com/SchumacherFM/Anonygento/archive/1.0.2.tar.gz)
 - Integrates parts of the Zend Framework 2
+- Donation: [http://www.seashepherd.org/](http://www.seashepherd.org/)
 
 
 Compatibility
@@ -361,12 +362,14 @@ Just rerun the script.
 On a Ubuntu virtual machine with standard LAMP system (php 5.3.[10|20] Suhosin) the script fails.
 Even with memory limit -1 the script will not run. Maybe someone can test this without Suhosin ...
 
-
 Support / Contribution
 ----------------------
 
-Report a bug or send me a pull request.
+Report a bug using the issue tracker or send us a pull request.
 
+Instead of forking I can add you as a Collaborator IF you really intend to develop on this module. Just ask :-)
+
+We work with: [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/) and [Semantic Versioning 2.0.0](http://semver.org/)
 
 Other modules for Magento
 -------------------------
@@ -386,3 +389,5 @@ Author
 [My pgp public key](http://www.schumacher.fm/cyrill.asc)
 
 Made in Zurich, Switzerland :-)
+
+If you consider a donation please contribute to: [http://www.seashepherd.org/](http://www.seashepherd.org/)
