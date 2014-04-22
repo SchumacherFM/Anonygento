@@ -1,9 +1,16 @@
 {
-    "name": "SchumacherFM/Anonygento",
+    "name": "schumacherfm/anonygento",
+    "type": "magento-module",
     "description": "Anonymizes all customer related data in a Magento shop!",
     "license": ["OSL-3.0"],
+    "homepage": "https://github.com/SchumacherFM/Magento-Markdown",
     "require": {
-        "php": ">=5.3.0"
+        "magento-hackathon/magento-composer-installer": "*"
     },
-    "minimum-stability": "dev"
+    "authors": [
+        {
+            "name": "Cyrill Schumacher",
+            "email": "cyrill@schumacher.fm"
+        }
+    ]
 }

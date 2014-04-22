@@ -386,3 +386,5 @@ Author
 [My pgp public key](http://www.schumacher.fm/cyrill.asc)
 
 Made in Zurich, Switzerland :-)
+
+If you consider a donation please contribute to: [http://www.seashepherd.org/](http://www.seashepherd.org/)
