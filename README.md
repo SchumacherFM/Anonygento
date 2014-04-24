@@ -67,7 +67,7 @@ The red label 'sensitive data' will switch to green for each entity when the ano
 
 About
 -----
-- version: 1.0.2
+- version: 1.0.3
 - extension key: SchumacherFM_Anonygento
 - [extension on GitHub](https://github.com/SchumacherFM/Anonygento)
 - [direct download link](https://github.com/SchumacherFM/Anonygento/archive/1.0.2.tar.gz)
@@ -78,8 +78,6 @@ Compatibility
 -------------
 - Magento >= 1.5
 - php >= 5.3.0
-
-I'm using http://php-osx.liip.ch/ with version 5.4.10 and 5.3.19.
 
 It could run with Magento < 1.5 but still not tested.
 
@@ -368,10 +366,25 @@ Support / Contribution
 Report a bug or send me a pull request.
 
 
-Other modules for Magento
--------------------------
+History
+---------
 
-There is https://github.com/integer-net/Anonymizer but it has several limitations.
+### v1.0.3
+
+- Changed system config from schumacherfm/anonygento/... to dev/anonygento/... Now browse to System -> Configuration -> Advanced -> Developer
+
+### v1.0.2
+
+- Updates of external libs and host names
+- Bugfixes
+
+### v1.0.1
+
+- Bugfixes
+
+### v1.0.0
+
+- Initial release
 
 
 Licence
